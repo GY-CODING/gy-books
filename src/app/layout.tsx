@@ -1,60 +1,55 @@
-'use client';
-
-import { ThemeProvider, CssBaseline, Button } from '@mui/material';
-import { useState, useEffect } from 'react';
-import { getTheme } from '../styles/theme';
 import React from 'react';
-import { ETheme } from '@/utils/constants/theme.enum';
+import ClientLayout from './ClientLayout';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'GY Books',
+  description: 'Tu biblioteca personal de libros',
+  keywords: ['libros', 'biblioteca', 'lectura', 'gycoding'],
+  authors: [{ name: 'GY Coding' }],
+  openGraph: {
+    title: 'WingWords',
+    description: 'Tu biblioteca personal de libros',
+    type: 'website',
+    locale: 'es_ES',
+    siteName: 'WingWords',
+    images: [
+      {
+        url: '/gy-logo.png',
+        width: 1080,
+        height: 1080,
+        alt: 'GY Books Logo',
+      },
+    ],
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: '/gy-logo.png',
+    apple: '/gy-logo.png',
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [themeMode, setThemeMode] = useState<ETheme.LIGHT | ETheme.DARK>(
-    ETheme.LIGHT
-  );
-
-  // Cargar el tema desde localStorage para que persista entre sesiones
-  useEffect(() => {
-    const savedMode = localStorage.getItem('themeMode') as
-      | ETheme.LIGHT
-      | ETheme.DARK
-      | null;
-    if (savedMode) {
-      setThemeMode(savedMode);
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newThemeMode =
-      themeMode === ETheme.LIGHT ? ETheme.DARK : ETheme.LIGHT;
-    setThemeMode(newThemeMode);
-    localStorage.setItem('themeMode', newThemeMode); // Guardar la preferencia en localStorage
-  };
-
   return (
-    <html lang="en">
+    <html lang="es">
+      <head>
+        <link rel="icon" href="/gy-logo.png" />
+        <meta name="theme-color" content="#161616" />
+      </head>
       <body>
-        <ThemeProvider theme={getTheme(themeMode)}>
-          <CssBaseline />
-          {children}
-          <Button
-            onClick={toggleTheme}
-            style={{
-              position: 'fixed',
-              borderRadius: '20px',
-              width: '3rem',
-              height: '3rem',
-              bottom: '20px',
-              right: '20px',
-              zIndex: 999,
-            }}
-            variant="contained"
-          >
-            {themeMode === ETheme.LIGHT ? '🌙' : '☀️'}
-          </Button>
-        </ThemeProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
