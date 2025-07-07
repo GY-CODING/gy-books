@@ -53,6 +53,7 @@ export const Hero = () => {
       <Button
         variant="contained"
         size="large"
+        id="explorar-biblioteca-button"
         onClick={() => router.push('/books')}
         sx={{
           background: 'linear-gradient(135deg, #9333ea 0%, #7e22ce 100%)',

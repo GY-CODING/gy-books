@@ -71,6 +71,7 @@ const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
     return (
       <a href="/api/auth/login" style={{ textDecoration: 'none' }}>
         <Button
+          id="login-button"
           variant="contained"
           onClick={() =>
             (window.location.href = '/api/auth/login?prompt=login')

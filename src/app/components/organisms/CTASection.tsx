@@ -60,6 +60,7 @@ export const CTASection = () => {
           : 'Conecta con otros lectores, comparte tus experiencias y descubre tu próxima lectura favorita.'}
       </Typography>
       <Button
+        id={user ? 'search-friends-button' : 'create-account-button'}
         variant="outlined"
         size="large"
         onClick={() => router.push(user ? '/friends' : '/api/auth/login')}
