@@ -36,7 +36,8 @@ describe('ProfileHeader', () => {
 
   it('shows loading state for friends', () => {
     render(<ProfileHeader {...defaultProps} isLoadingFriends={true} />);
-    expect(screen.getAllByText('...').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByTestId('friends-skeleton')).toBeInTheDocument();
+    expect(screen.queryByText('friends')).not.toBeInTheDocument();
   });
 
   it('renders biography section', () => {

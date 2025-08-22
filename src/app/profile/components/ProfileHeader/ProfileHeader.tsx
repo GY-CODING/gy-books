@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Skeleton } from '@mui/material';
 import { CustomButton } from '@/app/components/atoms/customButton';
 import EditIcon from '@mui/icons-material/Edit';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -104,28 +104,54 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           textDecoration: 'none',
         }}
       >
-        <Typography
-          variant="body2"
-          sx={{
-            color: '#FFFFFF',
-            fontWeight: 'bold',
-            fontSize: { xs: 14, sm: 15, md: 18 },
-            fontFamily: cinzel.style.fontFamily,
-          }}
-        >
-          {isLoadingFriends ? '...' : `${friendsCount}`}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{
-            color: '#FFFFFF',
-            fontWeight: 'bold',
-            fontSize: { xs: 14, sm: 15, md: 20 },
-            fontFamily: goudi.style.fontFamily,
-          }}
-        >
-          {isLoadingFriends ? '...' : 'friends'}
-        </Typography>
+        {!isLoadingFriends && (
+          <>
+            <Typography
+              variant="body2"
+              sx={{
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                fontSize: { xs: 14, sm: 15, md: 18 },
+                fontFamily: cinzel.style.fontFamily,
+              }}
+            >
+              {`${friendsCount}`}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                fontSize: { xs: 14, sm: 15, md: 20 },
+                fontFamily: goudi.style.fontFamily,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              {'friends'}
+            </Typography>
+          </>
+        )}
+        {isLoadingFriends && (
+          <Typography
+            variant="body2"
+            sx={{
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              fontSize: { xs: 14, sm: 15, md: 20 },
+              fontFamily: goudi.style.fontFamily,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Skeleton
+              data-testid="friends-skeleton"
+              variant="text"
+              width={80}
+              sx={{ bgcolor: '#ffffff20', display: 'inline-block' }}
+            />
+          </Typography>
+        )}
       </Box>
       <BiographySection
         biography={biography}
