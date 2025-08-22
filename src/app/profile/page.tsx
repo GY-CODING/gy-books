@@ -10,8 +10,6 @@ import React, {
 } from 'react';
 import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
 import { ProfileHeaderSkeleton } from './components/ProfileHeader/ProfileHeaderSkeleton';
-import { BiographySection } from './components/BiographySection/BiographySection';
-import { BiographySkeleton } from './components/BiographySection/BiographySkeleton';
 import { BooksFilter } from './components/BooksFilter/BooksFilter';
 import { BooksFilterSkeleton } from './components/BooksFilter/BooksFilterSkeleton';
 import { BooksList } from './components/BooksList/BooksList';
@@ -27,7 +25,6 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { EStatus } from '@/utils/constants/EStatus';
-import { useTheme } from '@mui/material/styles';
 import ProfileSkeleton from '../components/atoms/ProfileSkeleton';
 import { getBooksWithPagination } from '../actions/book/fetchApiBook';
 import Book from '@/domain/book.model';
