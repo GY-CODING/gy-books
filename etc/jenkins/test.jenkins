@@ -1,41 +1,63 @@
 pipeline {
   agent any
-  
+
+  environment {
+    WORKSPACE_DIR = 'WingWords'
+  }
+
   stages {
+    stage('Prepare Workspace') {
+      steps {
+        script {
+          if (fileExists(WORKSPACE_DIR)) {
+            echo "WingWords directory already exists, cleaning..."
+            dir(WORKSPACE_DIR) {
+              sh '''
+              rm -rf .nvm with-node.sh
+              '''
+            }
+          } else {
+            echo "Creating WingWords directory..."
+            sh "mkdir -p $WORKSPACE_DIR"
+          }
+        }
+      }
+    }
+
     stage('Install Node') {
         steps {
-            sh '''
-                mkdir -p "$NVM_DIR"
-                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-                export NVM_DIR="$NVM_DIR"
-                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                nvm install 18
+            dir(WORKSPACE_DIR) {
+              sh '''
+                  export NVM_DIR="$WORKSPACE/.nvm"
+                  mkdir -p "$NVM_DIR"
+                  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+                  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                  nvm install 18
 
-                echo '#!/bin/bash' > with-node.sh
-                echo 'export NVM_DIR="$WORKSPACE/.nvm"' >> with-node.sh
-                echo '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' >> with-node.sh
-                echo 'nvm use 18' >> with-node.sh
-                echo '"$@"' >> with-node.sh
-                chmod +x with-node.sh
-            '''
+                  echo '#!/bin/bash' > with-node.sh
+                  echo 'export NVM_DIR="$WORKSPACE/.nvm"' >> with-node.sh
+                  echo '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' >> with-node.sh
+                  echo 'nvm use 18' >> with-node.sh
+                  echo '"$@"' >> with-node.sh
+                  chmod +x with-node.sh
+              '''
+            }
         }
     }
 
     stage('Install Dependencies') {
       steps {
-        sh 'npm install'
+        dir(WORKSPACE_DIR) {
+          sh './with-node.sh npm install'
+        }
       }
     }
 
-    stage('Run Linter') {
+    stage('Run Tests') {
       steps {
-        sh 'npm run lint'
-      }
-    }
-
-    stage('Build Project') {
-      steps {
-        sh 'npm run build'
+        dir(WORKSPACE_DIR) {
+          sh './with-node.sh npm run test'
+        }
       }
     }
   }

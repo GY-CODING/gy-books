@@ -37,6 +37,23 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                        // Llamar al pipeline de test usando la ruta completa
+                        build job: 'Front/Test/WingWords',
+                              wait: true,
+                              propagate: true
+                    } catch (Exception e) {
+                        echo "Error calling test job: ${e.getMessage()}"
+                        echo "Job path: Front/Test/WingWords"
+                        throw e
+                    }
+                }
+            }
+        }
+
         stage('Sync Fork') {
             steps {
                 script {

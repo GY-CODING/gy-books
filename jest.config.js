@@ -5,6 +5,18 @@ module.exports = {
   testEnvironment: 'jsdom',
   testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  testPathIgnorePatterns: [
+    '<rootDir>/.nvm/',
+    '<rootDir>/.next/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/.git/',
+  ],
+  modulePathIgnorePatterns: [
+    '<rootDir>/.nvm/',
+    '<rootDir>/.next/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/.git/',
+  ],
   moduleNameMapper: {
     '^@/app/components/atoms/BookCardCompact(\\.(ts|tsx|js|jsx))?$':
       '<rootDir>/__mocks__/BookCardCompact.js',
