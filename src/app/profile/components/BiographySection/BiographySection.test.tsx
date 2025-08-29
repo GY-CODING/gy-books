@@ -22,7 +22,7 @@ describe('BiographySection', () => {
     expect(screen.queryByText(/Cancel/i)).not.toBeInTheDocument();
   });
 
-  it('renders default text when biography is empty', () => {
+  it('renders default text if biography is empty', () => {
     render(<BiographySection {...defaultProps} biography="" />);
     expect(
       screen.getByText('Aquí irá la biografía del usuario.')
@@ -59,7 +59,7 @@ describe('BiographySection', () => {
 
   it('disables Save button when isLoading is true', () => {
     render(<BiographySection {...defaultProps} isEditing isLoading />);
-    const saveButton = screen.getByText(/Save/i).closest('button');
-    expect(saveButton).toBeDisabled();
+    const saveButton = screen.getByText(/Save/i);
+    expect(saveButton).toHaveAttribute('disabled');
   });
 });

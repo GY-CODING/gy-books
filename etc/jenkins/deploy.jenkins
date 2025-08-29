@@ -7,10 +7,10 @@ pipeline {
         GITHUB_USER = 'gy-gfigueras'
         GITHUB_TOKEN = credentials('FRONT_GITHUB_TOKEN')
 
-        MAIN_REPO = 'GY-CODING/<repo>'
-        FORK_REPO = "${GITHUB_USER}/<repo>"
-        WORKSPACE_DIR = '<project_name>'
-        VERCEL_DEPLOY_URL = credentials('<PROJECT>_VERCEL_DEPLOY_URL')
+        MAIN_REPO = 'GY-CODING/gy-books'
+        FORK_REPO = "${GITHUB_USER}/gy-books"
+        WORKSPACE_DIR = 'WingWords'
+        VERCEL_DEPLOY_URL = credentials('WINGWORDS_VERCEL_DEPLOY_URL')
     }
 
     stages {
