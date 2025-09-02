@@ -12,6 +12,7 @@ interface CustomButtonProps {
   href?: string;
   target?: string;
   isLoading?: boolean;
+  disabled?: boolean;
   startIcon?: React.ReactNode;
   type?: 'ACTION' | 'CANCEL';
 }
@@ -23,6 +24,7 @@ export const CustomButton = ({
   endIcon,
   startIcon,
   sx,
+  disabled,
   variantComponent = 'button',
   href,
   target,
@@ -37,6 +39,7 @@ export const CustomButton = ({
       variant={variant}
       onClick={onClick}
       target={target}
+      disabled={disabled}
       sx={{
         background:
           variant === 'contained'

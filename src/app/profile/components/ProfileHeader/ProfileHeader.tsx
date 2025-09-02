@@ -19,6 +19,7 @@ interface ProfileHeaderProps {
   onBiographyChange: (bio: string) => void;
   onBiographySave: () => void;
   onBiographyCancel: () => void;
+  canEdit?: boolean;
 }
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
@@ -32,6 +33,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   onBiographyChange,
   onBiographySave,
   onBiographyCancel,
+  canEdit = true,
 }) => (
   <Box
     sx={{
@@ -91,32 +93,50 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           >{`(${user?.email})`}</Typography>
         )}
       </Box>
-      <Box
-        component={'a'}
-        href={'/users/friends'}
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 1,
-          marginTop: '-10px',
-          textDecoration: 'none',
-        }}
-      >
-        {!isLoadingFriends && (
-          <>
-            <Typography
-              variant="body2"
-              sx={{
-                color: '#FFFFFF',
-                fontWeight: 'bold',
-                fontSize: { xs: 14, sm: 15, md: 18 },
-                fontFamily: cinzel.style.fontFamily,
-              }}
-            >
-              {`${friendsCount}`}
-            </Typography>
+      {/* Friends count only if canEdit (profile owner) */}
+      {canEdit && (
+        <Box
+          component={'a'}
+          href={'/users/friends'}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+            marginTop: '-10px',
+            textDecoration: 'none',
+          }}
+        >
+          {!isLoadingFriends && (
+            <>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#FFFFFF',
+                  fontWeight: 'bold',
+                  fontSize: { xs: 14, sm: 15, md: 18 },
+                  fontFamily: cinzel.style.fontFamily,
+                }}
+              >
+                {`${friendsCount}`}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#FFFFFF',
+                  fontWeight: 'bold',
+                  fontSize: { xs: 14, sm: 15, md: 20 },
+                  fontFamily: goudi.style.fontFamily,
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                {'friends'}
+              </Typography>
+            </>
+          )}
+          {isLoadingFriends && (
             <Typography
               variant="body2"
               sx={{
@@ -128,83 +148,72 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 alignItems: 'center',
               }}
             >
-              {'friends'}
+              <Skeleton
+                data-testid="friends-skeleton"
+                variant="text"
+                width={80}
+                sx={{ bgcolor: '#ffffff20', display: 'inline-block' }}
+              />
             </Typography>
-          </>
-        )}
-        {isLoadingFriends && (
-          <Typography
-            variant="body2"
-            sx={{
-              color: '#FFFFFF',
-              fontWeight: 'bold',
-              fontSize: { xs: 14, sm: 15, md: 20 },
-              fontFamily: goudi.style.fontFamily,
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Skeleton
-              data-testid="friends-skeleton"
-              variant="text"
-              width={80}
-              sx={{ bgcolor: '#ffffff20', display: 'inline-block' }}
-            />
-          </Typography>
-        )}
-      </Box>
+          )}
+        </Box>
+      )}
       <BiographySection
         biography={biography}
-        isEditing={isEditingBiography}
+        isEditing={isEditingBiography && canEdit}
         isLoading={isLoadingBiography}
         onChange={onBiographyChange}
         onSave={onBiographySave}
         onCancel={onBiographyCancel}
+        canEdit={canEdit}
       />
     </Box>
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: { xs: 'row', md: 'column' },
-        gap: { xs: 2, md: 1 },
-        alignItems: { xs: 'center', md: 'flex-end' },
-        justifyContent: { xs: 'center', md: 'flex-end' },
-        ml: { xs: 0, md: 'auto' },
-        mt: { xs: 2, md: 0 },
-        width: { xs: '100%', md: 'auto' },
-        height: 'auto',
-      }}
-    >
-      <CustomButton
+    {/* Edit buttons only if canEdit */}
+    {canEdit && (
+      <Box
         sx={{
-          letterSpacing: '.05rem',
-          minWidth: { xs: 0, md: 170 },
-          width: { xs: '50%', md: '200px' },
-          fontFamily: goudi.style.fontFamily,
-          fontSize: { xs: 11, md: 15 },
+          display: 'flex',
+          flexDirection: { xs: 'row', md: 'column' },
+          gap: { xs: 2, md: 1 },
+          alignItems: { xs: 'center', md: 'flex-end' },
+          justifyContent: { xs: 'center', md: 'flex-end' },
+          ml: { xs: 0, md: 'auto' },
+          mt: { xs: 2, md: 0 },
+          width: { xs: '100%', md: 'auto' },
+          height: 'auto',
         }}
-        variant="contained"
-        endIcon={<LaunchIcon />}
-        variantComponent="link"
-        href="https://accounts.gycoding.com"
-        target="_blank"
       >
-        Edit Account
-      </CustomButton>
-      <CustomButton
-        sx={{
-          letterSpacing: '.05rem',
-          minWidth: { xs: 0, md: 170 },
-          width: { xs: '50%', md: '200px' },
-          fontFamily: goudi.style.fontFamily,
-          fontSize: { xs: 11, md: 15 },
-        }}
-        onClick={onEditProfile}
-        variant="contained"
-        endIcon={<EditIcon />}
-      >
-        Edit Profile
-      </CustomButton>
-    </Box>
+        <CustomButton
+          sx={{
+            letterSpacing: '.05rem',
+            minWidth: { xs: 0, md: 170 },
+            width: { xs: '50%', md: '200px' },
+            fontFamily: goudi.style.fontFamily,
+            fontSize: { xs: 11, md: 15 },
+          }}
+          variant="contained"
+          endIcon={<LaunchIcon />}
+          variantComponent="link"
+          href="https://accounts.gycoding.com"
+          target="_blank"
+        >
+          Edit Account
+        </CustomButton>
+        <CustomButton
+          sx={{
+            letterSpacing: '.05rem',
+            minWidth: { xs: 0, md: 170 },
+            width: { xs: '50%', md: '200px' },
+            fontFamily: goudi.style.fontFamily,
+            fontSize: { xs: 11, md: 15 },
+          }}
+          onClick={onEditProfile}
+          variant="contained"
+          endIcon={<EditIcon />}
+        >
+          Edit Profile
+        </CustomButton>
+      </Box>
+    )}
   </Box>
 );

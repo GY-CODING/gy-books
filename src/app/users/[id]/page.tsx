@@ -11,30 +11,25 @@ import {
   Box,
   Container,
   Typography,
-  Paper,
-  useTheme,
-  useMediaQuery,
-  CircularProgress,
-  FormControlLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
   Tab,
   Tabs,
+  CircularProgress,
 } from '@mui/material';
+import { BooksFilter } from '@/app/profile/components/BooksFilter/BooksFilter';
+import { BooksList } from '@/app/profile/components/BooksList/BooksList';
 import { useParams, useSearchParams } from 'next/navigation';
 import { goudi } from '@/utils/fonts/fonts';
 import { useAccountsUser } from '@/hooks/useAccountsUser';
 import ProfileSkeleton from '@/app/components/atoms/ProfileSkeleton';
+import { ProfileHeaderSkeleton } from '@/app/profile/components/ProfileHeader/ProfileHeaderSkeleton';
+import { BooksFilterSkeleton } from '@/app/profile/components/BooksFilter/BooksFilterSkeleton';
+import { BooksListSkeleton } from '@/app/profile/components/BooksList/BooksListSkeleton';
 import { getBooksWithPagination } from '@/app/actions/book/fetchApiBook';
 import Book from '@/domain/book.model';
 import { EStatus } from '@/utils/constants/EStatus';
 import { useRouter } from 'next/navigation';
 import { UUID } from 'crypto';
-import { BookCardCompact } from '@/app/components/atoms/BookCardCompact';
-import { UserImage } from '@/app/components/atoms/UserImage';
-import { User } from '@/domain/user.model';
+import { ProfileHeader } from '@/app/profile/components/ProfileHeader/ProfileHeader';
 const ActivityTab = React.lazy(
   () => import('@/app/components/molecules/activityTab')
 );
@@ -48,8 +43,6 @@ function ProfilePageContent() {
   const { data: user, isLoading } = useAccountsUser(params.id as string);
   const userId = params.id as string;
   const [tab, setTab] = React.useState(0);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const searchParams = useSearchParams();
   const router = useRouter();
   const [books, setBooks] = useState<Book[]>([]);
@@ -182,7 +175,44 @@ function ProfilePageContent() {
   }, [books, statusFilter]);
 
   if (isLoading) {
-    return <ProfileSkeleton />;
+    return (
+      <Container
+        maxWidth="xl"
+        sx={{
+          mt: { xs: 0, md: 6 },
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          minHeight: '70vh',
+          borderRadius: 0,
+          boxShadow: 'none',
+        }}
+      >
+        <Box
+          sx={{
+            width: { xs: '100%', md: '100%' },
+            maxWidth: 1200,
+            mx: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+          }}
+        >
+          <ProfileHeaderSkeleton canEdit={false} />
+          <Box
+            sx={{
+              mt: 6,
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              gap: 4,
+            }}
+          >
+            <BooksFilterSkeleton />
+            <BooksListSkeleton />
+          </Box>
+        </Box>
+      </Container>
+    );
   }
 
   if (!user) {
@@ -218,96 +248,19 @@ function ProfilePageContent() {
           alignItems: 'stretch',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            alignItems: { xs: 'center', md: 'flex-start' },
-            justifyContent: { xs: 'center', md: 'center' },
-            gap: { xs: 3, md: 6 },
-            minHeight: { xs: 0, md: 200 },
-            width: '100%',
-          }}
-        >
-          <UserImage user={user as User} />
-          <Box
-            sx={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              gap: 2,
-              width: { xs: '100%', md: 'auto' },
-              alignItems: { xs: 'center', md: 'flex-start' },
-              textAlign: { xs: 'center', md: 'left' },
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: 2,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Typography
-                id="profile-username"
-                variant="h3"
-                sx={{
-                  color: '#fff',
-                  fontWeight: 'bold',
-                  fontFamily: goudi.style.fontFamily,
-                  mb: 0,
-                  fontSize: { xs: 30, sm: 32, md: 40 },
-                }}
-              >
-                {user.username}
-              </Typography>
-              {user?.email && (
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: '#ffffff50',
-                    fontFamily: goudi.style.fontFamily,
-                    fontSize: { xs: 17, sm: 16, md: 22 },
-                    mb: 1,
-                    marginTop: { xs: -1, md: 0 },
-                    fontStyle: 'italic',
-                  }}
-                >
-                  {`(${user?.email})`}
-                </Typography>
-              )}
-            </Box>
-            <Box
-              sx={{ width: { xs: '100%', sm: 340, md: 400 }, maxWidth: '100%' }}
-            >
-              <Paper
-                elevation={0}
-                sx={{
-                  border: '2px solid #FFFFFF30',
-                  borderRadius: '12px',
-                  background: 'rgba(35, 35, 35, 0.85)',
-                  p: 1.5,
-                  mb: 1,
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: '#fff',
-                    fontFamily: goudi.style.fontFamily,
-                    fontSize: 18,
-                    minHeight: 32,
-                  }}
-                >
-                  {user.biography || 'Aquí irá la biografía del usuario.'}
-                </Typography>
-              </Paper>
-            </Box>
-          </Box>
-        </Box>
+        <ProfileHeader
+          user={user}
+          friendsCount={0}
+          isLoadingFriends={false}
+          onEditProfile={() => {}}
+          biography={user.biography || ''}
+          isEditingBiography={false}
+          isLoadingBiography={false}
+          onBiographyChange={() => {}}
+          onBiographySave={() => {}}
+          onBiographyCancel={() => {}}
+          canEdit={false}
+        />
         <Box sx={{ mt: 6 }}>
           <Tabs
             value={tab}
@@ -376,229 +329,17 @@ function ProfilePageContent() {
                 mt: 4,
               }}
             >
-              <Paper
-                elevation={0}
-                sx={{
-                  minWidth: { xs: '100%', md: 220 },
-                  maxWidth: { xs: '100%', md: 280 },
-                  p: 3,
-                  borderRadius: '18px',
-                  background: 'rgba(35, 35, 35, 0.85)',
-                  border: '1px solid #FFFFFF30',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                }}
-              >
-                {isMobile ? (
-                  <Select
-                    value={filterValue}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      if (v === 'all') {
-                        handleStatusFilterChange(null);
-                      } else {
-                        handleStatusFilterChange(v as EStatus);
-                      }
-                    }}
-                    fullWidth
-                    sx={{
-                      color: '#fff',
-                      fontWeight: 'bold',
-                      fontSize: 16,
-                      fontFamily: goudi.style.fontFamily,
-                      background: 'rgba(35, 35, 35, 0.85)',
-                      borderRadius: '12px',
-                      '.MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#FFFFFF',
-                      },
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#8C54FF',
-                      },
-                      '& .MuiSvgIcon-root': {
-                        color: '#fff',
-                      },
-                    }}
-                  >
-                    <MenuItem
-                      value="all"
-                      sx={{ color: '#8C54FF', fontWeight: 'bold' }}
-                    >
-                      All
-                    </MenuItem>
-                    {statusOptions.map((opt) => (
-                      <MenuItem
-                        key={opt.value}
-                        value={opt.value}
-                        sx={{ color: '#fff', fontWeight: 'bold' }}
-                      >
-                        {opt.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                ) : (
-                  <RadioGroup
-                    value={filterValue}
-                    onChange={(_, v) => {
-                      if (v === 'all') {
-                        handleStatusFilterChange(null);
-                      } else {
-                        handleStatusFilterChange(v as EStatus);
-                      }
-                    }}
-                    sx={{ gap: 1 }}
-                  >
-                    <FormControlLabel
-                      value="all"
-                      control={
-                        <Radio
-                          sx={{
-                            color: '#fff',
-                            '&.Mui-checked': {
-                              color: '#8C54FF',
-                            },
-                          }}
-                        />
-                      }
-                      label={
-                        <span
-                          style={{
-                            color: statusFilter === null ? '#8C54FF' : '#fff',
-                            fontWeight: 'bold',
-                            fontSize: 18,
-                            letterSpacing: '.05rem',
-                            fontFamily: goudi.style.fontFamily,
-                          }}
-                        >
-                          All
-                        </span>
-                      }
-                      sx={{
-                        ml: 0,
-                        mr: 0,
-                        mb: 1,
-                        borderRadius: '12px',
-                        px: 1.5,
-                        py: 0.5,
-                        background:
-                          statusFilter === null
-                            ? 'rgba(140,84,255,0.10)'
-                            : 'transparent',
-                        '&:hover': {
-                          background: 'rgba(140,84,255,0.15)',
-                        },
-                      }}
-                    />
-                    {statusOptions.map((opt) => (
-                      <FormControlLabel
-                        key={opt.value}
-                        value={opt.value}
-                        control={
-                          <Radio
-                            sx={{
-                              color: '#fff',
-                              '&.Mui-checked': {
-                                color: '#8C54FF',
-                              },
-                            }}
-                          />
-                        }
-                        label={
-                          <span
-                            style={{
-                              color:
-                                statusFilter === opt.value ? '#8C54FF' : '#fff',
-                              fontWeight: 'bold',
-                              fontSize: 18,
-                              letterSpacing: '.05rem',
-                              fontFamily: goudi.style.fontFamily,
-                            }}
-                          >
-                            {opt.label}
-                          </span>
-                        }
-                        sx={{
-                          ml: 0,
-                          mr: 0,
-                          borderRadius: '12px',
-                          pl: 1.5,
-                          pr: 2.2,
-                          py: 0.5,
-                          background:
-                            statusFilter === opt.value
-                              ? 'rgba(140,84,255,0.10)'
-                              : 'transparent',
-                          '&:hover': {
-                            background: 'rgba(140,84,255,0.15)',
-                          },
-                        }}
-                      />
-                    ))}
-                  </RadioGroup>
-                )}
-              </Paper>
-              <Box
-                sx={{
-                  flex: 1,
-                  display: { xs: 'grid', sm: 'grid', md: 'flex' },
-                  width: '100%',
-                  gridTemplateColumns: {
-                    xs: '1fr 1fr',
-                    sm: '1fr 1fr',
-                    md: 'none',
-                  },
-                  flexWrap: { xs: 'unset', md: 'wrap' },
-                  gap: 2,
-                  overflowY: 'auto',
-                  maxHeight: 560,
-                  minHeight: 340,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  py: 1,
-                  background: 'transparent',
-                  scrollbarColor: '#8C54FF #232323',
-                  '&::-webkit-scrollbar': {
-                    width: 10,
-                  },
-                  '&::-webkit-scrollbar-thumb': {
-                    background: '#FFFFFF',
-                    borderRadius: 6,
-                  },
-                }}
-              >
-                {filteredBooks.map((book) => (
-                  <Box
-                    key={book.id}
-                    sx={{
-                      minWidth: { xs: 'unset', md: 140 },
-                      maxWidth: { xs: 'unset', md: 220 },
-                      width: { xs: '100%', sm: '100%', md: 'auto' },
-                      boxSizing: 'border-box',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      px: { xs: 0.5, sm: 1, md: 0 },
-                      py: { xs: 1, md: 0 },
-                      height: '100%',
-                    }}
-                  >
-                    <BookCardCompact book={book} small={isMobile} />
-                  </Box>
-                ))}
-                {loading && (
-                  <Box sx={{ width: '100%', textAlign: 'center', py: 2 }}>
-                    <CircularProgress />
-                  </Box>
-                )}
-
-                {!hasMore && books.length > 0 && (
-                  <Box sx={{ width: '100%', textAlign: 'center', py: 2 }}>
-                    <Typography variant="body2" sx={{ color: '#fff' }}>
-                      Todos los libros cargados
-                    </Typography>
-                  </Box>
-                )}
-              </Box>
+              <BooksFilter
+                filterValue={filterValue}
+                statusOptions={statusOptions}
+                statusFilter={statusFilter}
+                onChange={handleStatusFilterChange}
+              />
+              <BooksList
+                books={filteredBooks}
+                loading={loading}
+                hasMore={hasMore}
+              />
             </Box>
           )}
           {tab === 1 && (

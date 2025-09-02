@@ -1,7 +1,13 @@
 import React from 'react';
 import { Box, Skeleton } from '@mui/material';
 
-export const ProfileHeaderSkeleton: React.FC = () => (
+interface ProfileHeaderSkeletonProps {
+  canEdit?: boolean;
+}
+
+export const ProfileHeaderSkeleton: React.FC<ProfileHeaderSkeletonProps> = ({
+  canEdit = true,
+}) => (
   <Box
     sx={{
       display: 'flex',
@@ -37,19 +43,22 @@ export const ProfileHeaderSkeleton: React.FC = () => (
         <Skeleton variant="text" width={220} height={48} /> {/* username */}
         <Skeleton variant="text" width={180} height={28} /> {/* email */}
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'start',
-          justifyContent: 'center',
-          gap: 1,
-          width: '10%',
-        }}
-      >
-        <Skeleton variant="text" width={100} height={24} />{' '}
-        {/* friends count */}
-      </Box>
+      {/* Friends count only if canEdit */}
+      {canEdit && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'start',
+            justifyContent: 'center',
+            gap: 1,
+            width: '10%',
+          }}
+        >
+          <Skeleton variant="text" width={100} height={24} />{' '}
+          {/* friends count */}
+        </Box>
+      )}
       <Box sx={{ width: 400, maxWidth: '100%' }}>
         <Skeleton
           variant="rectangular"
@@ -60,28 +69,31 @@ export const ProfileHeaderSkeleton: React.FC = () => (
         {/* biography skeleton */}
       </Box>
     </Box>
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: { xs: 'row', md: 'column' },
-        gap: 1,
-        alignItems: { xs: 'center', md: 'flex-end' },
-        ml: 'auto',
-        mt: { xs: 2, md: 0 },
-      }}
-    >
-      <Skeleton
-        variant="rectangular"
-        width={160}
-        height={60}
-        sx={{ borderRadius: 2 }}
-      />
-      <Skeleton
-        variant="rectangular"
-        width={160}
-        height={60}
-        sx={{ borderRadius: 2 }}
-      />
-    </Box>
+    {/* Edit buttons only if canEdit */}
+    {canEdit && (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'row', md: 'column' },
+          gap: 1,
+          alignItems: { xs: 'center', md: 'flex-end' },
+          ml: 'auto',
+          mt: { xs: 2, md: 0 },
+        }}
+      >
+        <Skeleton
+          variant="rectangular"
+          width={160}
+          height={60}
+          sx={{ borderRadius: 2 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={160}
+          height={60}
+          sx={{ borderRadius: 2 }}
+        />
+      </Box>
+    )}
   </Box>
 );
