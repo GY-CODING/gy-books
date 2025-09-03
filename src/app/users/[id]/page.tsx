@@ -254,6 +254,19 @@ function ProfilePageContent() {
     });
     return Array.from(set).sort();
   }, [books]);
+  const seriesOptions = React.useMemo(() => {
+    const set = new Set<string>();
+    books.forEach((b) => {
+      if (b.series && b.series.name && b.series.name.trim() !== '')
+        set.add(b.series.name);
+    });
+    return Array.from(set).sort();
+  }, [books]);
+
+  // Filtros nuevos
+  const [authorFilter, setAuthorFilter] = useState('');
+  const [seriesFilter, setSeriesFilter] = useState('');
+  const [ratingFilter, setRatingFilter] = useState(0);
 
   // Filtrar libros por status, autor, saga/serie y rating
   const filteredBooks = React.useMemo(() => {
