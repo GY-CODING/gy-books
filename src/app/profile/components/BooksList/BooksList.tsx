@@ -19,15 +19,15 @@ export const BooksList: React.FC<BooksListProps> = ({
       flex: 1,
       display: { xs: 'grid', sm: 'grid', md: 'flex' },
       width: '100%',
-      gridTemplateColumns: { xs: '1fr 1fr', sm: '1fr 1fr', md: 'none' },
+      gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'none' },
       flexWrap: { xs: 'unset', md: 'wrap' },
-      gap: 2,
+      gap: { xs: 1, sm: 2 },
       overflowY: 'auto',
-      maxHeight: 560,
-      minHeight: 340,
+      maxHeight: { xs: 400, md: 560 },
+      minHeight: 240,
       alignItems: 'center',
       justifyContent: 'center',
-      py: 1,
+      py: { xs: 0.5, md: 1 },
       background: 'transparent',
       scrollbarColor: '#8C54FF #232323',
       '&::-webkit-scrollbar': { width: 10 },
@@ -45,12 +45,12 @@ export const BooksList: React.FC<BooksListProps> = ({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          px: { xs: 0.5, sm: 1, md: 0 },
-          py: { xs: 1, md: 0 },
+          px: { xs: 0, sm: 1, md: 0 },
+          py: { xs: 0.5, md: 0 },
           height: '100%',
         }}
       >
-        <BookCardCompact book={book} small={false} />
+        <BookCardCompact book={book} small={true} />
       </Box>
     ))}
     {loading && (

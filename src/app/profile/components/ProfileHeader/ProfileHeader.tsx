@@ -39,12 +39,25 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     sx={{
       display: 'flex',
       flexDirection: { xs: 'column', md: 'row' },
-      gap: { xs: 3, md: 6 },
+      gap: { xs: 2, md: 6 },
       minHeight: { xs: 0, md: 200 },
       width: '100%',
+      px: { xs: 1, md: 0 },
+      py: { xs: 2, md: 0 },
+      alignItems: { xs: 'center', md: 'flex-start' },
+      boxSizing: 'border-box',
     }}
   >
-    <UserImage user={user} />
+    <Box
+      sx={{
+        width: { xs: 90, sm: 120, md: 160 },
+        height: { xs: 90, sm: 120, md: 160 },
+        mb: { xs: 2, md: 0 },
+        alignSelf: { xs: 'center', md: 'flex-start' },
+      }}
+    >
+      <UserImage user={user} />
+    </Box>
     <Box
       sx={{
         flex: 1,

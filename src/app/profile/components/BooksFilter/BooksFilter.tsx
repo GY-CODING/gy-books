@@ -1,170 +1,258 @@
 import React from 'react';
-import {
-  Paper,
-  Select,
-  MenuItem,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  useMediaQuery,
-} from '@mui/material';
+import { Select, MenuItem, Box, FormControl } from '@mui/material';
 import { goudi } from '@/utils/fonts/fonts';
 import { EStatus } from '@/utils/constants/EStatus';
-import { useTheme } from '@mui/material/styles';
 
 interface BooksFilterProps {
-  filterValue: string;
   statusOptions: { label: string; value: EStatus }[];
   statusFilter: EStatus | null;
-  onChange: (status: EStatus | null) => void;
+  authorOptions: string[];
+  seriesOptions: string[];
+  authorFilter: string;
+  seriesFilter: string;
+  ratingFilter: number;
+  onStatusChange: (status: EStatus | null) => void;
+  onAuthorChange: (author: string) => void;
+  onSeriesChange: (series: string) => void;
+  onRatingChange: (rating: number) => void;
 }
 
 export const BooksFilter: React.FC<BooksFilterProps> = ({
-  filterValue,
   statusOptions,
   statusFilter,
-  onChange,
+  authorOptions,
+  seriesOptions,
+  authorFilter,
+  seriesFilter,
+  ratingFilter,
+  onStatusChange,
+  onAuthorChange,
+  onSeriesChange,
+  onRatingChange,
 }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
   return (
-    <Paper
-      elevation={0}
+    <Box
       sx={{
-        minWidth: { xs: '100%', md: 220 },
-        maxWidth: { xs: '100%', md: 280 },
-        p: 3,
-        borderRadius: '18px',
-        background: 'rgba(35, 35, 35, 0.85)',
-        border: '1px solid #FFFFFF30',
+        width: '100%',
         display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: { xs: 'stretch', sm: 'center' },
+        justifyContent: 'flex-start',
+        gap: { xs: 1, sm: 2, md: 3 },
+        px: { xs: 0.5, sm: 1, md: 2 },
+        mb: 2,
+        borderRadius: '12px',
+        minHeight: 48,
+        maxWidth: { xs: '100%', md: 700 },
+        mx: 'auto',
       }}
     >
-      {isMobile ? (
+      <FormControl
+        sx={{
+          minWidth: 110,
+          flex: 1,
+          width: { xs: '100%', sm: 'auto' },
+          mb: { xs: 1, sm: 0 },
+        }}
+      >
         <Select
-          value={filterValue}
-          onChange={(e) => {
-            const v = e.target.value;
-            if (v === 'all') {
-              onChange(null);
-            } else {
-              onChange(v as EStatus);
-            }
-          }}
-          fullWidth
+          value={ratingFilter}
+          onChange={(e) => onRatingChange(Number(e.target.value))}
+          displayEmpty
           sx={{
             color: '#fff',
-            fontWeight: 'bold',
-            fontSize: 16,
+            fontWeight: 500,
+            fontSize: 15,
             fontFamily: goudi.style.fontFamily,
-            background: 'rgba(35, 35, 35, 0.85)',
-            borderRadius: '12px',
-            '.MuiOutlinedInput-notchedOutline': { borderColor: '#FFFFFF' },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#8C54FF',
-            },
-            '& .MuiSvgIcon-root': { color: '#fff' },
+            background: 'rgba(45,45,45,0.95)',
+            borderRadius: '10px',
+            boxShadow: 'none',
+            minHeight: 40,
+            '.MuiOutlinedInput-notchedOutline': { border: 0 },
+            '& .MuiSvgIcon-root': { color: '#8C54FF' },
           }}
         >
-          <MenuItem value="all" sx={{ color: '#8C54FF', fontWeight: 'bold' }}>
-            All
+          {ratingFilter === 0 && (
+            <MenuItem
+              value={0}
+              sx={{
+                color: '#8C54FF',
+                fontWeight: 500,
+                fontFamily: goudi.style.fontFamily,
+              }}
+            >
+              Rating
+            </MenuItem>
+          )}
+          {ratingFilter > 0 && (
+            <MenuItem
+              value={0}
+              sx={{
+                color: '#8C54FF',
+                fontWeight: 500,
+                fontFamily: goudi.style.fontFamily,
+              }}
+            >
+              <span style={{ fontFamily: goudi.style.fontFamily }}>All</span>
+            </MenuItem>
+          )}
+          {[1, 2, 3, 4].map((star) => (
+            <MenuItem
+              key={star}
+              value={star}
+              sx={{ color: '#fff', fontWeight: 500 }}
+            >
+              <span style={{ fontFamily: goudi.style.fontFamily }}>
+                {'★'.repeat(star)} {star}+
+              </span>
+            </MenuItem>
+          ))}
+          <MenuItem key={5} value={5} sx={{ color: '#fff', fontWeight: 500 }}>
+            <span style={{ fontFamily: goudi.style.fontFamily }}>
+              {'★'.repeat(5)} 5
+            </span>
           </MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl sx={{ minWidth: 110, flex: 1 }}>
+        <Select
+          value={statusFilter ?? ''}
+          onChange={(e) =>
+            onStatusChange(e.target.value ? (e.target.value as EStatus) : null)
+          }
+          displayEmpty
+          sx={{
+            color: '#fff',
+            fontWeight: 500,
+            fontSize: 15,
+            fontFamily: goudi.style.fontFamily,
+            background: 'rgba(45,45,45,0.95)',
+            borderRadius: '10px',
+            boxShadow: 'none',
+            minHeight: 40,
+            '.MuiOutlinedInput-notchedOutline': { border: 0 },
+            '& .MuiSvgIcon-root': { color: '#8C54FF' },
+          }}
+        >
+          {!statusFilter && (
+            <MenuItem
+              value=""
+              sx={{
+                color: '#8C54FF',
+                fontWeight: 500,
+                fontFamily: goudi.style.fontFamily,
+              }}
+            >
+              Status
+            </MenuItem>
+          )}
+          {statusFilter && (
+            <MenuItem
+              value=""
+              sx={{
+                color: '#8C54FF',
+                fontWeight: 500,
+                fontFamily: goudi.style.fontFamily,
+              }}
+            >
+              <span style={{ fontFamily: goudi.style.fontFamily }}>All</span>
+            </MenuItem>
+          )}
           {statusOptions.map((opt) => (
             <MenuItem
               key={opt.value}
               value={opt.value}
-              sx={{ color: '#fff', fontWeight: 'bold' }}
+              sx={{ color: '#fff', fontWeight: 500 }}
             >
-              {opt.label}
+              <span style={{ fontFamily: goudi.style.fontFamily }}>
+                {opt.label}
+              </span>
             </MenuItem>
           ))}
         </Select>
-      ) : (
-        <RadioGroup
-          value={filterValue}
-          onChange={(_, v) => {
-            if (v === 'all') {
-              onChange(null);
-            } else {
-              onChange(v as EStatus);
-            }
+      </FormControl>
+      <FormControl sx={{ minWidth: 110, flex: 1 }}>
+        <Select
+          value={authorFilter}
+          onChange={(e) => onAuthorChange(e.target.value)}
+          displayEmpty
+          sx={{
+            color: '#fff',
+            fontWeight: 500,
+            fontSize: 15,
+            fontFamily: goudi.style.fontFamily,
+            background: 'rgba(45,45,45,0.95)',
+            borderRadius: '10px',
+            boxShadow: 'none',
+            minHeight: 40,
+            '.MuiOutlinedInput-notchedOutline': { border: 0 },
+            '& .MuiSvgIcon-root': { color: '#8C54FF' },
           }}
-          sx={{ gap: 1 }}
         >
-          <FormControlLabel
-            value="all"
-            control={
-              <Radio
-                sx={{ color: '#fff', '&.Mui-checked': { color: '#8C54FF' } }}
-              />
-            }
-            label={
-              <span
-                style={{
-                  color: statusFilter === null ? '#8C54FF' : '#fff',
-                  fontWeight: 'bold',
-                  fontSize: 18,
-                  letterSpacing: '.05rem',
-                  fontFamily: goudi.style.fontFamily,
-                }}
-              >
-                All
-              </span>
-            }
+          <MenuItem
+            value=""
             sx={{
-              ml: 0,
-              mr: 0,
-              mb: 1,
-              borderRadius: '12px',
-              px: 1.5,
-              py: 0.5,
-              background:
-                statusFilter === null ? 'rgba(140,84,255,0.10)' : 'transparent',
-              '&:hover': { background: 'rgba(140,84,255,0.15)' },
+              color: '#8C54FF',
+              fontWeight: 500,
+              fontFamily: goudi.style.fontFamily,
             }}
-          />
-          {statusOptions.map((opt) => (
-            <FormControlLabel
-              key={opt.value}
-              value={opt.value}
-              control={
-                <Radio
-                  sx={{ color: '#fff', '&.Mui-checked': { color: '#8C54FF' } }}
-                />
-              }
-              label={
-                <span
-                  style={{
-                    color: statusFilter === opt.value ? '#8C54FF' : '#fff',
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    letterSpacing: '.05rem',
-                    fontFamily: goudi.style.fontFamily,
-                  }}
-                >
-                  {opt.label}
-                </span>
-              }
-              sx={{
-                ml: 0,
-                mr: 0,
-                borderRadius: '12px',
-                pl: 1.5,
-                pr: 2.2,
-                py: 0.5,
-                background:
-                  statusFilter === opt.value
-                    ? 'rgba(140,84,255,0.10)'
-                    : 'transparent',
-                '&:hover': { background: 'rgba(140,84,255,0.15)' },
-              }}
-            />
+          >
+            Author
+          </MenuItem>
+          {authorOptions.map((author) => (
+            <MenuItem
+              key={author}
+              value={author}
+              sx={{ color: '#fff', fontWeight: 500 }}
+            >
+              <span style={{ fontFamily: goudi.style.fontFamily }}>
+                {author}
+              </span>
+            </MenuItem>
           ))}
-        </RadioGroup>
-      )}
-    </Paper>
+        </Select>
+      </FormControl>
+      <FormControl sx={{ minWidth: 110, flex: 1 }}>
+        <Select
+          value={seriesFilter}
+          onChange={(e) => onSeriesChange(e.target.value)}
+          displayEmpty
+          sx={{
+            color: '#fff',
+            fontWeight: 500,
+            fontSize: 15,
+            fontFamily: goudi.style.fontFamily,
+            background: 'rgba(45,45,45,0.95)',
+            borderRadius: '10px',
+            boxShadow: 'none',
+            minHeight: 40,
+            '.MuiOutlinedInput-notchedOutline': { border: 0 },
+            '& .MuiSvgIcon-root': { color: '#8C54FF' },
+          }}
+        >
+          <MenuItem
+            value=""
+            sx={{
+              color: '#8C54FF',
+              fontWeight: 500,
+              fontFamily: goudi.style.fontFamily,
+            }}
+          >
+            Series
+          </MenuItem>
+          {seriesOptions.map((series) => (
+            <MenuItem
+              key={series}
+              value={series}
+              sx={{ color: '#fff', fontWeight: 500 }}
+            >
+              <span style={{ fontFamily: goudi.style.fontFamily }}>
+                {series}
+              </span>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };

@@ -62,11 +62,15 @@ function ProfilePageContent() {
   } = useBiography();
   const [isEditingBiography, setIsEditingBiography] = useState(false);
   const [biography, setBiography] = useState(user?.biography);
-  // Estado para paginación automática
+  // Estado para paginación automática y filtros
   const [books, setBooks] = useState<Book[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const pageRef = useRef(0);
+  // Filtros nuevos
+  const [authorFilter, setAuthorFilter] = useState('');
+  const [seriesFilter, setSeriesFilter] = useState('');
+  const [ratingFilter, setRatingFilter] = useState(0);
 
   // Obtener el status del URL al cargar la página
   const urlStatus = searchParams.get('status');
@@ -118,11 +122,6 @@ function ProfilePageContent() {
       setStatusFilter(newStatus);
     }
   }, [searchParams]); // Removido statusFilter de las dependencias para evitar loops
-
-  // Memoizar el valor del filtro para evitar re-renders innecesarios
-  const filterValue = React.useMemo(() => {
-    return statusFilter ?? 'all';
-  }, [statusFilter]);
 
   // Función para cargar más libros
   const loadMoreBooks = useCallback(async () => {
@@ -179,11 +178,40 @@ function ProfilePageContent() {
     return () => clearTimeout(timeout);
   }, [books, hasMore, loading, loadMoreBooks, user?.id]);
 
-  // Filtrar libros por status
+  // Opciones únicas de autor y saga/serie
+  // Opciones únicas de autor y saga/serie (evitar nulos/vacíos)
+  // Opciones únicas de autor y saga/serie (usando .name)
+  const authorOptions = React.useMemo(() => {
+    const set = new Set<string>();
+    books.forEach((b) => {
+      if (b.author && b.author.name && b.author.name.trim() !== '')
+        set.add(b.author.name);
+    });
+    return Array.from(set).sort();
+  }, [books]);
+  const seriesOptions = React.useMemo(() => {
+    const set = new Set<string>();
+    books.forEach((b) => {
+      if (b.series && b.series.name && b.series.name.trim() !== '')
+        set.add(b.series.name);
+    });
+    return Array.from(set).sort();
+  }, [books]);
+
+  // Filtrar libros por status, autor, saga/serie y rating
   const filteredBooks = React.useMemo(() => {
-    if (!statusFilter) return books;
-    return books.filter((book) => book.status === statusFilter);
-  }, [books, statusFilter]);
+    return books.filter((book) => {
+      const statusOk = !statusFilter || book.status === statusFilter;
+      const authorOk =
+        !authorFilter || (book.author && book.author.name === authorFilter);
+      const seriesOk =
+        !seriesFilter || (book.series && book.series.name === seriesFilter);
+      const ratingOk =
+        !ratingFilter ||
+        (typeof book.rating === 'number' && book.rating >= ratingFilter);
+      return statusOk && authorOk && seriesOk && ratingOk;
+    });
+  }, [books, statusFilter, authorFilter, seriesFilter, ratingFilter]);
 
   if (isLoading) {
     return (
@@ -315,16 +343,24 @@ function ProfilePageContent() {
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: 4,
+                flexDirection: 'column',
+                gap: 2,
                 mt: 4,
+                width: '100%',
               }}
             >
               <BooksFilter
-                filterValue={filterValue}
                 statusOptions={statusOptions}
                 statusFilter={statusFilter}
-                onChange={handleStatusFilterChange}
+                authorOptions={authorOptions}
+                seriesOptions={seriesOptions}
+                authorFilter={authorFilter}
+                seriesFilter={seriesFilter}
+                ratingFilter={ratingFilter}
+                onStatusChange={handleStatusFilterChange}
+                onAuthorChange={setAuthorFilter}
+                onSeriesChange={setSeriesFilter}
+                onRatingChange={setRatingFilter}
               />
               <BooksList
                 books={filteredBooks}
