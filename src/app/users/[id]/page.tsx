@@ -263,11 +263,6 @@ function ProfilePageContent() {
     return Array.from(set).sort();
   }, [books]);
 
-  // Filtros nuevos
-  const [authorFilter, setAuthorFilter] = useState('');
-  const [seriesFilter, setSeriesFilter] = useState('');
-  const [ratingFilter, setRatingFilter] = useState(0);
-
   // Filtrar libros por status, autor, saga/serie y rating
   const filteredBooks = React.useMemo(() => {
     return books.filter((book) => {

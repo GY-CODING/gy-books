@@ -85,10 +85,6 @@ function ProfilePageContent() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const pageRef = useRef(0);
-  // Filtros nuevos
-  const [authorFilter, setAuthorFilter] = useState('');
-  const [seriesFilter, setSeriesFilter] = useState('');
-  const [ratingFilter, setRatingFilter] = useState(0);
 
   const statusOptions = [
     { label: 'Reading', value: EStatus.READING },

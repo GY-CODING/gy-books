@@ -8,13 +8,13 @@
 
 ## Introduction
 
-Brief description of this project.
+GY Books is a web platform for discovering, organizing, and sharing books. It allows users to explore recommendations, manage their personal library, and connect with other readers. The project is focused on providing an intuitive and modern experience for book lovers.
 
 <br>
 
 ## How it was made
 
-Description of the technologies and procedures used to develop this project
+This project was developed using Next.js and React for the user interface, with TypeScript to ensure static typing and code robustness. Tools like ESLint and Prettier were used to maintain code quality and consistency, and Jest for unit testing. Deployment is handled by Vercel, leveraging its native integration with Next.js and automated CI/CD workflows.
 
 <br>
 
