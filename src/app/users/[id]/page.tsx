@@ -50,12 +50,21 @@ function ProfilePageContent() {
   const [loading, setLoading] = useState(false);
   const pageRef = useRef(0);
 
-  // Obtener el status del URL al cargar la página
+  // Obtener los filtros del URL al cargar la página
   const urlStatus = searchParams.get('status');
+  const urlAuthor = searchParams.get('author');
+  const urlSeries = searchParams.get('series');
+  const urlRating = searchParams.get('rating');
+
   const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
     urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
       ? (urlStatus as EStatus)
       : null
+  );
+  const [authorFilter, setAuthorFilter] = useState(urlAuthor || '');
+  const [seriesFilter, setSeriesFilter] = useState(urlSeries || '');
+  const [ratingFilter, setRatingFilter] = useState(
+    urlRating ? Number(urlRating) : 0
   );
 
   const statusOptions = [
@@ -64,29 +73,90 @@ function ProfilePageContent() {
     { label: 'Want to read', value: EStatus.WANT_TO_READ },
   ];
 
-  // Función para actualizar la URL cuando cambie el filtro
+  // Actualizar todos los filtros en la URL
   const updateUrl = useCallback(
-    (newStatus: EStatus | null) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (newStatus) {
-        params.set('status', newStatus);
+    (filters: {
+      status?: EStatus | null;
+      author?: string;
+      series?: string;
+      rating?: number;
+    }) => {
+      const paramsUrl = new URLSearchParams(searchParams.toString());
+      if (filters.status) {
+        paramsUrl.set('status', filters.status);
       } else {
-        params.delete('status');
+        paramsUrl.delete('status');
       }
-      router.replace(`/users/${userId as string}?${params.toString()}`, {
+      if (filters.author) {
+        paramsUrl.set('author', filters.author);
+      } else {
+        paramsUrl.delete('author');
+      }
+      if (filters.series) {
+        paramsUrl.set('series', filters.series);
+      } else {
+        paramsUrl.delete('series');
+      }
+      if (filters.rating && filters.rating > 0) {
+        paramsUrl.set('rating', String(filters.rating));
+      } else {
+        paramsUrl.delete('rating');
+      }
+      router.replace(`/users/${userId}?${paramsUrl.toString()}`, {
         scroll: false,
       });
     },
-    [searchParams, router, params.id]
+    [searchParams, router, userId]
   );
 
-  // Función para manejar cambios en el filtro
+  // Handlers para cada filtro
   const handleStatusFilterChange = useCallback(
     (newStatus: EStatus | null) => {
       setStatusFilter(newStatus);
-      updateUrl(newStatus);
+      updateUrl({
+        status: newStatus,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+      });
     },
-    [updateUrl]
+    [authorFilter, seriesFilter, ratingFilter, updateUrl]
+  );
+  const handleAuthorFilterChange = useCallback(
+    (newAuthor: string) => {
+      setAuthorFilter(newAuthor);
+      updateUrl({
+        status: statusFilter,
+        author: newAuthor,
+        series: seriesFilter,
+        rating: ratingFilter,
+      });
+    },
+    [statusFilter, seriesFilter, ratingFilter, updateUrl]
+  );
+  const handleSeriesFilterChange = useCallback(
+    (newSeries: string) => {
+      setSeriesFilter(newSeries);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: newSeries,
+        rating: ratingFilter,
+      });
+    },
+    [statusFilter, authorFilter, ratingFilter, updateUrl]
+  );
+  const handleRatingFilterChange = useCallback(
+    (newRating: number) => {
+      setRatingFilter(newRating);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: newRating,
+      });
+    },
+    [statusFilter, authorFilter, seriesFilter, updateUrl]
   );
 
   // Sincronizar el estado con los search params cuando cambien (solo para navegación del navegador)
@@ -97,12 +167,23 @@ function ProfilePageContent() {
       Object.values(EStatus).includes(currentUrlStatus as EStatus)
         ? (currentUrlStatus as EStatus)
         : null;
-
-    // Solo actualizar si es diferente y no es el mismo valor que ya tenemos
     if (newStatus !== statusFilter) {
       setStatusFilter(newStatus);
     }
-  }, [searchParams]); // Removido statusFilter de las dependencias para evitar loops
+    const currentUrlAuthor = searchParams.get('author') || '';
+    if (currentUrlAuthor !== authorFilter) {
+      setAuthorFilter(currentUrlAuthor);
+    }
+    const currentUrlSeries = searchParams.get('series') || '';
+    if (currentUrlSeries !== seriesFilter) {
+      setSeriesFilter(currentUrlSeries);
+    }
+    const currentUrlRating = searchParams.get('rating');
+    const newRating = currentUrlRating ? Number(currentUrlRating) : 0;
+    if (newRating !== ratingFilter) {
+      setRatingFilter(newRating);
+    }
+  }, [searchParams]);
 
   // Función para cargar más libros
   const loadMoreBooks = useCallback(async () => {
@@ -173,11 +254,6 @@ function ProfilePageContent() {
     });
     return Array.from(set).sort();
   }, [books]);
-
-  // Filtros nuevos
-  const [authorFilter, setAuthorFilter] = useState('');
-  const [seriesFilter, setSeriesFilter] = useState('');
-  const [ratingFilter, setRatingFilter] = useState(0);
 
   // Filtrar libros por status, autor, saga/serie y rating
   const filteredBooks = React.useMemo(() => {
@@ -359,9 +435,9 @@ function ProfilePageContent() {
                 seriesFilter={seriesFilter}
                 ratingFilter={ratingFilter}
                 onStatusChange={handleStatusFilterChange}
-                onAuthorChange={setAuthorFilter}
-                onSeriesChange={setSeriesFilter}
-                onRatingChange={setRatingFilter}
+                onAuthorChange={handleAuthorFilterChange}
+                onSeriesChange={handleSeriesFilterChange}
+                onRatingChange={handleRatingFilterChange}
               />
               <BooksList
                 books={filteredBooks}

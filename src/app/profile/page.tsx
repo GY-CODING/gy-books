@@ -51,7 +51,25 @@ function ProfilePageContent() {
   const [tab, setTab] = React.useState(0);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { isLoading: isLoadingFriends, count: friendsCount } = useFriends();
+
+  const { count: friendsCount, isLoading: isLoadingFriends } = useFriends();
+  // Obtener los filtros del URL al cargar la página
+  const urlStatus = searchParams.get('status');
+  const urlAuthor = searchParams.get('author');
+  const urlSeries = searchParams.get('series');
+  const urlRating = searchParams.get('rating');
+
+  const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
+    urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
+      ? (urlStatus as EStatus)
+      : null
+  );
+  const [authorFilter, setAuthorFilter] = useState(urlAuthor || '');
+  const [seriesFilter, setSeriesFilter] = useState(urlSeries || '');
+  const [ratingFilter, setRatingFilter] = useState(
+    urlRating ? Number(urlRating) : 0
+  );
+
   const {
     handleUpdateBiography,
     setIsUpdated: setIsUpdatedBiography,
@@ -67,18 +85,6 @@ function ProfilePageContent() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const pageRef = useRef(0);
-  // Filtros nuevos
-  const [authorFilter, setAuthorFilter] = useState('');
-  const [seriesFilter, setSeriesFilter] = useState('');
-  const [ratingFilter, setRatingFilter] = useState(0);
-
-  // Obtener el status del URL al cargar la página
-  const urlStatus = searchParams.get('status');
-  const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
-    urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
-      ? (urlStatus as EStatus)
-      : null
-  );
 
   const statusOptions = [
     { label: 'Reading', value: EStatus.READING },
@@ -86,26 +92,88 @@ function ProfilePageContent() {
     { label: 'Want to read', value: EStatus.WANT_TO_READ },
   ];
 
+  // Actualizar todos los filtros en la URL
   const updateUrl = useCallback(
-    (newStatus: EStatus | null) => {
+    (filters: {
+      status?: EStatus | null;
+      author?: string;
+      series?: string;
+      rating?: number;
+    }) => {
       const params = new URLSearchParams(searchParams.toString());
-      if (newStatus) {
-        params.set('status', newStatus);
+      if (filters.status) {
+        params.set('status', filters.status);
       } else {
         params.delete('status');
+      }
+      if (filters.author) {
+        params.set('author', filters.author);
+      } else {
+        params.delete('author');
+      }
+      if (filters.series) {
+        params.set('series', filters.series);
+      } else {
+        params.delete('series');
+      }
+      if (filters.rating && filters.rating > 0) {
+        params.set('rating', String(filters.rating));
+      } else {
+        params.delete('rating');
       }
       router.replace(`/profile?${params.toString()}`, { scroll: false });
     },
     [searchParams, router]
   );
 
-  // Función para manejar cambios en el filtro
+  // Handlers para cada filtro
   const handleStatusFilterChange = useCallback(
     (newStatus: EStatus | null) => {
       setStatusFilter(newStatus);
-      updateUrl(newStatus);
+      updateUrl({
+        status: newStatus,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+      });
     },
-    [updateUrl]
+    [authorFilter, seriesFilter, ratingFilter, updateUrl]
+  );
+  const handleAuthorFilterChange = useCallback(
+    (newAuthor: string) => {
+      setAuthorFilter(newAuthor);
+      updateUrl({
+        status: statusFilter,
+        author: newAuthor,
+        series: seriesFilter,
+        rating: ratingFilter,
+      });
+    },
+    [statusFilter, seriesFilter, ratingFilter, updateUrl]
+  );
+  const handleSeriesFilterChange = useCallback(
+    (newSeries: string) => {
+      setSeriesFilter(newSeries);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: newSeries,
+        rating: ratingFilter,
+      });
+    },
+    [statusFilter, authorFilter, ratingFilter, updateUrl]
+  );
+  const handleRatingFilterChange = useCallback(
+    (newRating: number) => {
+      setRatingFilter(newRating);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: newRating,
+      });
+    },
+    [statusFilter, authorFilter, seriesFilter, updateUrl]
   );
 
   // Sincronizar el estado con los search params cuando cambien (solo para navegación del navegador)
@@ -358,9 +426,9 @@ function ProfilePageContent() {
                 seriesFilter={seriesFilter}
                 ratingFilter={ratingFilter}
                 onStatusChange={handleStatusFilterChange}
-                onAuthorChange={setAuthorFilter}
-                onSeriesChange={setSeriesFilter}
-                onRatingChange={setRatingFilter}
+                onAuthorChange={handleAuthorFilterChange}
+                onSeriesChange={handleSeriesFilterChange}
+                onRatingChange={handleRatingFilterChange}
               />
               <BooksList
                 books={filteredBooks}

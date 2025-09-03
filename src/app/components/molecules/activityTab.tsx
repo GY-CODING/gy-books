@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { goudi } from '@/utils/fonts/fonts';
 import { Activity } from '@/domain/activity.model';
 import { BookImage } from '../atoms/BookImage';
@@ -9,8 +9,9 @@ import { useActivities } from '@/hooks/useActivities';
 interface ActivityTabProps {
   id: UUID;
 }
+
 export default function ActivityTab({ id }: ActivityTabProps) {
-  const { data: activities } = useActivities(id);
+  const { data: activities, isLoading } = useActivities(id);
 
   return (
     <Box
@@ -21,7 +22,9 @@ export default function ActivityTab({ id }: ActivityTabProps) {
         textAlign: 'center',
       }}
     >
-      {activities && activities.length > 0 ? (
+      {isLoading ? (
+        <CircularProgress sx={{ color: '#fff', mt: 4 }} />
+      ) : activities && activities.length > 0 ? (
         <Box sx={{ maxHeight: 500, overflowY: 'auto' }}>
           {activities.map((activity: Activity, index: number) => (
             <Box
