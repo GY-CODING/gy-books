@@ -1,19 +1,14 @@
 import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { BookCardCompact } from '@/app/components/atoms/BookCardCompact';
 import Book from '@/domain/book.model';
 
 interface BooksListProps {
   books: Book[];
-  loading: boolean;
   hasMore: boolean;
 }
 
-export const BooksList: React.FC<BooksListProps> = ({
-  books,
-  loading,
-  hasMore,
-}) => (
+export const BooksList: React.FC<BooksListProps> = ({ books, hasMore }) => (
   <Box
     sx={{
       flex: 1,
@@ -62,11 +57,6 @@ export const BooksList: React.FC<BooksListProps> = ({
         <BookCardCompact book={book} small={true} />
       </Box>
     ))}
-    {loading && (
-      <Box sx={{ width: '100%', textAlign: 'center', py: 2 }}>
-        <CircularProgress />
-      </Box>
-    )}
     {!hasMore && books.length > 0 && (
       <Box sx={{ width: '100%', textAlign: 'center', py: 2 }}>
         <Typography variant="body2" sx={{ color: '#fff' }}>

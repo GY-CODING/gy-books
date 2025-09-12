@@ -16,33 +16,27 @@ const mockBooks: Book[] = [
 
 describe('BooksList', () => {
   it('renders book cards for each book', () => {
-    render(<BooksList books={mockBooks} loading={false} hasMore={true} />);
+    render(<BooksList books={mockBooks} hasMore={true} />);
     expect(screen.getAllByTestId('book-card')).toHaveLength(mockBooks.length);
     expect(
       screen.queryByText('Todos los libros cargados')
     ).not.toBeInTheDocument();
-    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
-  });
-
-  it('shows loading spinner when loading is true', () => {
-    render(<BooksList books={mockBooks} loading={true} hasMore={true} />);
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
   it('shows "Todos los libros cargados" when hasMore is false and books exist', () => {
-    render(<BooksList books={mockBooks} loading={false} hasMore={false} />);
+    render(<BooksList books={mockBooks} hasMore={false} />);
     expect(screen.getByText('Todos los libros cargados')).toBeInTheDocument();
   });
 
   it('does not show "Todos los libros cargados" when hasMore is true', () => {
-    render(<BooksList books={mockBooks} loading={false} hasMore={true} />);
+    render(<BooksList books={mockBooks} hasMore={true} />);
     expect(
       screen.queryByText('Todos los libros cargados')
     ).not.toBeInTheDocument();
   });
 
   it('does not show "Todos los libros cargados" when books list is empty', () => {
-    render(<BooksList books={[]} loading={false} hasMore={false} />);
+    render(<BooksList books={[]} hasMore={false} />);
     expect(
       screen.queryByText('Todos los libros cargados')
     ).not.toBeInTheDocument();

@@ -97,6 +97,8 @@ function ProfilePageContent() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const pageRef = useRef(0);
+  // Sentinel ref para IntersectionObserver
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const statusOptions = [
     { label: 'Reading', value: EStatus.READING },
@@ -326,16 +328,27 @@ function ProfilePageContent() {
     loadMoreBooks();
   }, [user?.id]);
 
-  // Paginación automática cada 2 segundos usando setTimeout encadenado
+  // Paginación automática con IntersectionObserver
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (hasMore && !loading && user?.id) {
-      timeout = setTimeout(() => {
-        loadMoreBooks();
-      }, 2000);
-    }
-    return () => clearTimeout(timeout);
-  }, [books, hasMore, loading, loadMoreBooks, user?.id]);
+    if (!hasMore || loading) return;
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          loadMoreBooks();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(sentinel);
+
+    return () => {
+      if (sentinel) observer.unobserve(sentinel);
+    };
+  }, [hasMore, loading, loadMoreBooks, books]);
 
   // Opciones únicas de autor y saga/serie
   // Opciones únicas de autor y saga/serie (evitar nulos/vacíos)
@@ -583,11 +596,20 @@ function ProfilePageContent() {
                 onOrderByChange={handleOrderByChange}
                 onOrderDirectionChange={handleOrderDirectionChange}
               />
-              <BooksList
-                books={filteredBooks}
-                loading={loading}
-                hasMore={hasMore}
-              />
+              <BooksList books={filteredBooks} hasMore={hasMore} />
+              {/* Loader y sentinel para paginación infinita */}
+              <Box
+                ref={sentinelRef}
+                sx={{
+                  display: hasMore ? 'flex' : 'none',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  minHeight: 60,
+                  width: '100%',
+                }}
+              >
+                {loading && <CircularProgress size={28} />}
+              </Box>
             </Box>
           )}
           {tab === 1 && (
