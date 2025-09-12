@@ -55,9 +55,8 @@ function ProfilePageContent() {
   const urlSeries = searchParams.get('series');
   const urlRating = searchParams.get('rating');
   const urlSearch = searchParams.get('search') || '';
-  const urlOrderBy = searchParams.get('orderBy') || '';
-  const urlOrderDirection =
-    searchParams.get('orderDirection') === 'desc' ? 'desc' : 'asc';
+  const urlOrderBy = searchParams.get('orderBy') || 'rating';
+  const urlOrderDirection = searchParams.get('orderDirection') || 'desc';
 
   const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
     urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
@@ -72,7 +71,7 @@ function ProfilePageContent() {
   const [search, setSearch] = useState(urlSearch);
   const [orderBy, setOrderBy] = useState<string>(urlOrderBy);
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>(
-    urlOrderDirection
+    urlOrderDirection as 'asc' | 'desc'
   );
 
   const statusOptions = [
