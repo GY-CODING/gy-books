@@ -62,6 +62,7 @@ export const BooksFilter: React.FC<BooksFilterProps> = ({
 }) => {
   // Opciones de ordenamiento
   const orderOptions = [
+    { label: 'Original', value: '' },
     { label: 'Author', value: 'author' },
     { label: 'Rating', value: 'rating' },
     { label: 'Series', value: 'series' },

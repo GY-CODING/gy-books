@@ -74,12 +74,11 @@ function ProfilePageContent() {
   );
   const [search, setSearch] = useState(urlSearch);
   // Estado para ordenamiento
-  const urlOrderBy = searchParams.get('orderBy') || 'title';
-  const urlOrderDirection =
-    searchParams.get('orderDirection') === 'desc' ? 'desc' : 'asc';
+  const urlOrderBy = searchParams.get('orderBy') || 'rating';
+  const urlOrderDirection = searchParams.get('orderDirection') || 'desc';
   const [orderBy, setOrderBy] = useState<string>(urlOrderBy);
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>(
-    urlOrderDirection
+    urlOrderDirection as 'asc' | 'desc'
   );
 
   const {

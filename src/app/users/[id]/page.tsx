@@ -55,7 +55,7 @@ function ProfilePageContent() {
   const urlSeries = searchParams.get('series');
   const urlRating = searchParams.get('rating');
   const urlSearch = searchParams.get('search') || '';
-  const urlOrderBy = searchParams.get('orderBy') || 'title';
+  const urlOrderBy = searchParams.get('orderBy') || '';
   const urlOrderDirection =
     searchParams.get('orderDirection') === 'desc' ? 'desc' : 'asc';
 
@@ -370,42 +370,44 @@ function ProfilePageContent() {
       return statusOk && authorOk && seriesOk && ratingOk && searchOk;
     });
 
-    // Ordenar por orderBy y orderDirection
-    result = result.sort((a, b) => {
-      let aValue: string | number = '';
-      let bValue: string | number = '';
-      switch (orderBy) {
-        case 'author':
-          aValue = a.author?.name || '';
-          bValue = b.author?.name || '';
-          break;
-        case 'series':
-          aValue = a.series?.name || '';
-          bValue = b.series?.name || '';
-          break;
-        case 'rating':
-          aValue = typeof a.rating === 'number' ? a.rating : 0;
-          bValue = typeof b.rating === 'number' ? b.rating : 0;
-          break;
-        case 'title':
-        default:
-          aValue = a.title || '';
-          bValue = b.title || '';
-      }
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        if (orderDirection === 'asc') {
-          return aValue.localeCompare(bValue);
-        } else {
-          return bValue.localeCompare(aValue);
+    // Solo ordenar si hay orderBy
+    if (orderBy) {
+      result = result.sort((a, b) => {
+        let aValue: string | number = '';
+        let bValue: string | number = '';
+        switch (orderBy) {
+          case 'author':
+            aValue = a.author?.name || '';
+            bValue = b.author?.name || '';
+            break;
+          case 'series':
+            aValue = a.series?.name || '';
+            bValue = b.series?.name || '';
+            break;
+          case 'rating':
+            aValue = typeof a.rating === 'number' ? a.rating : 0;
+            bValue = typeof b.rating === 'number' ? b.rating : 0;
+            break;
+          case 'title':
+            aValue = a.title || '';
+            bValue = b.title || '';
+            break;
         }
-      } else {
-        if (orderDirection === 'asc') {
-          return (aValue as number) - (bValue as number);
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          if (orderDirection === 'asc') {
+            return aValue.localeCompare(bValue);
+          } else {
+            return bValue.localeCompare(aValue);
+          }
         } else {
-          return (bValue as number) - (aValue as number);
+          if (orderDirection === 'asc') {
+            return (aValue as number) - (bValue as number);
+          } else {
+            return (bValue as number) - (aValue as number);
+          }
         }
-      }
-    });
+      });
+    }
     return result;
   }, [
     books,
