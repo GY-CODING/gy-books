@@ -592,11 +592,7 @@ function ProfilePageContent() {
                 onOrderByChange={handleOrderByChange}
                 onOrderDirectionChange={handleOrderDirectionChange}
               />
-              <BooksList
-                books={filteredBooks}
-                loading={loading}
-                hasMore={hasMore}
-              />
+              <BooksList books={filteredBooks} hasMore={hasMore} />
             </Box>
           )}
           {tab === 1 && (
