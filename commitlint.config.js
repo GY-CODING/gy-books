@@ -16,6 +16,6 @@ module.exports = {
         'chore', // Cambios en la configuración (builds, CI/CD)
       ],
     ],
-    'subject-case': [2, 'always', 'sentence-case'],
+    // Reglas eliminadas para permitir commits largos y sin restricción de mayúsculas
   },
 };

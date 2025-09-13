@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
 import queryBooks from '@/app/actions/book/queryBooks';
-import { Box, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, InputAdornment, TextField } from '@mui/material';
 import Book from '@/domain/book.model';
 import SearchIcon from '@mui/icons-material/Search';
 import Head from 'next/head';
@@ -13,6 +13,7 @@ import { BookCard } from '../components/atoms/BookCard';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { birthStone, goudi } from '@/utils/fonts/fonts';
 import LottieAnimation from '../components/atoms/LottieAnimation';
+import CustomTitle from '../components/atoms/CustomTitle';
 
 function BooksContent() {
   const searchParams = useSearchParams();
@@ -81,17 +82,14 @@ function BooksContent() {
           gap: '1rem',
         }}
       >
-        <Typography
-          variant="h1"
+        <CustomTitle
+          text="Library"
+          size="6rem"
+          fontFamily={birthStone.style.fontFamily}
           sx={{
-            fontSize: '4rem',
-            fontWeight: 'bold',
             color: 'white',
-            fontFamily: birthStone.style.fontFamily,
           }}
-        >
-          Library
-        </Typography>
+        />
       </Box>
 
       <Box

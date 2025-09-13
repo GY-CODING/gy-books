@@ -17,6 +17,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useRouter } from 'next/navigation';
 import AnimatedAlert from '@/app/components/atoms/Alert';
 import { ESeverity } from '@/utils/constants/ESeverity';
+import CustomTitle from '@/app/components/atoms/CustomTitle';
 
 export default function FriendsPage() {
   const {
@@ -50,17 +51,14 @@ export default function FriendsPage() {
           gap: '1rem',
         }}
       >
-        <Typography
-          variant="h1"
+        <CustomTitle
+          text="Friends"
+          size="6rem"
+          fontFamily={birthStone.style.fontFamily}
           sx={{
-            fontSize: '4rem',
-            fontWeight: 'bold',
             color: 'white',
-            fontFamily: birthStone.style.fontFamily,
           }}
-        >
-          Friends
-        </Typography>
+        />
         <Box
           sx={{
             display: 'flex',
