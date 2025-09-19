@@ -31,6 +31,7 @@ module.exports = {
     '^next/font/google$': '<rootDir>/__mocks__/nextFontGoogleMock.js',
     '^next/image$': '<rootDir>/__mocks__/next-image-mock.js',
     '^@auth0/nextjs-auth0$': '<rootDir>/__mocks__/auth0Mock.js',
+    '^@auth0/nextjs-auth0/server$': '<rootDir>/__mocks__/auth0Mock.js',
   },
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': [
@@ -43,6 +44,8 @@ module.exports = {
     ],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  transformIgnorePatterns: ['/node_modules/'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@auth0/nextjs-auth0)/)',
+  ],
 };
 /* ...existing code... */
