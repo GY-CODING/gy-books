@@ -124,19 +124,18 @@ export const BookRating = ({
           onClose={() => setAnchorEl(null)}
           state={state}
           handlers={handlers}
-          isBookSaved={isBookSaved}
+          isBookSaved={!!isBookSaved}
           isLoading={isLoading}
           isSubmitting={isSubmitting}
           fontFamily={goudi.style.fontFamily}
           handleDeleteBook={localHandleDeleteBook}
         />
-        {/* Mobile drawer */}
         <BookRatingDrawer
           open={drawerOpen && isMobile}
           onClose={() => setDrawerOpen(false)}
           state={state}
           handlers={handlers}
-          isBookSaved={isBookSaved}
+          isBookSaved={!!isBookSaved}
           isLoading={isLoading}
           isSubmitting={isSubmitting}
           fontFamily={goudi.style.fontFamily}
