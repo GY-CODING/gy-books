@@ -14,7 +14,7 @@ import BookRatingMenu from './BookRatingMenu';
 import { BookRatingProps } from './types';
 import { useBookRatingState } from './hooks/useBookRatingState';
 import { statusOptions } from './BookRatingOptions';
-
+import { EStatus } from '@/utils/constants/EStatus';
 export const BookRating = ({
   bookId,
   apiBook,
@@ -23,7 +23,7 @@ export const BookRating = ({
   isLoggedIn,
 }: BookRatingProps) => {
   const { data: user, isLoading: isUserLoading } = useUser();
-  const { handleDeleteBook, isLoading } = useRemoveBook();
+  const { handleDeleteBook } = useRemoveBook();
   // Local delete handler for BookRatingMenu/Drawer
   const localHandleDeleteBook = () => {
     if (isBookSaved) {
@@ -46,6 +46,7 @@ export const BookRating = ({
       apiBook,
       isRatingLoading,
       mutate,
+      isLoggedIn: false,
     });
 
   // Local computed values
