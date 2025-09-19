@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { Box, Typography, Skeleton } from '@mui/material';
-import { CustomButton } from '@/app/components/atoms/customButton';
+import { CustomButton } from '@/app/components/atoms/CustomButton/customButton';
 import EditIcon from '@mui/icons-material/Edit';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { UserImage } from '@/app/components/atoms/UserImage';
+import { UserImage } from '@/app/components/atoms/UserAvatar/UserImage';
 import { cinzel, goudi } from '@/utils/fonts/fonts';
 import { BiographySection } from '../BiographySection/BiographySection';
 
@@ -52,7 +52,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       sx={{
         width: { xs: 90, sm: 120, md: 160 },
         height: { xs: 90, sm: 120, md: 160 },
-        mb: { xs: 2, md: 0 },
         alignSelf: { xs: 'center', md: 'flex-start' },
       }}
     >
@@ -188,12 +187,14 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           display: 'flex',
           flexDirection: { xs: 'row', md: 'column' },
           gap: { xs: 2, md: 1 },
-          alignItems: { xs: 'center', md: 'flex-end' },
+          alignItems: 'center',
           justifyContent: { xs: 'center', md: 'flex-end' },
-          ml: { xs: 0, md: 'auto' },
+          mx: { xs: 'auto', md: 0 },
           mt: { xs: 2, md: 0 },
           width: { xs: '100%', md: 'auto' },
-          height: 'auto',
+          height: '100%',
+          position: { xs: 'static', md: 'relative' },
+          marginTop: { xs: 0, md: '42px' },
         }}
       >
         <CustomButton
@@ -202,7 +203,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             minWidth: { xs: 0, md: 170 },
             width: { xs: '50%', md: '200px' },
             fontFamily: goudi.style.fontFamily,
-            fontSize: { xs: 11, md: 15 },
+            fontSize: { xs: 10, md: 15 },
           }}
           variant="contained"
           endIcon={<LaunchIcon />}

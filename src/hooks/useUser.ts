@@ -15,10 +15,10 @@ export function useUser(): useUserProps {
   const { data, isLoading, error } = useSWR('/api/auth/get', fetchUser, {
     revalidateOnFocus: false,
     shouldRetryOnError: false,
-    dedupingInterval: 5000,
+    dedupingInterval: 30000,
     revalidateOnReconnect: false,
     revalidateIfStale: false,
-    focusThrottleInterval: 5000,
+    focusThrottleInterval: 30000,
     keepPreviousData: true,
   });
 

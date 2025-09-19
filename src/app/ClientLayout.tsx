@@ -38,17 +38,19 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import CloseIcon from '@mui/icons-material/Close';
 import { useFriendRequestsCount } from '@/hooks/useFriendRequestsCount';
 import { useFriendRequests } from '@/hooks/useFriendRequests';
-import FriendRequest from './components/atoms/FriendRequest';
-import AnimatedAlert from './components/atoms/Alert';
+import FriendRequest from './components/atoms/FriendRequest/FriendRequest';
+import AnimatedAlert from './components/atoms/Alert/Alert';
 import { ESeverity } from '@/utils/constants/ESeverity';
 import { UUID } from 'crypto';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import PersonIcon from '@mui/icons-material/Person';
-import { CustomButton } from './components/atoms/customButton';
+import { CustomButton } from './components/atoms/CustomButton/customButton';
+import { useStatsPreFetch } from '@/hooks/useStatsPreFetch';
 import { useUser } from '@/hooks/useUser';
 const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
   useUser(); // Fetch and store profile in Redux
   const { user, isLoading } = useGyCodingUser();
+  useStatsPreFetch(user?.id); // Pre-fetch stats for current user
   const { count } = useFriendRequestsCount(user?.id as UUID);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));

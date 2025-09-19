@@ -13,7 +13,6 @@ import {
   Divider,
   Stack,
 } from '@mui/material';
-import RatingStars from './RatingStars';
 import rateBook from '@/app/actions/book/rateBook';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -30,6 +29,7 @@ import { useUser } from '@/hooks/useUser';
 import BookIcon from '@mui/icons-material/Book';
 import PercentIcon from '@mui/icons-material/Percent';
 import { formatPercent, formatProgress } from '@/domain/userData.model';
+import RatingStars from '../RatingStars/RatingStars';
 
 interface BookRatingProps {
   bookId: string;

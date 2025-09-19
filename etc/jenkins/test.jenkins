@@ -3,6 +3,7 @@ pipeline {
 
   environment {
     WORKSPACE_DIR = 'WingWords'
+    NVM_DIR = "${WORKSPACE}/.nvm"
   }
 
   stages {
@@ -13,7 +14,7 @@ pipeline {
             echo "WingWords directory already exists, cleaning..."
             dir(WORKSPACE_DIR) {
               sh '''
-              rm -rf .nvm with-node.sh
+                rm -rf .nvm with-node.sh
               '''
             }
           } else {
@@ -25,24 +26,28 @@ pipeline {
     }
 
     stage('Install Node') {
-        steps {
-            dir(WORKSPACE_DIR) {
-              sh '''
-                  export NVM_DIR="$WORKSPACE/.nvm"
-                  mkdir -p "$NVM_DIR"
-                  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-                  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                  nvm install 18
+      steps {
+        dir(WORKSPACE_DIR) {
+          sh '''
+            mkdir -p "$NVM_DIR"
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm install 18
 
-                  echo '#!/bin/bash' > with-node.sh
-                  echo 'export NVM_DIR="$WORKSPACE/.nvm"' >> with-node.sh
-                  echo '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' >> with-node.sh
-                  echo 'nvm use 18' >> with-node.sh
-                  echo '"$@"' >> with-node.sh
-                  chmod +x with-node.sh
-              '''
-            }
+            # Crear wrapper para ejecutar npm con Node 18
+            echo '#!/bin/bash' > with-node.sh
+            echo 'export NVM_DIR="$NVM_DIR"' >> with-node.sh
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' >> with-node.sh
+            echo 'nvm use 18 > /dev/null' >> with-node.sh
+            echo 'exec "$@"' >> with-node.sh
+            chmod +x with-node.sh
+
+            echo ">>> Node y npm instalados:"
+            ./with-node.sh node -v
+            ./with-node.sh npm -v
+          '''
         }
+      }
     }
 
     stage('Install Dependencies') {

@@ -11,7 +11,6 @@ import React, {
 import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
 import { ProfileHeaderSkeleton } from './components/ProfileHeader/ProfileHeaderSkeleton';
 import { BooksFilter } from './components/BooksFilter/BooksFilter';
-import { BooksFilterSkeleton } from './components/BooksFilter/BooksFilterSkeleton';
 import { BooksList } from './components/BooksList/BooksList';
 import { BooksListSkeleton } from './components/BooksList/BooksListSkeleton';
 import {
@@ -24,15 +23,16 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { User } from '@/domain/user.model';
 import { EStatus } from '@/utils/constants/EStatus';
-import ProfileSkeleton from '../components/atoms/ProfileSkeleton';
+import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
 import { getBooksWithPagination } from '../actions/book/fetchApiBook';
 import Book from '@/domain/book.model';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { goudi } from '@/utils/fonts/fonts';
 import { useFriends } from '@/hooks/useFriends';
 import { useBiography } from '@/hooks/useBiography';
-import AnimatedAlert from '../components/atoms/Alert';
+import AnimatedAlert from '../components/atoms/Alert/Alert';
 import { ESeverity } from '@/utils/constants/ESeverity';
 import { UUID } from 'crypto';
 const Stats = React.lazy(() => import('../components/organisms/Stats'));
@@ -46,7 +46,9 @@ import StatsSkeleton from '../components/molecules/StatsSkeleton';
 import { HallOfFameSkeleton } from '../components/molecules/HallOfFameSkeleton';
 
 function ProfilePageContent() {
-  const user = useSelector((state: RootState) => state.user.profile);
+  const user = useSelector(
+    (state: RootState) => state.user.profile
+  ) as User | null;
   const isLoading = !user;
   const [tab, setTab] = React.useState(0);
   const searchParams = useSearchParams();
@@ -58,6 +60,7 @@ function ProfilePageContent() {
   const urlAuthor = searchParams.get('author');
   const urlSeries = searchParams.get('series');
   const urlRating = searchParams.get('rating');
+  const urlSearch = searchParams.get('search') || '';
 
   const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
     urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
@@ -68,6 +71,14 @@ function ProfilePageContent() {
   const [seriesFilter, setSeriesFilter] = useState(urlSeries || '');
   const [ratingFilter, setRatingFilter] = useState(
     urlRating ? Number(urlRating) : 0
+  );
+  const [search, setSearch] = useState(urlSearch);
+  // Estado para ordenamiento
+  const urlOrderBy = searchParams.get('orderBy') || 'rating';
+  const urlOrderDirection = searchParams.get('orderDirection') || 'desc';
+  const [orderBy, setOrderBy] = useState<string>(urlOrderBy);
+  const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>(
+    urlOrderDirection as 'asc' | 'desc'
   );
 
   const {
@@ -85,6 +96,8 @@ function ProfilePageContent() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const pageRef = useRef(0);
+  // Sentinel ref para IntersectionObserver
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const statusOptions = [
     { label: 'Reading', value: EStatus.READING },
@@ -99,6 +112,9 @@ function ProfilePageContent() {
       author?: string;
       series?: string;
       rating?: number;
+      search?: string;
+      orderBy?: string;
+      orderDirection?: 'asc' | 'desc';
     }) => {
       const params = new URLSearchParams(searchParams.toString());
       if (filters.status) {
@@ -121,9 +137,85 @@ function ProfilePageContent() {
       } else {
         params.delete('rating');
       }
+      if (filters.search) {
+        params.set('search', filters.search);
+      } else {
+        params.delete('search');
+      }
+      if (filters.orderBy) {
+        params.set('orderBy', filters.orderBy);
+      } else {
+        params.delete('orderBy');
+      }
+      if (filters.orderDirection) {
+        params.set('orderDirection', filters.orderDirection);
+      } else {
+        params.delete('orderDirection');
+      }
       router.replace(`/profile?${params.toString()}`, { scroll: false });
     },
     [searchParams, router]
+  );
+  // Handlers para ordenamiento
+  const handleOrderByChange = useCallback(
+    (newOrderBy: string) => {
+      setOrderBy(newOrderBy);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+        search,
+        orderBy: newOrderBy,
+        orderDirection,
+      });
+    },
+    [
+      statusFilter,
+      authorFilter,
+      seriesFilter,
+      ratingFilter,
+      search,
+      orderDirection,
+      updateUrl,
+    ]
+  );
+  const handleOrderDirectionChange = useCallback(
+    (newDirection: 'asc' | 'desc') => {
+      setOrderDirection(newDirection);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+        search,
+        orderBy,
+        orderDirection: newDirection,
+      });
+    },
+    [
+      statusFilter,
+      authorFilter,
+      seriesFilter,
+      ratingFilter,
+      search,
+      orderBy,
+      updateUrl,
+    ]
+  );
+  // Handler para el buscador
+  const handleSearchChange = useCallback(
+    (newSearch: string) => {
+      setSearch(newSearch);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+        search: newSearch,
+      });
+    },
+    [statusFilter, authorFilter, seriesFilter, ratingFilter, updateUrl]
   );
 
   // Handlers para cada filtro
@@ -235,16 +327,27 @@ function ProfilePageContent() {
     loadMoreBooks();
   }, [user?.id]);
 
-  // Paginación automática cada 2 segundos usando setTimeout encadenado
+  // Paginación automática con IntersectionObserver
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (hasMore && !loading && user?.id) {
-      timeout = setTimeout(() => {
-        loadMoreBooks();
-      }, 2000);
-    }
-    return () => clearTimeout(timeout);
-  }, [books, hasMore, loading, loadMoreBooks, user?.id]);
+    if (!hasMore || loading) return;
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          loadMoreBooks();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(sentinel);
+
+    return () => {
+      if (sentinel) observer.unobserve(sentinel);
+    };
+  }, [hasMore, loading, loadMoreBooks, books]);
 
   // Opciones únicas de autor y saga/serie
   // Opciones únicas de autor y saga/serie (evitar nulos/vacíos)
@@ -266,9 +369,9 @@ function ProfilePageContent() {
     return Array.from(set).sort();
   }, [books]);
 
-  // Filtrar libros por status, autor, saga/serie y rating
+  // Filtrar y ordenar libros
   const filteredBooks = React.useMemo(() => {
-    return books.filter((book) => {
+    let result = books.filter((book) => {
       const statusOk = !statusFilter || book.status === statusFilter;
       const authorOk =
         !authorFilter || (book.author && book.author.name === authorFilter);
@@ -277,9 +380,66 @@ function ProfilePageContent() {
       const ratingOk =
         !ratingFilter ||
         (typeof book.rating === 'number' && book.rating >= ratingFilter);
-      return statusOk && authorOk && seriesOk && ratingOk;
+      const searchOk =
+        !search ||
+        (book.title &&
+          book.title.toLowerCase().includes(search.toLowerCase())) ||
+        (book.author &&
+          book.author.name &&
+          book.author.name.toLowerCase().includes(search.toLowerCase())) ||
+        (book.series &&
+          book.series.name &&
+          book.series.name.toLowerCase().includes(search.toLowerCase()));
+      return statusOk && authorOk && seriesOk && ratingOk && searchOk;
     });
-  }, [books, statusFilter, authorFilter, seriesFilter, ratingFilter]);
+
+    // Ordenar por orderBy y orderDirection
+    result = result.sort((a, b) => {
+      let aValue: string | number = '';
+      let bValue: string | number = '';
+      switch (orderBy) {
+        case 'author':
+          aValue = a.author?.name || '';
+          bValue = b.author?.name || '';
+          break;
+        case 'series':
+          aValue = a.series?.name || '';
+          bValue = b.series?.name || '';
+          break;
+        case 'rating':
+          aValue = typeof a.rating === 'number' ? a.rating : 0;
+          bValue = typeof b.rating === 'number' ? b.rating : 0;
+          break;
+        case 'title':
+        default:
+          aValue = a.title || '';
+          bValue = b.title || '';
+      }
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        if (orderDirection === 'asc') {
+          return aValue.localeCompare(bValue);
+        } else {
+          return bValue.localeCompare(aValue);
+        }
+      } else {
+        if (orderDirection === 'asc') {
+          return (aValue as number) - (bValue as number);
+        } else {
+          return (bValue as number) - (aValue as number);
+        }
+      }
+    });
+    return result;
+  }, [
+    books,
+    statusFilter,
+    authorFilter,
+    seriesFilter,
+    ratingFilter,
+    search,
+    orderBy,
+    orderDirection,
+  ]);
 
   if (isLoading) {
     return (
@@ -314,7 +474,6 @@ function ProfilePageContent() {
               gap: 4,
             }}
           >
-            <BooksFilterSkeleton />
             <BooksListSkeleton />
           </Box>
         </Box>
@@ -345,11 +504,12 @@ function ProfilePageContent() {
     <Container
       maxWidth="xl"
       sx={{
-        mt: { xs: 0, md: 6 },
+        mt: { xs: 0, md: 0 },
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
         minHeight: '70vh',
+        height: '100%',
         borderRadius: 0,
         boxShadow: 'none',
       }}
@@ -369,14 +529,14 @@ function ProfilePageContent() {
           friendsCount={friendsCount}
           isLoadingFriends={isLoadingFriends}
           onEditProfile={() => setIsEditingBiography(true)}
-          biography={biography || user.biography || ''}
+          biography={biography || user?.biography || ''}
           isEditingBiography={isEditingBiography}
           isLoadingBiography={isLoadingBiography}
           onBiographyChange={setBiography}
           onBiographySave={handleBiographyChange}
           onBiographyCancel={() => setIsEditingBiography(false)}
         />
-        <Box sx={{ mt: 6 }}>
+        <Box sx={{ mt: 0 }}>
           <Tabs
             value={tab}
             onChange={(_, v) => setTab(v)}
@@ -425,16 +585,31 @@ function ProfilePageContent() {
                 authorFilter={authorFilter}
                 seriesFilter={seriesFilter}
                 ratingFilter={ratingFilter}
+                search={search}
                 onStatusChange={handleStatusFilterChange}
                 onAuthorChange={handleAuthorFilterChange}
                 onSeriesChange={handleSeriesFilterChange}
                 onRatingChange={handleRatingFilterChange}
+                onSearchChange={handleSearchChange}
+                orderBy={orderBy}
+                orderDirection={orderDirection}
+                onOrderByChange={handleOrderByChange}
+                onOrderDirectionChange={handleOrderDirectionChange}
               />
-              <BooksList
-                books={filteredBooks}
-                loading={loading}
-                hasMore={hasMore}
-              />
+              <BooksList books={filteredBooks} hasMore={hasMore} />
+              {/* Loader y sentinel para paginación infinita */}
+              <Box
+                ref={sentinelRef}
+                sx={{
+                  display: hasMore ? 'flex' : 'none',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  minHeight: 60,
+                  width: '100%',
+                }}
+              >
+                {loading && <CircularProgress size={28} />}
+              </Box>
             </Box>
           )}
           {tab === 1 && (
@@ -447,7 +622,7 @@ function ProfilePageContent() {
               }}
             >
               <Suspense fallback={<HallOfFameSkeleton />}>
-                <HallOfFame userId={user.id} />
+                {user && <HallOfFame userId={user.id} />}
               </Suspense>
             </Box>
           )}
@@ -461,7 +636,7 @@ function ProfilePageContent() {
               }}
             >
               <Suspense fallback={<StatsSkeleton />}>
-                <Stats id={user?.id as UUID} />
+                {user && <Stats id={user.id} />}
               </Suspense>
             </Box>
           )}
@@ -475,7 +650,7 @@ function ProfilePageContent() {
               }}
             >
               <Suspense fallback={<CircularProgress />}>
-                <ActivityTab id={user?.id as UUID} />
+                {user && <ActivityTab id={user.id} />}
               </Suspense>
             </Box>
           )}

@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useMemo } from 'react';
 import { Friend } from '@/domain/friend.model';
-import FriendCard from '@/app/components/atoms/FriendCard';
-import FriendCardSkeleton from '@/app/components/atoms/FriendCardSkeleton';
+import FriendCard from '@/app/components/atoms/FriendCard/FriendCard';
+import FriendCardSkeleton from '@/app/components/atoms/FriendCard/FriendCardSkeleton';
 import { useFriends } from '@/hooks/useFriends';
 import {
   Box,
@@ -15,8 +15,9 @@ import { birthStone, goudi } from '@/utils/fonts/fonts';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useRouter } from 'next/navigation';
-import AnimatedAlert from '@/app/components/atoms/Alert';
+import AnimatedAlert from '@/app/components/atoms/Alert/Alert';
 import { ESeverity } from '@/utils/constants/ESeverity';
+import CustomTitle from '@/app/components/atoms/BookTitle/CustomTitle';
 
 export default function FriendsPage() {
   const {
@@ -50,17 +51,14 @@ export default function FriendsPage() {
           gap: '1rem',
         }}
       >
-        <Typography
-          variant="h1"
+        <CustomTitle
+          text="Friends"
+          size="6rem"
+          fontFamily={birthStone.style.fontFamily}
           sx={{
-            fontSize: '4rem',
-            fontWeight: 'bold',
             color: 'white',
-            fontFamily: birthStone.style.fontFamily,
           }}
-        >
-          Friends
-        </Typography>
+        />
         <Box
           sx={{
             display: 'flex',

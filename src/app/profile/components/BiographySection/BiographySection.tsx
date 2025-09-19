@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Paper, Typography, TextField } from '@mui/material';
-import { CustomButton } from '@/app/components/atoms/customButton';
+import { CustomButton } from '@/app/components/atoms/CustomButton/customButton';
 import { goudi } from '@/utils/fonts/fonts';
 
 interface BiographySectionProps {

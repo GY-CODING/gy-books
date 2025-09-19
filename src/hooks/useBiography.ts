@@ -24,6 +24,7 @@ export function useBiography(): useBiographyProps {
         formData.get('biography') as string
       );
       setIsUpdated(true);
+      setIsError(false); // Reset error state on success
       mutate('/api/auth/get');
       return biography;
     } catch (error) {

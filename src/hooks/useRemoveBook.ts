@@ -41,8 +41,10 @@ export function useRemoveBook(): useRemoveBookProps {
       }
 
       setIsSuccess(true);
+      setError(null); // Reset error state on success
     } catch (error) {
       setError(error as Error);
+      setIsSuccess(false); // Reset success state on error
     } finally {
       setIsLoading(false);
     }

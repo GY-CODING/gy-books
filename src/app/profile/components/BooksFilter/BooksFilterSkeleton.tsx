@@ -1,29 +1,47 @@
 import React from 'react';
-import { Paper, Skeleton } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 
 export const BooksFilterSkeleton: React.FC = () => (
-  <Paper
-    elevation={0}
+  <Box
     sx={{
-      minWidth: { xs: '100%', md: 220 },
-      maxWidth: { xs: '100%', md: 260 },
-      p: 3,
-      borderRadius: '18px',
-      background: 'rgba(35, 35, 35, 0.85)',
-      border: '1px solid #FFFFFF30',
+      width: '100%',
       display: 'flex',
-      flexDirection: 'column',
-      gap: 2,
+      flexDirection: { xs: 'column', sm: 'row' },
+      gap: { xs: 1, sm: 2, md: 3 },
+      px: { xs: 0.5, sm: 1, md: 2 },
+      mb: 2,
+      borderRadius: '12px',
+      minHeight: 48,
+      maxWidth: { xs: '100%', md: 1000 },
+      mx: 'auto',
     }}
   >
-    {[1, 2, 3].map((i) => (
-      <Skeleton
-        key={i}
-        variant="rectangular"
-        width="100%"
-        height={36}
-        sx={{ borderRadius: 2, mb: 1 }}
-      />
-    ))}
-  </Paper>
+    <Skeleton
+      variant="rectangular"
+      height={40}
+      sx={{ flex: 2, borderRadius: '16px', minWidth: 110 }}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={40}
+      sx={{ flex: 1, borderRadius: '16px', minWidth: 110 }}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={40}
+      sx={{ flex: 1, borderRadius: '16px', minWidth: 110 }}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={40}
+      sx={{ flex: 1, borderRadius: '16px', minWidth: 110 }}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={40}
+      sx={{ flex: 1, borderRadius: '16px', minWidth: 110 }}
+    />
+  </Box>
 );
+
+export default BooksFilterSkeleton;

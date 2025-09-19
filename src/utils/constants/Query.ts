@@ -66,7 +66,8 @@ query GetSpanishEditionByBookId {
 export const GET_STATS = `
  query GetBookStats($id: Int!) {
     books_by_pk(id: $id) {
-    dto_combined
+    id
+    title
     pages
     contributions{
       author {

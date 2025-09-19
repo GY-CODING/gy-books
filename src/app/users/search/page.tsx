@@ -18,9 +18,10 @@ import { User } from '@/domain/friend.model';
 import queryUsers from '@/app/actions/accounts/user/fetchUsers';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import addFriend from '@/app/actions/accounts/user/friend/addFriend';
-import AnimatedAlert from '@/app/components/atoms/Alert';
+import AnimatedAlert from '@/app/components/atoms/Alert/Alert';
 import { ESeverity } from '@/utils/constants/ESeverity';
 import Image from 'next/image';
+import CustomTitle from '@/app/components/atoms/BookTitle/CustomTitle';
 
 function BooksContent() {
   const searchParams = useSearchParams();
@@ -76,17 +77,14 @@ function BooksContent() {
           gap: '1rem',
         }}
       >
-        <Typography
-          variant="h1"
+        <CustomTitle
+          text="Search Users"
+          size="6rem"
+          fontFamily={birthStone.style.fontFamily}
           sx={{
-            fontSize: '4rem',
-            fontWeight: 'bold',
             color: 'white',
-            fontFamily: birthStone.style.fontFamily,
           }}
-        >
-          Search Users
-        </Typography>
+        />
         <Box
           sx={{
             display: 'flex',

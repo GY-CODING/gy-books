@@ -20,9 +20,8 @@ import { BooksList } from '@/app/profile/components/BooksList/BooksList';
 import { useParams, useSearchParams } from 'next/navigation';
 import { goudi } from '@/utils/fonts/fonts';
 import { useAccountsUser } from '@/hooks/useAccountsUser';
-import ProfileSkeleton from '@/app/components/atoms/ProfileSkeleton';
+import ProfileSkeleton from '@/app/components/atoms/ProfileSkeleton/ProfileSkeleton';
 import { ProfileHeaderSkeleton } from '@/app/profile/components/ProfileHeader/ProfileHeaderSkeleton';
-import { BooksFilterSkeleton } from '@/app/profile/components/BooksFilter/BooksFilterSkeleton';
 import { BooksListSkeleton } from '@/app/profile/components/BooksList/BooksListSkeleton';
 import { getBooksWithPagination } from '@/app/actions/book/fetchApiBook';
 import Book from '@/domain/book.model';
@@ -55,6 +54,9 @@ function ProfilePageContent() {
   const urlAuthor = searchParams.get('author');
   const urlSeries = searchParams.get('series');
   const urlRating = searchParams.get('rating');
+  const urlSearch = searchParams.get('search') || '';
+  const urlOrderBy = searchParams.get('orderBy') || 'rating';
+  const urlOrderDirection = searchParams.get('orderDirection') || 'desc';
 
   const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
     urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
@@ -65,6 +67,11 @@ function ProfilePageContent() {
   const [seriesFilter, setSeriesFilter] = useState(urlSeries || '');
   const [ratingFilter, setRatingFilter] = useState(
     urlRating ? Number(urlRating) : 0
+  );
+  const [search, setSearch] = useState(urlSearch);
+  const [orderBy, setOrderBy] = useState<string>(urlOrderBy);
+  const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>(
+    urlOrderDirection as 'asc' | 'desc'
   );
 
   const statusOptions = [
@@ -80,6 +87,9 @@ function ProfilePageContent() {
       author?: string;
       series?: string;
       rating?: number;
+      search?: string;
+      orderBy?: string;
+      orderDirection?: 'asc' | 'desc';
     }) => {
       const paramsUrl = new URLSearchParams(searchParams.toString());
       if (filters.status) {
@@ -102,11 +112,87 @@ function ProfilePageContent() {
       } else {
         paramsUrl.delete('rating');
       }
+      if (filters.search) {
+        paramsUrl.set('search', filters.search);
+      } else {
+        paramsUrl.delete('search');
+      }
+      if (filters.orderBy) {
+        paramsUrl.set('orderBy', filters.orderBy);
+      } else {
+        paramsUrl.delete('orderBy');
+      }
+      if (filters.orderDirection) {
+        paramsUrl.set('orderDirection', filters.orderDirection);
+      } else {
+        paramsUrl.delete('orderDirection');
+      }
       router.replace(`/users/${userId}?${paramsUrl.toString()}`, {
         scroll: false,
       });
     },
     [searchParams, router, userId]
+  );
+  // Handlers para ordenamiento
+  const handleOrderByChange = useCallback(
+    (newOrderBy: string) => {
+      setOrderBy(newOrderBy);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+        search,
+        orderBy: newOrderBy,
+        orderDirection,
+      });
+    },
+    [
+      statusFilter,
+      authorFilter,
+      seriesFilter,
+      ratingFilter,
+      search,
+      orderDirection,
+      updateUrl,
+    ]
+  );
+  const handleOrderDirectionChange = useCallback(
+    (newDirection: 'asc' | 'desc') => {
+      setOrderDirection(newDirection);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+        search,
+        orderBy,
+        orderDirection: newDirection,
+      });
+    },
+    [
+      statusFilter,
+      authorFilter,
+      seriesFilter,
+      ratingFilter,
+      search,
+      orderBy,
+      updateUrl,
+    ]
+  );
+  // Handler para el buscador
+  const handleSearchChange = useCallback(
+    (newSearch: string) => {
+      setSearch(newSearch);
+      updateUrl({
+        status: statusFilter,
+        author: authorFilter,
+        series: seriesFilter,
+        rating: ratingFilter,
+        search: newSearch,
+      });
+    },
+    [statusFilter, authorFilter, seriesFilter, ratingFilter, updateUrl]
   );
 
   // Handlers para cada filtro
@@ -182,6 +268,10 @@ function ProfilePageContent() {
     const newRating = currentUrlRating ? Number(currentUrlRating) : 0;
     if (newRating !== ratingFilter) {
       setRatingFilter(newRating);
+    }
+    const currentUrlSearch = searchParams.get('search') || '';
+    if (currentUrlSearch !== search) {
+      setSearch(currentUrlSearch);
     }
   }, [searchParams]);
 
@@ -263,9 +353,9 @@ function ProfilePageContent() {
     return Array.from(set).sort();
   }, [books]);
 
-  // Filtrar libros por status, autor, saga/serie y rating
+  // Filtrar y ordenar libros
   const filteredBooks = React.useMemo(() => {
-    return books.filter((book) => {
+    let result = books.filter((book) => {
       const statusOk = !statusFilter || book.status === statusFilter;
       const authorOk =
         !authorFilter || (book.author && book.author.name === authorFilter);
@@ -274,9 +364,68 @@ function ProfilePageContent() {
       const ratingOk =
         !ratingFilter ||
         (typeof book.rating === 'number' && book.rating >= ratingFilter);
-      return statusOk && authorOk && seriesOk && ratingOk;
+      const searchOk =
+        !search ||
+        (book.title &&
+          book.title.toLowerCase().includes(search.toLowerCase())) ||
+        (book.author &&
+          book.author.name &&
+          book.author.name.toLowerCase().includes(search.toLowerCase())) ||
+        (book.series &&
+          book.series.name &&
+          book.series.name.toLowerCase().includes(search.toLowerCase()));
+      return statusOk && authorOk && seriesOk && ratingOk && searchOk;
     });
-  }, [books, statusFilter, authorFilter, seriesFilter, ratingFilter]);
+
+    // Solo ordenar si hay orderBy
+    if (orderBy) {
+      result = result.sort((a, b) => {
+        let aValue: string | number = '';
+        let bValue: string | number = '';
+        switch (orderBy) {
+          case 'author':
+            aValue = a.author?.name || '';
+            bValue = b.author?.name || '';
+            break;
+          case 'series':
+            aValue = a.series?.name || '';
+            bValue = b.series?.name || '';
+            break;
+          case 'rating':
+            aValue = typeof a.rating === 'number' ? a.rating : 0;
+            bValue = typeof b.rating === 'number' ? b.rating : 0;
+            break;
+          case 'title':
+            aValue = a.title || '';
+            bValue = b.title || '';
+            break;
+        }
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          if (orderDirection === 'asc') {
+            return aValue.localeCompare(bValue);
+          } else {
+            return bValue.localeCompare(aValue);
+          }
+        } else {
+          if (orderDirection === 'asc') {
+            return (aValue as number) - (bValue as number);
+          } else {
+            return (bValue as number) - (aValue as number);
+          }
+        }
+      });
+    }
+    return result;
+  }, [
+    books,
+    statusFilter,
+    authorFilter,
+    seriesFilter,
+    ratingFilter,
+    search,
+    orderBy,
+    orderDirection,
+  ]);
 
   if (isLoading) {
     return (
@@ -311,7 +460,6 @@ function ProfilePageContent() {
               gap: 4,
             }}
           >
-            <BooksFilterSkeleton />
             <BooksListSkeleton />
           </Box>
         </Box>
@@ -442,16 +590,18 @@ function ProfilePageContent() {
                 authorFilter={authorFilter}
                 seriesFilter={seriesFilter}
                 ratingFilter={ratingFilter}
+                search={search}
                 onStatusChange={handleStatusFilterChange}
                 onAuthorChange={handleAuthorFilterChange}
                 onSeriesChange={handleSeriesFilterChange}
                 onRatingChange={handleRatingFilterChange}
+                onSearchChange={handleSearchChange}
+                orderBy={orderBy}
+                orderDirection={orderDirection}
+                onOrderByChange={handleOrderByChange}
+                onOrderDirectionChange={handleOrderDirectionChange}
               />
-              <BooksList
-                books={filteredBooks}
-                loading={loading}
-                hasMore={hasMore}
-              />
+              <BooksList books={filteredBooks} hasMore={hasMore} />
             </Box>
           )}
           {tab === 1 && (

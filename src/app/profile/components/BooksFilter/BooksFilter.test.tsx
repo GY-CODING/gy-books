@@ -20,10 +20,16 @@ describe('BooksFilter', () => {
     authorFilter: '',
     seriesFilter: '',
     ratingFilter: 0,
+    search: '',
     onStatusChange: jest.fn(),
     onAuthorChange: jest.fn(),
     onSeriesChange: jest.fn(),
     onRatingChange: jest.fn(),
+    onSearchChange: jest.fn(),
+    orderBy: 'title',
+    orderDirection: 'asc' as const, // Explicitly type as 'asc'
+    onOrderByChange: jest.fn(),
+    onOrderDirectionChange: jest.fn(),
   };
 
   it('renders all filter selects', () => {
@@ -31,7 +37,9 @@ describe('BooksFilter', () => {
     expect(screen.getByText('Status')).toBeInTheDocument();
     expect(screen.getByText('Author')).toBeInTheDocument();
     expect(screen.getByText('Series')).toBeInTheDocument();
-    expect(screen.getByText('Rating')).toBeInTheDocument();
+    // El input de búsqueda tiene 'Search books...' como placeholder y el select de rating tiene 'All' como opción principal
+    expect(screen.getByPlaceholderText('Search books...')).toBeInTheDocument();
+    expect(screen.getByText('All')).toBeInTheDocument();
   });
 
   it('renders status options', () => {

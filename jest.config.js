@@ -5,6 +5,13 @@ module.exports = {
   testEnvironment: 'jsdom',
   testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/*.d.ts',
+    '!src/**/__mocks__/**',
+  ],
+  coverageReporters: ['html'],
   testPathIgnorePatterns: [
     '<rootDir>/.nvm/',
     '<rootDir>/.next/',
@@ -23,6 +30,7 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^next/font/google$': '<rootDir>/__mocks__/nextFontGoogleMock.js',
     '^next/image$': '<rootDir>/__mocks__/next-image-mock.js',
+    '^@auth0/nextjs-auth0$': '<rootDir>/__mocks__/auth0Mock.js',
   },
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': [

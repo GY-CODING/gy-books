@@ -1,96 +1,133 @@
 pipeline {
-    agent any
+  agent any
 
-    environment {
-        NVM_DIR = "${WORKSPACE}/.nvm"
+  environment {
+    WORKSPACE_DIR = 'WingWords'
+    NVM_DIR = "${WORKSPACE}/.nvm"
+    VERCEL_DEPLOYMENT_TOKEN = credentials('VERCEL_DEPLOYMENT_TOKEN')
+    GITHUB_USER = 'gy-gfigueras'
+    MAIN_REPO = 'GY-CODING/gy-books'
+    FORK_REPO = "${GITHUB_USER}/gy-books"
+  }
 
-        GITHUB_USER = 'gy-gfigueras'
-        GITHUB_TOKEN = credentials('FRONT_GITHUB_TOKEN')
-
-        MAIN_REPO = 'GY-CODING/gy-books'
-        FORK_REPO = "${GITHUB_USER}/gy-books"
-        WORKSPACE_DIR = 'WingWords'
-        VERCEL_DEPLOY_URL = credentials('WINGWORDS_VERCEL_DEPLOY_URL')
+  stages {
+    stage('Prepare Workspace') {
+      steps {
+        script {
+          if (fileExists(WORKSPACE_DIR)) {
+            echo "WingWords directory already exists, cleaning..."
+            dir(WORKSPACE_DIR) {
+              sh 'rm -rf * .nvm with-node.sh'
+            }
+          } else {
+            echo "Creating WingWords directory..."
+            sh "mkdir -p $WORKSPACE_DIR"
+          }
+        }
+      }
     }
 
-    stages {
-        stage('Prepare Repository') {
-            steps {
-                script {
-                    if (fileExists(WORKSPACE_DIR)) {
-                        echo "Repository already exists, updating..."
-                        dir(WORKSPACE_DIR) {
-                            sh '''
-                            git reset --hard
-                            git clean -fd
-                            git checkout main
-                            git pull origin main
-                            '''
-                        }
-                    } else {
-                        echo "Cloning repository..."
-                        sh '''
-                        git clone https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$FORK_REPO.git $WORKSPACE_DIR
-                        '''
-                    }
-                }
-            }
-        }
+    stage('Install Node') {
+      steps {
+        dir(WORKSPACE_DIR) {
+          sh '''
+            mkdir -p "$NVM_DIR"
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm install 18
 
-        stage('Run Tests') {
-            steps {
-                script {
-                    try {
-                        // Llamar al pipeline de test usando la ruta completa
-                        build job: 'Front/Test/WingWords',
-                              wait: true,
-                              propagate: true
-                    } catch (Exception e) {
-                        echo "Error calling test job: ${e.getMessage()}"
-                        echo "Job path: Front/Test/WingWords"
-                        throw e
-                    }
-                }
-            }
-        }
+            # Crear wrapper para ejecutar npm con Node 18
+            echo '#!/bin/bash' > with-node.sh
+            echo 'export NVM_DIR="$NVM_DIR"' >> with-node.sh
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' >> with-node.sh
+            echo 'nvm use 18 > /dev/null' >> with-node.sh
+            echo 'exec "$@"' >> with-node.sh
+            chmod +x with-node.sh
 
-        stage('Sync Fork') {
-            steps {
-                script {
-                    dir(WORKSPACE_DIR) {
-                        sh '''
-                        git remote add upstream https://github.com/$MAIN_REPO.git || true
-                        git fetch upstream
-                        git checkout main
-                        git merge upstream/main --allow-unrelated-histories
-                        git push origin main
-                        '''
-                    }
-                }
-            }
+            echo ">>> Node y npm instalados:"
+            ./with-node.sh node -v
+            ./with-node.sh npm -v
+          '''
         }
-
-        stage('Deploy to Vercel') {
-            steps {
-                script {
-                    sh "curl -X POST $VERCEL_DEPLOY_URL"
-                }
-            }
-        }
-
-        stage('Create Release') {
-            steps {
-                script {
-                    def WORKFLOW_FILE = "release.yml"
-
-                    sh """
-                    curl -X POST https://api.github.com/repos/$MAIN_REPO/actions/workflows/$WORKFLOW_FILE/dispatches \
-                        -H "Accept: application/vnd.github.v3+json" \
-                        -H "Authorization: token $GITHUB_TOKEN" \
-                        -d '{ "ref": "main" }'
-                    """
-                }
-            }
-        }
+      }
     }
+
+    stage('Install Dependencies') {
+      steps {
+        dir(WORKSPACE_DIR) {
+          sh './with-node.sh npm install'
+        }
+      }
+    }
+
+    stage('Run Tests') {
+      steps {
+        script {
+          try {
+            build job: 'Front/Test/WingWords',
+                  wait: true,
+                  propagate: true
+          } catch (Exception e) {
+            echo "Error calling test job: ${e.getMessage()}"
+            throw e
+          }
+        }
+      }
+    }
+
+    stage('Sync Fork') {
+      steps {
+        script {
+          dir(WORKSPACE_DIR) {
+            sh '''
+              git remote add upstream https://github.com/$MAIN_REPO.git || true
+              git fetch upstream
+              git checkout main
+              git merge upstream/main --allow-unrelated-histories
+              git push origin main
+            '''
+          }
+        }
+      }
+    }
+
+    stage('Deploy to Vercel') {
+      steps {
+        dir(WORKSPACE_DIR) {
+          withCredentials([string(credentialsId: 'VERCEL_DEPLOYMENT_TOKEN', variable: 'TOKEN')]) {
+            sh '''
+              echo "Iniciando despliegue vía API Vercel..."
+
+              DEPLOY_PAYLOAD=$(cat <<'EOF'
+{
+  "name": "gy-books",
+  "target": "production",
+  "gitSource": {
+    "type": "github",
+    "repoId": "GY-CODING/gy-books",
+    "org": "GY-CODING",
+    "repo": "gy-books",
+    "ref": "main"
+  }
+}
+EOF
+              )
+
+              curl -s -X POST https://api.vercel.com/v13/deployments \
+                -H "Authorization: Bearer $TOKEN" \
+                -H "Content-Type: application/json" \
+                -d "$DEPLOY_PAYLOAD"
+            '''
+          }
+        }
+      }
+    }
+
+    stage('Create Release') {
+      steps {
+        echo 'Creando release...'
+        // aquí tu lógica de release
+      }
+    }
+  }
 }
