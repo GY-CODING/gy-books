@@ -273,7 +273,14 @@ function ProfilePageContent() {
     if (currentUrlSearch !== search) {
       setSearch(currentUrlSearch);
     }
-  }, [searchParams]);
+  }, [
+    searchParams,
+    statusFilter,
+    authorFilter,
+    seriesFilter,
+    ratingFilter,
+    search,
+  ]);
 
   // Función para cargar más libros
   const loadMoreBooks = useCallback(async () => {
@@ -306,15 +313,21 @@ function ProfilePageContent() {
     } finally {
       setLoading(false);
     }
-  }, [hasMore, loading]);
+  }, [hasMore, loading, params.id]);
 
-  // Cargar libros iniciales
+  // Cargar libros iniciales cuando cambie el ID del usuario
   useEffect(() => {
     pageRef.current = 0;
     setBooks([]);
     setHasMore(true);
-    loadMoreBooks();
-  }, []);
+  }, [params.id]);
+
+  // Ejecutar la carga inicial solo una vez al montar el componente
+  useEffect(() => {
+    if (pageRef.current === 0 && books.length === 0 && hasMore) {
+      loadMoreBooks();
+    }
+  }, [loadMoreBooks, books.length, hasMore]);
 
   // Paginación automática cada 3 segundos usando setTimeout encadenado
   useEffect(() => {
@@ -333,14 +346,6 @@ function ProfilePageContent() {
     books.forEach((b) => {
       if (b.author && b.author.name && b.author.name.trim() !== '')
         set.add(b.author.name);
-    });
-    return Array.from(set).sort();
-  }, [books]);
-  const seriesOptions = React.useMemo(() => {
-    const set = new Set<string>();
-    books.forEach((b) => {
-      if (b.series && b.series.name && b.series.name.trim() !== '')
-        set.add(b.series.name);
     });
     return Array.from(set).sort();
   }, [books]);

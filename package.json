@@ -1,15 +1,22 @@
 {
   "name": "WingWords",
   "version": "0.1.15",
+  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/dev-with-banner.js",
+    "dev-simple": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepare": "husky install",
+    "precommit": "lint-staged",
     "test": "jest --coverage --coverageReporters=html",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --coverage --watchAll=false",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:production": "cypress run --config baseUrl=https://wingwords.gycoding.com",
@@ -17,13 +24,12 @@
     "test:e2e:production": "cypress run --config baseUrl=https://wingwords.gycoding.com"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^3.7.0",
+    "@auth0/nextjs-auth0": "^4.10.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.1.1",
     "@mui/material": "^7.0.0",
     "@mui/x-charts": "^8.8.0",
-    "@next/font": "^14.2.15",
     "@reduxjs/toolkit": "^2.8.2",
     "@types/testing-library__jest-dom": "^5.14.9",
     "eslint-config-prettier": "^10.1.1",
@@ -31,8 +37,7 @@
     "google": "^2.1.0",
     "husky": "^9.1.7",
     "lottie-react": "^2.4.1",
-    "mtgsdk-ts": "^1.1.2",
-    "next": "^14.2.26",
+    "next": "^15.5.3",
     "prettier": "^3.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -44,7 +49,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
-    "@eslint/eslintrc": "^3",
+    "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.22.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^4.2.4",
@@ -60,7 +65,7 @@
     "cypress": "^14.5.1",
     "dotenv": "^17.0.1",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.26",
+    "eslint-config-next": "^15.5.3",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-react": "^7.37.4",
     "globals": "^16.0.0",
@@ -77,8 +82,13 @@
     "typescript-eslint": "^8.26.1"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,md}": [
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,css,md}": [
       "prettier --write"
-    ]
+    ],
+    "next-env.d.ts": []
   }
 }

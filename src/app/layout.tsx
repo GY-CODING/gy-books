@@ -48,7 +48,7 @@ export default function RootLayout({
         <link rel="icon" href="/gy-logo.png" />
         <meta name="theme-color" content="#161616" />
       </head>
-      <body>
+      <body suppressHydrationWarning={true}>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

@@ -1,22 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
-import { NextResponse } from 'next/server';
+import { auth0 } from '@/lib/auth0';
+import { NextResponse, NextRequest } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
 import { ApiBook } from '@/domain/apiBook.model';
 
-async function handler(request: Request) {
-  const url = new URL(request.url);
-  const ID = url.pathname.split('/').pop();
+async function handler(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  const params = await context.params;
+  const ID = params.id;
 
   if (!ID) {
     return NextResponse.json({ error: 'Book ID is required' }, { status: 400 });
   }
 
   try {
-    const session = await getSession();
-    const idToken = session?.idToken;
+    const session = await auth0.getSession();
+    const idToken = session?.tokenSet?.idToken;
 
     if (!session || !idToken) {
       await sendLog(ELevel.ERROR, ELogs.NO_ACTIVE_SESSION);
@@ -142,6 +145,23 @@ async function handler(request: Request) {
   }
 }
 
-export const PATCH = withApiAuthRequired(handler); //ACTUALIZAR LIBRO
-export const GET = withApiAuthRequired(handler); //OBTENER LIBRO CON INFO DEL USUARIO
-export const DELETE = withApiAuthRequired(handler); //ELIMINAR LIBRO
+export async function PATCH(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  return handler(request, context);
+}
+
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  return handler(request, context);
+}
+
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  return handler(request, context);
+}

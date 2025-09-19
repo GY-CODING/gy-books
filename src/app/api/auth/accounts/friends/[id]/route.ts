@@ -1,16 +1,24 @@
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { auth0 } from '@/lib/auth0';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
 
-export const DELETE = withApiAuthRequired(async (req: NextRequest) => {
+export async function DELETE(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const SESSION = await getSession();
-    const USER_ID = SESSION?.user.sub;
-    const ID_TOKEN = SESSION?.idToken;
-    const FRIEND_ID = req.nextUrl.pathname.split('/').pop();
+    const params = await context.params;
+    const SESSION = await auth0.getSession();
 
+    if (!SESSION) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const USER_ID = SESSION?.user.sub;
+    const ID_TOKEN = SESSION?.tokenSet?.idToken;
+    const FRIEND_ID = params.id;
     if (SESSION) {
       await sendLog(ELevel.INFO, ELogs.SESSION_RECIVED, { user: USER_ID });
     }
@@ -59,4 +67,4 @@ export const DELETE = withApiAuthRequired(async (req: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}

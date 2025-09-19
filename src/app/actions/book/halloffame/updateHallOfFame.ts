@@ -7,10 +7,10 @@ export default async function updateHallOfFame(
   formData: FormData
 ): Promise<string> {
   if (!formData) throw new Error('No quote provided in formData');
-  const headersList = headers();
+  const headersList = await headers();
   const host = headersList.get('host') || 'localhost:3000';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
   const urlPrivate = `${protocol}://${host}/api/auth/books/halloffame/quote`;

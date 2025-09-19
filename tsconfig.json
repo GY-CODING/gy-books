@@ -20,7 +20,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node", "jest", "@testing-library/jest-dom"]
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",

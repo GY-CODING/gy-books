@@ -3,7 +3,7 @@
 
 import { headers } from 'next/headers';
 import { cookies } from 'next/headers';
-import { getSession } from '@auth0/nextjs-auth0';
+import { auth0 } from '@/lib/auth0';
 import { ApiBook } from '@/domain/apiBook.model';
 import { UUID } from 'crypto';
 
@@ -12,14 +12,14 @@ export default async function getApiBook(
   bookId: string
 ): Promise<ApiBook | null> {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const cookieHeader = cookieStore.toString();
 
     // Verificar si el usuario está autenticado
-    const session = await getSession();
+    const session = await auth0.getSession();
     const isAuthenticated = !!session?.user;
 
     let url: string;
@@ -90,7 +90,7 @@ export async function getBooksWithPagination(
   size: number = 10
 ): Promise<{ books: any[]; hasMore: boolean } | null> {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 

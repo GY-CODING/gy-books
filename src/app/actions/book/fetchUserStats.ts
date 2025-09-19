@@ -8,7 +8,7 @@ import { Stats } from '@/domain/stats.model';
 // Nueva función para traer todos los libros con paginación
 export async function getStats(profileId: UUID): Promise<any> {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 

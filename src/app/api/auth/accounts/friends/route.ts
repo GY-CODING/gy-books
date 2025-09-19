@@ -1,18 +1,22 @@
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { auth0 } from '@/lib/auth0';
 import { NextResponse } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
 
-export const GET = withApiAuthRequired(async () => {
+export async function GET() {
   try {
-    const SESSION = await getSession();
-    const USER_ID = SESSION?.user.sub;
-    const ID_TOKEN = SESSION?.idToken;
+    const SESSION = await auth0.getSession();
 
-    if (SESSION) {
-      await sendLog(ELevel.INFO, ELogs.SESSION_RECIVED, { user: USER_ID });
+    if (!SESSION || !SESSION.user) {
+      return NextResponse.json(
+        { error: 'No authentication token available' },
+        { status: 401 }
+      );
     }
+
+    // En Auth0 v4, el idToken está en tokenSet.idToken, no directamente en session.idToken
+    const ID_TOKEN = SESSION.tokenSet?.idToken;
 
     let apiUrl: string | null = null;
     let headers: Record<string, string> = {
@@ -64,4 +68,4 @@ export const GET = withApiAuthRequired(async () => {
       { status: 500 }
     );
   }
-});
+}

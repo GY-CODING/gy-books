@@ -1,4 +1,4 @@
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { auth0 } from '@/lib/auth0';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
@@ -6,9 +6,9 @@ import { ELogs } from '@/utils/constants/ELogs';
 
 async function handler(req: NextRequest) {
   try {
-    const SESSION = await getSession();
+    const SESSION = await auth0.getSession();
     const USER_ID = SESSION?.user.sub;
-    const ID_TOKEN = SESSION?.idToken;
+    const ID_TOKEN = SESSION?.tokenSet?.idToken;
 
     if (!SESSION) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -65,4 +65,6 @@ async function handler(req: NextRequest) {
   }
 }
 
-export const PATCH = withApiAuthRequired(handler);
+export async function PATCH(req: NextRequest) {
+  return handler(req);
+}

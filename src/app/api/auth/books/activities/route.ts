@@ -1,14 +1,19 @@
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { auth0 } from '@/lib/auth0';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
 
-export const POST = withApiAuthRequired(async (req: NextRequest) => {
+export async function POST(req: NextRequest) {
   try {
-    const SESSION = await getSession();
+    const SESSION = await auth0.getSession();
+
+    if (!SESSION) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const USER_ID = SESSION?.user.sub;
-    const ID_TOKEN = SESSION?.idToken;
+    const ID_TOKEN = SESSION?.tokenSet?.idToken;
 
     const body = await req.json();
 
@@ -63,4 +68,4 @@ export const POST = withApiAuthRequired(async (req: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}

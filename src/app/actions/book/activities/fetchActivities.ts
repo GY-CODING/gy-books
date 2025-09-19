@@ -8,7 +8,7 @@ import { Activity } from '@/domain/activity.model';
 // Nueva función para traer todos los libros con paginación
 export async function fetchActivities(profileId: UUID): Promise<Activity[]> {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 

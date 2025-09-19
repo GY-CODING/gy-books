@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable react/react-in-jsx-scope */
 'use client';
 
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { Auth0Provider } from '@auth0/nextjs-auth0';
 import { Provider } from 'react-redux';
+import { useState } from 'react';
 import store from '@/store';
 import {
   GyCodingUserProvider,
@@ -28,7 +30,6 @@ import {
 import { getTheme } from '@/styles/theme';
 import Profile from './components/organisms/Profile';
 import { ETheme } from '@/utils/constants/theme.enum';
-import { useState } from 'react';
 import { getMenuItems } from '@/utils/constants/MenuItems';
 import { User } from '@/domain/user.model';
 import { useRouter } from 'next/navigation';
@@ -48,6 +49,8 @@ import { CustomButton } from './components/atoms/CustomButton/customButton';
 import { useStatsPreFetch } from '@/hooks/useStatsPreFetch';
 import { useUser } from '@/hooks/useUser';
 const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
+  // Removed isHydrated state to prevent hydration mismatch
+
   useUser(); // Fetch and store profile in Redux
   const { user, isLoading } = useGyCodingUser();
   useStatsPreFetch(user?.id); // Pre-fetch stats for current user
@@ -115,7 +118,7 @@ const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-      <a href="/api/auth/login" style={{ textDecoration: 'none' }}>
+      <a href="/auth/login" style={{ textDecoration: 'none' }}>
         <CustomButton
           sx={{
             backgroundColor: 'primary.main',
@@ -137,6 +140,7 @@ const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
     <ThemeProvider theme={getTheme(ETheme.DARK)}>
       <CssBaseline />
       <Box
+        suppressHydrationWarning={true}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -145,6 +149,7 @@ const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         <Box
+          suppressHydrationWarning={true}
           sx={{
             position: 'fixed',
             top: 0,
@@ -516,7 +521,7 @@ const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
                 justifyContent: 'center',
               }}
             >
-              <a href="/api/auth/logout" style={{ textDecoration: 'none' }}>
+              <a href="/auth/logout" style={{ textDecoration: 'none' }}>
                 <Button
                   variant="outlined"
                   color="error"
@@ -537,7 +542,9 @@ const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
           )}
         </Drawer>
 
-        <Box sx={{ mt: '80px' }}>{children}</Box>
+        <Box suppressHydrationWarning={true} sx={{ mt: '80px' }}>
+          {children}
+        </Box>
 
         {/* Alertas para las solicitudes de amistad */}
         <AnimatedAlert
@@ -564,11 +571,11 @@ export default function ClientLayout({
 }) {
   return (
     <Provider store={store}>
-      <UserProvider>
+      <Auth0Provider>
         <GyCodingUserProvider>
           <ClientLayoutContent>{children}</ClientLayoutContent>
         </GyCodingUserProvider>
-      </UserProvider>
+      </Auth0Provider>
     </Provider>
   );
 }

@@ -100,8 +100,11 @@ const ActivityTab: React.FC<ActivityTabProps> = ({ id }) => {
             scrollbarColor: ' #8C54FF transparent',
           }}
         >
-          {activities.map((activity: Activity) => (
-            <ActivityItem activity={activity} key={activity.bookId} />
+          {activities.map((activity: Activity, index: number) => (
+            <ActivityItem
+              activity={activity}
+              key={`${activity.bookId || 'activity'}-${index}-${activity.date ? new Date(activity.date).getTime() : Date.now()}`}
+            />
           ))}
         </Box>
       ) : (

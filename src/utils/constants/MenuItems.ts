@@ -50,7 +50,7 @@ export const getMenuItems = (user: User | null): MenuItem[] => {
     {
       text: 'Iniciar Sesión',
       icon: React.createElement(MenuIcons.Login),
-      route: '/api/auth/login',
+      route: '/auth/login',
     },
   ];
 };

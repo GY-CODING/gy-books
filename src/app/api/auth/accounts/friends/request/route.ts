@@ -1,15 +1,20 @@
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
-import { NextResponse } from 'next/server';
+import { auth0 } from '@/lib/auth0';
+import { NextResponse, NextRequest } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
 import { FriendRequest } from '@/domain/friend.model';
 import { MongoClient } from 'mongodb';
 
-async function handler(req: Request) {
+async function handler(req: NextRequest) {
   try {
-    const SESSION = await getSession();
-    const ID_TOKEN = SESSION?.idToken;
+    const SESSION = await auth0.getSession();
+
+    if (!SESSION) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const ID_TOKEN = SESSION?.tokenSet?.idToken;
     const baseUrl = process.env.GY_API?.replace(/['"]/g, '');
     const MONGO_URI = process.env.MONGO_URI;
 
@@ -108,5 +113,10 @@ async function handler(req: Request) {
   }
 }
 
-export const POST = withApiAuthRequired(handler);
-export const GET = withApiAuthRequired(handler);
+export async function POST(req: NextRequest) {
+  return handler(req);
+}
+
+export async function GET(req: NextRequest) {
+  return handler(req);
+}

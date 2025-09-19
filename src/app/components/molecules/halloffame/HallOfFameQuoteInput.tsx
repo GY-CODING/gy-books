@@ -4,7 +4,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { goudi } from '@/utils/fonts/fonts';
 
 interface HallOfFameQuoteInputProps {
-  quote: string;
+  quote?: string; // Optional since we're using controlled component
   editedQuote: string;
   setEditedQuote: (q: string) => void;
   isEditing: boolean;
@@ -14,7 +14,7 @@ interface HallOfFameQuoteInputProps {
 }
 
 export const HallOfFameQuoteInput: React.FC<HallOfFameQuoteInputProps> = ({
-  quote,
+  quote: _quote, // Renamed to indicate it's not used
   editedQuote,
   setEditedQuote,
   isEditing,
@@ -37,7 +37,6 @@ export const HallOfFameQuoteInput: React.FC<HallOfFameQuoteInputProps> = ({
       onClick={() => setIsEditing(true)}
       onBlur={() => setIsEditing(false)}
       disabled={disabled}
-      defaultValue={quote || ''}
       multiline
       value={editedQuote}
       onChange={(e) => setEditedQuote(e.target.value)}

@@ -8,10 +8,10 @@ export default async function updateBiography(
 ): Promise<string> {
   if (!biography) throw new Error('No biography provided in formData');
 
-  const headersList = headers();
+  const headersList = await headers();
   const host = headersList.get('host') || 'localhost:3000';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
   const urlPrivate = `${protocol}://${host}/api/auth/books/biography`;

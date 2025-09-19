@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
-import { NextResponse } from 'next/server';
+import { auth0 } from '@/lib/auth0';
+import { NextResponse, NextRequest } from 'next/server';
 import { MongoClient } from 'mongodb';
 import { User } from '@/domain/user.model';
 /**
@@ -25,10 +25,15 @@ import { User } from '@/domain/user.model';
  *               biography: "Aquí una biografía ficticia."
  */
 
-export const GET = withApiAuthRequired(async () => {
+export async function GET() {
   console.log('🔐 Entrando a GET /api/auth/user');
 
-  const session = await getSession();
+  const session = await auth0.getSession();
+
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const userId = session?.user.sub;
 
   if (!userId) {
@@ -67,4 +72,4 @@ export const GET = withApiAuthRequired(async () => {
   } finally {
     await client.close();
   }
-});
+}

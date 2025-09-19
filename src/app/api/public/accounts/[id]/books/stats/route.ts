@@ -32,8 +32,13 @@ async function fetchUserBooksPage(profileId: string, page: number) {
   return data;
 }
 
-async function fetchBookStats(bookId: number) {
-  console.log(`📚 Fetching book stats for ID: ${bookId}`);
+async function fetchBookStats(
+  bookId: number,
+  retryCount = 0
+): Promise<unknown> {
+  console.log(
+    `📚 Fetching book stats for ID: ${bookId} (attempt ${retryCount + 1})`
+  );
 
   const requestBody = {
     query: GET_STATS,
@@ -56,6 +61,19 @@ async function fetchBookStats(bookId: number) {
 
   console.log(`📡 HARDCOVER API Response status: ${res.status}`);
 
+  if (res.status === 429) {
+    // Rate limited - implement exponential backoff
+    if (retryCount < 3) {
+      const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
+      console.log(`⏳ Rate limited, retrying after ${delay}ms...`);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      return fetchBookStats(bookId, retryCount + 1);
+    } else {
+      console.warn(`⚠️ Max retries reached for book ${bookId}, skipping`);
+      return null; // Skip this book instead of failing
+    }
+  }
+
   if (!res.ok) {
     const text = await res.text();
     console.error(`❌ HARDCOVER API Error (${res.status}):`, text);
@@ -73,7 +91,7 @@ async function processBooksInBatches(
   stats: { totalPages: number; totalBooks: number }
 ) {
   console.log(`🔄 Starting batch processing for ${bookIds.length} books`);
-  const CONCURRENCY = 5;
+  const CONCURRENCY = 2; // Reduced from 5 to 2
   let idx = 0;
 
   while (idx < bookIds.length) {
@@ -88,8 +106,20 @@ async function processBooksInBatches(
           console.log(`🎯 Processing book ${bookId}...`);
           const bookData = await fetchBookStats(bookId);
 
-          if (!bookData || !bookData.data) {
-            console.warn(`⚠️ Book ${bookId} has empty data:`, bookData);
+          if (!bookData) {
+            console.warn(`⚠️ Book ${bookId} skipped due to rate limiting`);
+            return;
+          }
+
+          if (
+            !bookData ||
+            typeof bookData !== 'object' ||
+            !('data' in bookData)
+          ) {
+            console.warn(
+              `⚠️ Book ${bookId} has invalid data structure:`,
+              bookData
+            );
             await sendLog(ELevel.WARN, 'BOOK_STATS_EMPTY', {
               bookId,
               bookData,
@@ -97,11 +127,10 @@ async function processBooksInBatches(
             return;
           }
 
-          if (!bookData.data.books_by_pk) {
-            console.warn(
-              `⚠️ Book ${bookId} missing books_by_pk:`,
-              bookData.data
-            );
+          const data = bookData as { data?: { books_by_pk?: unknown } };
+
+          if (!data.data?.books_by_pk) {
+            console.warn(`⚠️ Book ${bookId} missing books_by_pk:`, data.data);
             await sendLog(ELevel.WARN, 'BOOKS_BY_PK_MISSING', {
               bookId,
               bookData,
@@ -125,9 +154,9 @@ async function processBooksInBatches(
     );
 
     idx += CONCURRENCY;
-    console.log(`⏳ Batch completed, waiting 150ms before next batch...`);
-    // Pequeña pausa para evitar rate limits
-    await new Promise((r) => setTimeout(r, 150));
+    console.log(`⏳ Batch completed, waiting 500ms before next batch...`);
+    // Increased pause to avoid rate limits
+    await new Promise((r) => setTimeout(r, 500));
   }
 
   console.log(
@@ -135,7 +164,10 @@ async function processBooksInBatches(
   );
 }
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) => {
   console.log('🚀 STATS API STARTED - Request received');
   console.log('📍 Request URL:', req.url);
   console.log('📍 Request method:', req.method);
@@ -154,7 +186,7 @@ export const GET = async (req: NextRequest) => {
       throw new Error(ELogs.ENVIROMENT_VARIABLE_NOT_DEFINED);
     }
 
-    const profileId = req.nextUrl.pathname.split('/')[4];
+    const { id: profileId } = await params;
     console.log('👤 Profile ID extracted:', profileId);
 
     if (!profileId) {
@@ -227,6 +259,10 @@ export const GET = async (req: NextRequest) => {
 
           const status = book.userData?.status || 'unknown';
           bookStatus[status] = (bookStatus[status] || 0) + 1;
+
+          console.log(
+            `📊 Book ${bookId} status: "${status}" (EStatus.READ: "${EStatus.READ}")`
+          );
 
           if (status === EStatus.READ) {
             readBooks.push(bookId);

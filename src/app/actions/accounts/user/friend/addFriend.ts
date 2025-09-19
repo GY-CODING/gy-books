@@ -12,10 +12,10 @@ export default async function addFriend(formData: FormData): Promise<boolean> {
       throw new Error('User ID is required');
     }
 
-    const headersList = headers();
+    const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const cookieHeader = cookieStore.toString();
 
     const response = await fetch(

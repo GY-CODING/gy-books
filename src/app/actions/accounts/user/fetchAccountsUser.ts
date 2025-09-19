@@ -2,7 +2,7 @@
 'use server';
 
 import { headers, cookies } from 'next/headers';
-import { getSession } from '@auth0/nextjs-auth0';
+import { auth0 } from '@/lib/auth0';
 import { User } from '@/domain/friend.model';
 
 export default async function getAccountsUser(
@@ -10,8 +10,9 @@ export default async function getAccountsUser(
 ): Promise<User | null> {
   if (!id) throw new Error('No username provided in formData');
 
-  const session = await getSession();
-  const host = headers().get('host') || 'localhost:3000';
+  const session = await auth0.getSession();
+  const headersList = await headers();
+  const host = headersList.get('host') || 'localhost:3000';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 
   const urlPrivate = `${protocol}://${host}/api/auth/accounts/${id}`;
@@ -20,7 +21,8 @@ export default async function getAccountsUser(
   // Si hay sesión, intenta privada primero
   if (session?.user) {
     try {
-      const cookieHeader = cookies().toString();
+      const cookieStore = await cookies();
+      const cookieHeader = cookieStore.toString();
       const privateRes = await fetch(urlPrivate, {
         method: 'GET',
         headers: {

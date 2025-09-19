@@ -1,35 +1,26 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { auth0 } from './lib/auth0';
 
-// Rutas que requieren autenticación
-const protectedRoutes = ['/profile', '/users/friends'];
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-export default function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-
-  // Si la ruta está en la lista de protegidas, verifica la sesión
-  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    // Verifica si existe la cookie de sesión de Auth0
-    const hasSession = req.cookies.has('appSession');
-
-    // Si no hay sesión, redirige al login
-    if (!hasSession) {
-      const url = new URL('/api/auth/login', req.url);
-      url.searchParams.set('returnTo', pathname);
-      url.searchParams.set('prompt', 'login');
-      return NextResponse.redirect(url);
-    }
-
-    // Si hay sesión, permite el acceso
-    return NextResponse.next();
+  // Log de rutas Auth0 para debugging
+  if (pathname.startsWith('/auth/')) {
+    console.log(`🔐 Auth0 Route: ${pathname}`);
+    console.log(`🔐 Full URL: ${request.url}`);
   }
 
-  // Para el resto de rutas, permite el acceso sin autenticación
-  return NextResponse.next();
+  return await auth0.middleware(request);
 }
 
 export const config = {
   matcher: [
-    // Protege todo menos las rutas públicas y estáticas
-    '/((?!api/auth|api/public|api/books|_next/static|_next/image|gy-logo.ico).*)',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
