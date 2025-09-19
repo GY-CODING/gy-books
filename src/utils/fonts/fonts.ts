@@ -3,7 +3,7 @@ import {
   Goudy_Bookletter_1911,
   Birthstone,
   Cinzel,
-} from 'next/font/google';
+} from 'next/font/google'; // Ya está usando next/font, no requiere cambio aquí
 
 export const inter = Inter({
   subsets: ['latin'],
