@@ -12,17 +12,13 @@ interface BookDisplayData {
  * Hook personalizado para obtener los datos de visualización de un libro
  * Maneja la lógica de qué título e imagen mostrar basado en la edición seleccionada
  * @param book El libro del que obtener los datos de visualización
- * @param defaultCoverImage URL de imagen por defecto a usar si no hay imagen
  * @returns Objeto con los datos de visualización procesados
  */
-export function useBookDisplay(
-  book: Book,
-  defaultCoverImage: string = ''
-): BookDisplayData {
+export function useBookDisplay(book: Book): BookDisplayData {
   return useMemo(() => {
     const selectedEdition = BookHelpers.getSelectedEdition(book);
     const title = BookHelpers.getDisplayTitle(book);
-    const coverUrl = BookHelpers.getDisplayCoverUrl(book) || defaultCoverImage;
+    const coverUrl = BookHelpers.getDisplayCoverUrl(book);
     const hasSelectedEdition = BookHelpers.hasSelectedEdition(book);
 
     return {
@@ -31,5 +27,5 @@ export function useBookDisplay(
       selectedEdition,
       hasSelectedEdition,
     };
-  }, [book, defaultCoverImage]);
+  }, [book]);
 }
