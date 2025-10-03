@@ -3,7 +3,7 @@ import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
 import { GET_BOOK_BY_ID_QUERY } from '@/utils/constants/Query';
-import { mapHardcoverToBook } from '@/mapper/books.mapper';
+import { mapHardcoverToBook } from '@/mapper/BookToMO.mapper';
 import Book from '@/domain/book.model';
 
 export const GET = async (req: NextRequest) => {
@@ -85,6 +85,15 @@ export const GET = async (req: NextRequest) => {
               }
             : null,
           status: book.userData.status,
+          userData: {
+            userId: book.userData.userId,
+            status: book.userData.status,
+            rating: book.userData.rating,
+            startDate: book.userData.startDate,
+            endDate: book.userData.endDate,
+            progress: book.userData.progress,
+            editionId: book.userData.editionId,
+          },
         };
 
         LIBRARY.books.push(MAPPED_BOOK);

@@ -28,13 +28,27 @@ export const GET_BOOK_BY_ID_QUERY = `
           image {
             url
           }
-          bio
         }
       }
       book_series {
+        id
         series {
           id
           name
+        }
+        book {
+          release_date
+          editions {
+            id
+            book_id
+            cached_image
+            language {
+              language
+              id
+            }
+            pages
+            title
+          }
         }
       }
     }

@@ -4,6 +4,7 @@ import Book from '@/domain/book.model';
 import { useRouter } from 'next/navigation';
 import { Library } from '@/domain/library.model';
 import { lora } from '@/utils/fonts/fonts';
+import { useBookDisplay } from '@/hooks/useBookDisplay';
 
 interface BookCardCompactProps {
   book: Book;
@@ -122,6 +123,7 @@ export const BookCardCompact = ({
   small = false,
 }: BookCardCompactProps) => {
   const router = useRouter();
+  const { title, coverUrl } = useBookDisplay(book, '/placeholder-book.jpg');
 
   const handleClick = () => {
     if (onClick) {
@@ -170,8 +172,8 @@ export const BookCardCompact = ({
       >
         <Box
           component="img"
-          src={book.cover.url || '/placeholder-book.jpg'}
-          alt={book.title}
+          src={coverUrl}
+          alt={title}
           sx={{
             width: '100%',
             height: '100%',
@@ -211,7 +213,7 @@ export const BookCardCompact = ({
               overflow: 'hidden',
             }}
           >
-            {book.title}
+            {title}
           </Typography>
           <Typography
             sx={{

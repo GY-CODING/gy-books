@@ -3,8 +3,14 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { lora } from '@/utils/fonts/fonts';
+import { useBookDisplay } from '@/hooks/useBookDisplay';
 
 export function BookCard({ book }: { book: Book }) {
+  if (book.id === '103241') {
+    console.log(book);
+  }
+
+  const { title, coverUrl } = useBookDisplay(book);
   return (
     <Box
       component="a"
@@ -54,8 +60,8 @@ export function BookCard({ book }: { book: Book }) {
               transform: 'scale(1.05)',
             },
           }}
-          src={book.cover.url}
-          alt={book.title}
+          src={coverUrl}
+          alt={title}
         />
       </Box>
       <Box
@@ -98,7 +104,7 @@ export function BookCard({ book }: { book: Book }) {
             }}
             variant="h6"
           >
-            {book.title}
+            {title}
           </Typography>
           {book.series != null && (
             <Typography

@@ -1,5 +1,6 @@
 import { EStatus } from '@/utils/constants/EStatus';
 import { ApiBook } from '@/domain/apiBook.model';
+import { Edition } from '@/domain/book.model';
 
 export interface BookRatingProps {
   bookId: string;
@@ -10,6 +11,7 @@ export interface BookRatingProps {
     options?: { revalidate?: boolean }
   ) => Promise<ApiBook | null | undefined>;
   isLoggedIn: boolean;
+  selectedEdition?: Edition | null;
 }
 
 export interface BookRatingState {

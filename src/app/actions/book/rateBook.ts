@@ -22,6 +22,7 @@ export default async function rateBook(
     const endDate = formData.get('endDate') as string;
     const status = formData.get('status') as string;
     const progress = formData.get('progress') as string;
+    const editionId = formData.get('editionId') as string;
 
     if (!bookId) {
       throw new Error('Book ID is required');
@@ -31,6 +32,12 @@ export default async function rateBook(
     if (isNaN(ratingNumber) || ratingNumber < 0 || ratingNumber > 5) {
       throw new Error('Rating must be a number between 0 and 5');
     }
+
+    // Validar que solo se envíe editionId si el libro está en un estado válido
+    const validStatuses = [EStatus.WANT_TO_READ, EStatus.READING, EStatus.READ];
+    const finalEditionId = validStatuses.includes(status as EStatus)
+      ? editionId
+      : null;
 
     const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
@@ -52,6 +59,7 @@ export default async function rateBook(
           endDate: endDate || '',
           status: status,
           progress: progress,
+          editionId: finalEditionId || undefined,
         }),
         credentials: 'include',
       }

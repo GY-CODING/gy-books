@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Book, { Author, AuthorImage, Cover, Series } from '@/domain/book.model';
+import Book, {
+  Author,
+  AuthorImage,
+  Cover,
+  Series,
+  Edition,
+} from '@/domain/book.model';
 import { EStatus } from '@/utils/constants/EStatus';
 
 export function mapHardcoverToBook(data: any): Book {
@@ -29,6 +35,30 @@ export function mapHardcoverToBook(data: any): Book {
     url: data.image?.url ?? '',
   };
 
+  // Map editions if present
+  let editions: Edition[] | undefined = undefined;
+  const editionsRaw = data.book_series?.[0]?.book?.editions;
+  if (Array.isArray(editionsRaw)) {
+    editions = editionsRaw.map((ed: any) => ({
+      id: parseInt(ed.id),
+      book_id: parseInt(ed.book_id),
+      title: ed.title,
+      pages: ed.pages ?? null,
+      cached_image:
+        ed.cached_image && ed.cached_image.url
+          ? {
+              id: ed.cached_image.id,
+              url: ed.cached_image.url,
+              color: ed.cached_image.color,
+              width: ed.cached_image.width,
+              height: ed.cached_image.height,
+              color_name: ed.cached_image.color_name,
+            }
+          : null,
+      language: ed.language ?? null,
+    }));
+  }
+
   const book: Book = {
     id: data.id.toString(),
     title: data.title,
@@ -39,6 +69,7 @@ export function mapHardcoverToBook(data: any): Book {
     author,
     series,
     status: EStatus.WANT_TO_READ,
+    editions,
   };
 
   return book;

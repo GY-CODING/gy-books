@@ -61,6 +61,11 @@ export function useBookRatingState(props: BookRatingProps) {
       formData.append('progress', progressValue as unknown as string);
       const statusToSave = tempStatus;
       formData.append('status', statusToSave.toString());
+
+      // Solo incluir editionId si hay una selectedEdition
+      if (props.selectedEdition?.id) {
+        formData.append('editionId', props.selectedEdition.id.toString());
+      }
       const updatedApiBook = await rateBook(
         formData,
         user.username,

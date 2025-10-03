@@ -21,6 +21,7 @@ export const BookRating = ({
   isRatingLoading,
   mutate,
   isLoggedIn,
+  selectedEdition,
 }: BookRatingProps) => {
   const { data: user, isLoading: isUserLoading } = useUser();
   const { handleDeleteBook } = useRemoveBook();
@@ -47,6 +48,7 @@ export const BookRating = ({
       isRatingLoading,
       mutate,
       isLoggedIn: false,
+      selectedEdition,
     });
 
   // Local computed values

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, IconButton, Chip, Divider } from '@mui/material';
 import { useParams } from 'next/navigation';
 import { useBook } from '@/hooks/useBook';
@@ -16,10 +16,13 @@ import { ESeverity } from '@/utils/constants/ESeverity';
 import { useApiBookPublic } from '@/hooks/useApiBookPublic';
 import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
 import BookDetailsSkeleton from '@/app/components/molecules/BookDetailsSkeleton';
+import { EditionSelector } from '@/app/components/molecules/EditionSelector/EditionSelector';
+import { Edition } from '@/domain/book.model';
 export default function BookDetails() {
   const params = useParams();
   const { data: book, isLoading } = useBook(params.id as string);
   const { data: user } = useUser();
+  const [selectedEdition, setSelectedEdition] = useState<Edition | null>(null);
   const {
     data: hallOfFame,
     handleAddBookToHallOfFame,
@@ -44,6 +47,20 @@ export default function BookDetails() {
   } = useApiBook(params.id as string);
   const { data: apiBookPublic, isLoading: isApiBookLoadingPublic } =
     useApiBookPublic(params.id as string);
+
+  // Extraer todas las ediciones disponibles
+  const allEditions: Edition[] = React.useMemo(() => {
+    if (!book?.editions) return [];
+    return book.editions;
+  }, [book]);
+
+  // Determinar la imagen y título a mostrar
+  const displayImage =
+    selectedEdition?.cached_image?.url ||
+    book?.cover?.url ||
+    DEFAULT_COVER_IMAGE;
+  const displayTitle = selectedEdition?.title || book?.title;
+
   if (isLoading || isApiBookLoading || isApiBookLoadingPublic) {
     return <BookDetailsSkeleton />;
   }
@@ -64,8 +81,6 @@ export default function BookDetails() {
       handleAddBookToHallOfFame(book?.id || '');
     }
   };
-
-  const bookHasCover = book?.cover.url && book.cover.url !== '';
 
   return (
     <Box
@@ -101,7 +116,7 @@ export default function BookDetails() {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          {book?.title}
+          {displayTitle}
         </Typography>
         <Typography
           variant="h6"
@@ -129,8 +144,8 @@ export default function BookDetails() {
       >
         <Box
           component="img"
-          src={bookHasCover ? book?.cover.url : DEFAULT_COVER_IMAGE}
-          alt={book?.title}
+          src={displayImage}
+          alt={displayTitle}
           sx={{
             width: ['250px', '250px', '300px'],
             maxWidth: { xs: '100%', md: '300px' },
@@ -197,6 +212,7 @@ export default function BookDetails() {
               isRatingLoading={isApiBookLoading}
               mutate={mutate}
               isLoggedIn={isLoggedIn}
+              selectedEdition={selectedEdition}
             />
 
             {user && (
@@ -227,6 +243,13 @@ export default function BookDetails() {
               </IconButton>
             )}
           </Box>
+
+          {/* Edition Selector */}
+          <EditionSelector
+            editions={allEditions}
+            selectedEdition={selectedEdition}
+            onEditionChange={setSelectedEdition}
+          />
         </Box>
       </Box>
       <Box
@@ -258,7 +281,7 @@ export default function BookDetails() {
               textAlign: { xs: 'center', md: 'left' },
             }}
           >
-            {book?.title}
+            {displayTitle}
           </Typography>
         </Box>
         <Typography

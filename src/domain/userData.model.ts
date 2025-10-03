@@ -7,6 +7,7 @@ export interface UserData {
   startDate: string;
   endDate: string;
   progress?: number;
+  editionId?: string;
 }
 
 export function formatProgress(progress: number) {

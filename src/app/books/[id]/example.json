@@ -1,0 +1,4208 @@
+{
+  "data": {
+    "books_by_pk": {
+      "id": 369692,
+      "title": "Mistborn: The Final Empire",
+      "description": "What if the whole world were a dead, blasted wasteland?\r\n\r\nMistborn\r\nFor a thousand years the ash fell and no flowers bloomed. For a thousand years the Skaa slaved in misery and lived in fear. For a thousand years the Lord Ruler, the \"Sliver of Infinity,\" reigned with absolute power and ultimate terror, divinely invincible. Then, when hope was so long lost that not even its memory remained, a terribly scarred, heart-broken half-Skaa rediscovered it in the depths of the Lord Ruler's most hellish prison. Kelsier \"snapped\" and found in himself the powers of a Mistborn. A brilliant thief and natural leader, he turned his talents to the ultimate caper, with the Lord Ruler himself as the mark.\r\n\r\nKelsier recruited the underworld's elite, the smartest and most trustworthy allomancers, each of whom shares one of his many powers, and all of whom relish a high-stakes challenge. Then Kelsier reveals his ultimate dream, not just the greatest heist in history, but the downfall of the divine despot.\r\n\r\nBut even with the best criminal crew ever assembled, Kel's plan looks more like the ultimate long shot, until luck brings a ragged girl named Vin into his life. Like him, she's a half-Skaa orphan, but she's lived a much harsher life. Vin has learned to expect betrayal from everyone she meets. She will have to learn trust if Kel is to help her master powers of which she never dreamed.\r\n\r\nBrandon Sanderson, fantasy's newest master tale-spinner and author of the acclaimed debut Elantris, dares to turn a genre on its head by asking a simple question: What if the prophesied hero failed to defeat the Dark Lord? The answer will be found in the Misborn Trilogy, a saga of surprises that begins with the book in your hands. Fantasy will never be the same again.",
+      "release_date": "2006-01-01",
+      "image": {
+        "url": "https://assets.hardcover.app/external_data/31614753/800579f7d675e7d2cd01043ddc57eb6ff724a6a5.jpeg"
+      },
+      "contributions": [
+        {
+          "author": {
+            "id": 204214,
+            "name": "Brandon Sanderson",
+            "image": {
+              "url": "https://assets.hardcover.app/author/204214/6001568168434228.jpg"
+            }
+          }
+        }
+      ],
+      "book_series": [
+        {
+          "id": 2893,
+          "series": {
+            "id": 5452,
+            "name": "The Mistborn Saga"
+          },
+          "book": {
+            "release_date": "2006-01-01",
+            "editions": [
+              {
+                "id": 31521152,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3599365,
+                  "url": "https://assets.hardcover.app/external_data/61320197/76410b2082495906df31856d10293b1f09dfaad6.jpeg",
+                  "color": "#264a72",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Russian",
+                  "id": 136
+                },
+                "pages": 736,
+                "title": "Пепел и сталь"
+              },
+              {
+                "id": 30572581,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844191,
+                  "url": "https://assets.hardcover.app/external_data/59640595/a0f72621b6ea916b44b307a1f907f0778d5e74b9.jpeg",
+                  "color": "#303e46",
+                  "width": 128,
+                  "height": 200,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Dutch; Flemish",
+                  "id": 39
+                },
+                "pages": 692,
+                "title": "Het laatste rijk"
+              },
+              {
+                "id": 31333409,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226714,
+                  "url": "https://assets.hardcover.app/external_data/60564165/1c0abb3e375fdba7fbce19aef1da48ee7b3cc678.jpeg",
+                  "color": "#899a6a",
+                  "width": 98,
+                  "height": 144,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "Bulgarian",
+                  "id": 25
+                },
+                "pages": 656,
+                "title": "Последната империя"
+              },
+              {
+                "id": 30432877,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4297649,
+                  "url": "https://assets.hardcover.app/editions/30432877/6800548512332565.jpg",
+                  "color": "#b41008",
+                  "width": 1466,
+                  "height": 2200,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 558,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30501719,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4156315,
+                  "url": "https://assets.hardcover.app/external_data/61763528/174f0a3f6ff89c188483dd85b0b914b1902bcfb3.jpeg",
+                  "color": "#452710",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 680,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30425202,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4156681,
+                  "url": "https://assets.hardcover.app/edition/30425202/a7223dacd356a7dc3092f191baa88f50959ee5c4.jpeg",
+                  "color": "#fcfdf4",
+                  "width": 347,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "L'ultimo impero"
+              },
+              {
+                "id": 32230916,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5618137,
+                  "url": "https://assets.hardcover.app/edition/32230916/020012e215bd853c86b5be2e24647d35eb866c95.jpeg",
+                  "color": "#674305",
+                  "width": 347,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "Mistborn. L'ultimo impero"
+              },
+              {
+                "id": 31516510,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3565729,
+                  "url": "https://assets.hardcover.app/external_data/61306780/6533454e5984ee746688c247f244287e4ca3d34d.jpeg",
+                  "color": "#73809c",
+                  "width": 98,
+                  "height": 155,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Polish",
+                  "id": 129
+                },
+                "pages": 624,
+                "title": "Z mgły zrodzony"
+              },
+              {
+                "id": 31945593,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4764560,
+                  "url": "https://assets.hardcover.app/books/369692/0bf80c05-d352-473a-893e-8cd3fca13754.jpg",
+                  "color": "#9c1a0e",
+                  "width": 352,
+                  "height": 531,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 544,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31560992,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3794616,
+                  "url": "https://assets.hardcover.app/external_data/61436903/2a515ef7e2c11d6816397540ea87da41c9812f47.jpeg",
+                  "color": "#ced3d3",
+                  "width": 98,
+                  "height": 150,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Finnish",
+                  "id": 46
+                },
+                "pages": 608,
+                "title": "Viimeinen valtakunta"
+              },
+              {
+                "id": 31707097,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4169015,
+                  "url": "https://assets.hardcover.app/external_data/61775977/066324dc5facdd1838e804d8b335f75e6a8b3352.jpeg",
+                  "color": "#393539",
+                  "width": 97,
+                  "height": 160,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Lithuanian",
+                  "id": 98
+                },
+                "pages": 744,
+                "title": "Miglos vaikai. Paskutinė imperija"
+              },
+              {
+                "id": 30478610,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226741,
+                  "url": "https://assets.hardcover.app/edition/30478610/84de2c65fec79b9048990c5ac337b3d86832e04a.jpeg",
+                  "color": "#178d8d",
+                  "width": 250,
+                  "height": 359,
+                  "color_name": "Blue"
+                },
+                "language": {
+                  "language": "Brazilian Portuguese",
+                  "id": 185
+                },
+                "pages": 621,
+                "title": "O Império Final"
+              },
+              {
+                "id": 31729050,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4224646,
+                  "url": "https://assets.hardcover.app/edition/31729050/b8ff4a46569fe9562a4de0eee7f27596a3c8c743.jpeg",
+                  "color": "#e1e6ea",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Swedish",
+                  "id": 154
+                },
+                "pages": 743,
+                "title": "Sista riket"
+              },
+              {
+                "id": 31794359,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4395557,
+                  "url": "https://assets.hardcover.app/edition/31794359/95580a745b68133f7c9270c3a431762120bcec72.jpeg",
+                  "color": "#4b220d",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 663,
+                "title": "El imperio final"
+              },
+              {
+                "id": 31660362,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4051020,
+                  "url": "https://assets.hardcover.app/external_data/61668647/7f258ecaaab4cf1ad55308532142cdb0df2abef9.jpeg",
+                  "color": "#84576e",
+                  "width": 98,
+                  "height": 131,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31675736,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "Turkish",
+                  "id": 168
+                },
+                "pages": 544,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31580280,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3843704,
+                  "url": "https://assets.hardcover.app/external_data/61482812/65ee23a125b5911ff7d7c9c0ca412d96440b6146.jpeg",
+                  "color": "#867a8c",
+                  "width": 98,
+                  "height": 156,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "French",
+                  "id": 47
+                },
+                "pages": 606,
+                "title": "L'Empire ultime"
+              },
+              {
+                "id": 30800010,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1044370,
+                  "url": "https://assets.hardcover.app/external_data/59936129/cc0f00b9333285ce710d9f0aa99e14c5ab595577.jpeg",
+                  "color": "#6b2208",
+                  "width": 128,
+                  "height": 197,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Czech",
+                  "id": 36
+                },
+                "pages": 622,
+                "title": "Mistborn: Finální říše"
+              },
+              {
+                "id": 32137995,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5340587,
+                  "url": "https://assets.hardcover.app/edition/32137995/5fa67c832e42a3d0ee67287928c85e29d8e6e04d.jpeg",
+                  "color": "#20816c",
+                  "width": 324,
+                  "height": 500,
+                  "color_name": "Green"
+                },
+                "language": {
+                  "language": "Dutch; Flemish",
+                  "id": 39
+                },
+                "pages": 639,
+                "title": "Het Laatste Rijk"
+              },
+              {
+                "id": 30598862,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844217,
+                  "url": "https://assets.hardcover.app/external_data/59668292/1c945407e45d21c2ecfd13b4a55fcbac0cc4a99f.jpeg",
+                  "color": "#dce1e5",
+                  "width": 128,
+                  "height": 196,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "Swedish",
+                  "id": 154
+                },
+                "pages": 578,
+                "title": "Sista riket"
+              },
+              {
+                "id": 31802980,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4428695,
+                  "url": "https://assets.hardcover.app/editions/31802980/8985921707208175.jpg",
+                  "color": "#a57d89",
+                  "width": 1120,
+                  "height": 1120,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30661331,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226795,
+                  "url": "https://assets.hardcover.app/edition/30661331/26b9937f98d3884c53af4b685504e9577bca036e.jpeg",
+                  "color": "#9d1a0e",
+                  "width": 332,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 534,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31897364,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4650973,
+                  "url": "https://assets.hardcover.app/external_data/61589267/3933f0538d90b9b7ce3aba64e6322f64e6bca071.jpeg",
+                  "color": "#e4e8ea",
+                  "width": 98,
+                  "height": 146,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Arabic",
+                  "id": 8
+                },
+                "pages": 1004,
+                "title": "ملحمة وليدو الضباب: الإمبراطوية النهائية"
+              },
+              {
+                "id": 31959646,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4804612,
+                  "url": "https://assets.hardcover.app/edition/31959646/e241e181b9a9cb5b37307dff2a1de54a78d9f6cc.jpeg",
+                  "color": "#a1160d",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "Nacidos de la bruma"
+              },
+              {
+                "id": 31973247,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4840083,
+                  "url": "https://assets.hardcover.app/external_data/203633/a3c534c6a8da8f172e92f9dd64d0310074e8bd4b.jpeg",
+                  "color": "#153b2f",
+                  "width": 98,
+                  "height": 139,
+                  "color_name": "Green"
+                },
+                "language": {
+                  "language": "Ukrainian",
+                  "id": 171
+                },
+                "pages": 704,
+                "title": "Остання імперія"
+              },
+              {
+                "id": 31478724,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 31965395,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4814618,
+                  "url": "https://assets.hardcover.app/editions/31965395/2aac7737-0e7f-4f98-8bc1-c39871029538.jpg",
+                  "color": "#a57e89",
+                  "width": 2400,
+                  "height": 2400,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30420807,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226720,
+                  "url": "https://assets.hardcover.app/external_data/60564171/e63ae7813de99ed0c18c89daf7fe0667dd1b2bd0.jpeg",
+                  "color": "#614e27",
+                  "width": 327,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 670,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30500350,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226745,
+                  "url": "https://assets.hardcover.app/external_data/38309294/87179ea24f567ad6833c4c2e23c09bdd8ab14735.jpeg",
+                  "color": "#d8e8f0",
+                  "width": 325,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 169,
+                "title": "Mistborn: Secret History"
+              },
+              {
+                "id": 30432878,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226728,
+                  "url": "https://assets.hardcover.app/edition/30432878/44ed46eaa882c3845b4cd58dd2db97dc9c32040d.jpeg",
+                  "color": "#4f4c4c",
+                  "width": 333,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30432884,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226734,
+                  "url": "https://assets.hardcover.app/external_data/49456151/243712cb9da52eb40bc27b638a87e44e1a2ee0cc.jpeg",
+                  "color": "#eae9e8",
+                  "width": 500,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 696,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30501711,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226750,
+                  "url": "https://assets.hardcover.app/external_data/60564214/093bb410908818d9f9e5e88a62c6a338b91dd996.jpeg",
+                  "color": "#4c230d",
+                  "width": 329,
+                  "height": 499,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30500337,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844138,
+                  "url": "https://assets.hardcover.app/external_data/59570680/778fe583015efc0c6588986a2ed0fe2556ce21b8.jpeg",
+                  "color": "#25425c",
+                  "width": 128,
+                  "height": 197,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Romanian; Moldavian; Moldovan",
+                  "id": 134
+                },
+                "pages": null,
+                "title": "Ultimul imperiu"
+              },
+              {
+                "id": 30500344,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1977387,
+                  "url": "https://assets.hardcover.app/external_data/59570690/8cf929a207bd26c589601417f6e7b0786ca399af.jpeg",
+                  "color": "#e1eaed",
+                  "width": 128,
+                  "height": 195,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30616735,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226774,
+                  "url": "https://assets.hardcover.app/external_data/49147403/4848ac16ce64d4bbc3b4a6890d0000d260ea0352.jpeg",
+                  "color": "#cbbbc3",
+                  "width": 305,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30652515,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226782,
+                  "url": "https://assets.hardcover.app/edition/30652515/b00d234f982c2b65e691a5148abe337ec6102b7c.jpeg",
+                  "color": "#5f757c",
+                  "width": 331,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 688,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30668434,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226801,
+                  "url": "https://assets.hardcover.app/external_data/60564292/b53c8aa6b6de0998829bd16c5bec7dc720076cb1.jpeg",
+                  "color": "#9f7e83",
+                  "width": 309,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "French",
+                  "id": 47
+                },
+                "pages": 913,
+                "title": "L'Empire ultime"
+              },
+              {
+                "id": 30780165,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226806,
+                  "url": "https://assets.hardcover.app/edition/30780165/e1cabf9a0ae77ed1424fe568b0d7fcf387dc2b08.jpeg",
+                  "color": "#c0781d",
+                  "width": 327,
+                  "height": 500,
+                  "color_name": "Orange"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 608,
+                "title": "L'ultimo impero"
+              },
+              {
+                "id": 30870871,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226815,
+                  "url": "https://assets.hardcover.app/external_data/60564310/98fac1afb94d01d822bbcce545d30d1d8eea3653.jpeg",
+                  "color": "#48260e",
+                  "width": 369,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 663,
+                "title": "El Imperio Final"
+              },
+              {
+                "id": 30953266,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1325716,
+                  "url": "https://assets.hardcover.app/external_data/60081309/7f805d06e275b2e88f094d7c5264caf785b54ba8.jpeg",
+                  "color": "#522301",
+                  "width": 128,
+                  "height": 184,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 774,
+                "title": "Mistborn #1. L'ultimo impero - The Final Empire"
+              },
+              {
+                "id": 31058951,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1534300,
+                  "url": "https://assets.hardcover.app/external_data/60202643/760bac35bca6384e27bfa32776be6757181675e4.jpeg",
+                  "color": "#0b567d",
+                  "width": 128,
+                  "height": 186,
+                  "color_name": "Blue"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 822,
+                "title": "O Império Final"
+              },
+              {
+                "id": 31083171,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226823,
+                  "url": "https://assets.hardcover.app/edition/31083171/b3849fb461b0a1c030acd2e3c9c3e7916a3acc7d.jpeg",
+                  "color": "#ceca98",
+                  "width": 323,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "Mistborn. L'ultimo impero"
+              },
+              {
+                "id": 31335589,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1824853,
+                  "url": "https://assets.hardcover.app/editions/31335589/362821797398814.jpg",
+                  "color": "#bec5d1",
+                  "width": 988,
+                  "height": 1500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": 894,
+                "title": "Kinder des Nebels "
+              },
+              {
+                "id": 31342063,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226828,
+                  "url": "https://assets.hardcover.app/edition/31342063/72539182be337136d0c25c56e34c968d5daea1b1.jpeg",
+                  "color": "#601c11",
+                  "width": 345,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Russian",
+                  "id": 136
+                },
+                "pages": 640,
+                "title": "Пепел и сталь"
+              },
+              {
+                "id": 31264161,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226852,
+                  "url": "https://assets.hardcover.app/external_data/60564355/a7e7ed814e9ab68084d19529317ab5ba74269250.jpeg",
+                  "color": "#6b7694",
+                  "width": 314,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Polish",
+                  "id": 129
+                },
+                "pages": 672,
+                "title": "Z mgły zrodzony"
+              },
+              {
+                "id": 31440008,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2758212,
+                  "url": "https://assets.hardcover.app/editions/31440008/3821389423458097.jpg",
+                  "color": "#9d1a0e",
+                  "width": 1698,
+                  "height": 2560,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 558,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30616149,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226711,
+                  "url": "https://assets.hardcover.app/external_data/60564161/0f17005f643258da853c86a4b77e90adb168636c.jpeg",
+                  "color": "#a41907",
+                  "width": 98,
+                  "height": 98,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30654942,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226784,
+                  "url": "https://assets.hardcover.app/external_data/60564271/26258f225caee8b4abe5ad6d10529f1b9dd6f3da.jpeg",
+                  "color": "#824e88",
+                  "width": 98,
+                  "height": 131,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30602509,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2084548,
+                  "url": "https://assets.hardcover.app/external_data/59672191/d6b51d53782de2cb74f68e9c6a721c14b2ef3070.jpeg",
+                  "color": "#5a4821",
+                  "width": 128,
+                  "height": 195,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 32106670,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5258017,
+                  "url": "https://assets.hardcover.app/external_data/709336/b1f397d6a25126c8229d507f321e316bc2aa7329.jpeg",
+                  "color": "#545a5b",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Persian",
+                  "id": 127
+                },
+                "pages": 728,
+                "title": "امپراتوری نهایی"
+              },
+              {
+                "id": 5195452,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1733515,
+                  "url": "https://assets.hardcover.app/external_data/31614753/800579f7d675e7d2cd01043ddc57eb6ff724a6a5.jpeg",
+                  "color": "#a6747c",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 541,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30391598,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226718,
+                  "url": "https://assets.hardcover.app/edition/30391598/df043e9ffcf05edce0c1025eed218028372e084c.jpeg",
+                  "color": "#dde1e5",
+                  "width": 486,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 32057873,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5102787,
+                  "url": "https://assets.hardcover.app/external_data/524682/ebc19357c33ee4ee5cd907fd3305a27d511834c0.jpeg",
+                  "color": "#cac3c3",
+                  "width": 500,
+                  "height": 387,
+                  "color_name": "Silver"
+                },
+                "language": null,
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31482157,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3251231,
+                  "url": "https://assets.hardcover.app/edition/31482157/9503991630d606d2207acd897c7dae03ff33ccee.jpeg",
+                  "color": "#bbb68e",
+                  "width": 160,
+                  "height": 235,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Greek, Modern (1453-)",
+                  "id": 56
+                },
+                "pages": 424,
+                "title": "Η ύστατη αυτοκρατορία, Τόμος Α'"
+              },
+              {
+                "id": 11581193,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1903149,
+                  "url": "https://assets.hardcover.app/book_mappings/7332293/b3bbeca1bb35566579b72de5d5588c3afff0acda.jpeg",
+                  "color": "#8e5463",
+                  "width": 310,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "Mistborn"
+              },
+              {
+                "id": 31273669,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226810,
+                  "url": "https://assets.hardcover.app/external_data/35201536/4a79f4a297ec8debd649b71ae747a7f4d2b0a9b8.jpeg",
+                  "color": "#91825d",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": null,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 30795878,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226810,
+                  "url": "https://assets.hardcover.app/external_data/35201536/4a79f4a297ec8debd649b71ae747a7f4d2b0a9b8.jpeg",
+                  "color": "#91825d",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": 894,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 31505140,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": null,
+                "pages": null,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31256917,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5107067,
+                  "url": "https://assets.hardcover.app/external_data/529549/dea76b442dd067c63487469650fbccad6c4cdc4c.jpeg",
+                  "color": "#ea2505",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Red"
+                },
+                "language": null,
+                "pages": 614,
+                "title": "Konačno carstvo"
+              },
+              {
+                "id": 30904054,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4084700,
+                  "url": "https://assets.hardcover.app/external_data/61700315/d6c495b26d64ef260bca4eebce06b20d2f3bed99.jpeg",
+                  "color": "#b3a29f",
+                  "width": 341,
+                  "height": 500,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Turkish",
+                  "id": 168
+                },
+                "pages": 544,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31934161,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4735422,
+                  "url": "https://assets.hardcover.app/books/369692/517623169642258.jpeg",
+                  "color": "#a39772",
+                  "width": 300,
+                  "height": 300,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": null,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 31597332,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3887387,
+                  "url": "https://assets.hardcover.app/edition/31597332/a446f7a027cc05c1d878915a154bf182f9660576.jpeg",
+                  "color": "#4b230d",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "Nacidos de la Bruma: El Imperio Final"
+              },
+              {
+                "id": 31104010,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3473224,
+                  "url": "https://assets.hardcover.app/editions/31104010/6282677130727592.jpeg",
+                  "color": "#f2d1bf",
+                  "width": 636,
+                  "height": 944,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Hungarian",
+                  "id": 66
+                },
+                "pages": 381,
+                "title": "Ködszerzet: A Végső Birodalom 1."
+              },
+              {
+                "id": 32113613,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5271687,
+                  "url": "https://assets.hardcover.app/edition/32113613/2971cf492110cc9d981935135e3bd2eb5772c037.jpeg",
+                  "color": "#2b4f69",
+                  "width": 317,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": null,
+                "pages": null,
+                "title": "Рожденный туманом. Книга 1. Пепел и сталь"
+              },
+              {
+                "id": 30405361,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 843507,
+                  "url": "https://assets.hardcover.app/external_data/59360039/e2c6ba1f606033b4e202fccc5931d651feda3d4d.jpeg",
+                  "color": "#905465",
+                  "width": 98,
+                  "height": 158,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30431573,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226723,
+                  "url": "https://assets.hardcover.app/external_data/30835425/ab8bbbd23b43e8589bf43149e7f3507985c64888.jpeg",
+                  "color": "#373527",
+                  "width": 325,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 352,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 1257855,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 843516,
+                  "url": "https://assets.hardcover.app/external_data/45920648/e08119147e4c18d194f5e66596174ba90d694569.jpeg",
+                  "color": "#e4eced",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 647,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 32124613,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5303108,
+                  "url": "https://assets.hardcover.app/edition/32124613/0758bf3560deac22a80c622a1655fed0c2d98708.jpeg",
+                  "color": "#4c220c",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30501714,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226756,
+                  "url": "https://assets.hardcover.app/external_data/60564221/d0abc22f0ca032de1ce430aa14a7e22a3c38020d.jpeg",
+                  "color": "#60290f",
+                  "width": 293,
+                  "height": 458,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30512443,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226763,
+                  "url": "https://assets.hardcover.app/edition/30512443/3d62ff05af7bd98ad1520df802b0ae8ff4262cf1.jpeg",
+                  "color": "#452617",
+                  "width": 349,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 608,
+                "title": "Mistborn: O Império Final"
+              },
+              {
+                "id": 30550953,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2026630,
+                  "url": "https://assets.hardcover.app/external_data/59620766/f4829fccbca8860c50a120e12d6792691832bbfd.jpeg",
+                  "color": "#7e4a23",
+                  "width": 128,
+                  "height": 176,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 823,
+                "title": "O herói das eras"
+              },
+              {
+                "id": 30550950,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226765,
+                  "url": "https://assets.hardcover.app/external_data/40336221/957d63b02a81534b5833ba37ca2a455aca3864c4.jpeg",
+                  "color": "#452710",
+                  "width": 350,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30550949,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2026626,
+                  "url": "https://assets.hardcover.app/external_data/59620762/edfc914c8771f7e18b228c006f192535d6578e9d.jpeg",
+                  "color": "#89541f",
+                  "width": 128,
+                  "height": 186,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 766,
+                "title": "Mistborn: primeira era: Nascidos da bruma: O império final"
+              },
+              {
+                "id": 30660652,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226788,
+                  "url": "https://assets.hardcover.app/edition/30660652/acfdcb16b7f9db8321689432b7c21fb664a85a1a.jpeg",
+                  "color": "#aa7d8c",
+                  "width": 310,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30953268,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3209094,
+                  "url": "https://assets.hardcover.app/edition/30953268/565360267d49a194dc4f785b66ce5dcf131bd690.jpeg",
+                  "color": "#514b4b",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "L'ultimo impero. Mistborn"
+              },
+              {
+                "id": 31148372,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1659995,
+                  "url": "https://assets.hardcover.app/external_data/60294340/32b163887d04ec8e20cb6032b58da4921dd89be7.jpeg",
+                  "color": "#482124",
+                  "width": 98,
+                  "height": 150,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Serbian",
+                  "id": 150
+                },
+                "pages": 645,
+                "title": "Poslednje carstvo"
+              },
+              {
+                "id": 31379363,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 608,
+                "title": "Mistborn – Nascidos da Bruma: O Império Final"
+              },
+              {
+                "id": 31950466,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5502493,
+                  "url": "https://assets.hardcover.app/external_data/126171/f538eaf5448d865811df355822d39f70fbe4b378.jpeg",
+                  "color": "#9c1a0e",
+                  "width": 128,
+                  "height": 193,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "Mistborn"
+              },
+              {
+                "id": 31760152,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5502507,
+                  "url": "https://assets.hardcover.app/edition/31760152/1cbc080a-8b0e-4dba-8c4f-7fe4b77742b8.jpeg",
+                  "color": "#b27b8c",
+                  "width": 295,
+                  "height": 475,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 571,
+                "title": "Mistborn"
+              }
+            ]
+          }
+        },
+        {
+          "id": 16592,
+          "series": {
+            "id": 5497,
+            "name": "The Cosmere"
+          },
+          "book": {
+            "release_date": "2006-01-01",
+            "editions": [
+              {
+                "id": 31521152,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3599365,
+                  "url": "https://assets.hardcover.app/external_data/61320197/76410b2082495906df31856d10293b1f09dfaad6.jpeg",
+                  "color": "#264a72",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Russian",
+                  "id": 136
+                },
+                "pages": 736,
+                "title": "Пепел и сталь"
+              },
+              {
+                "id": 30572581,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844191,
+                  "url": "https://assets.hardcover.app/external_data/59640595/a0f72621b6ea916b44b307a1f907f0778d5e74b9.jpeg",
+                  "color": "#303e46",
+                  "width": 128,
+                  "height": 200,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Dutch; Flemish",
+                  "id": 39
+                },
+                "pages": 692,
+                "title": "Het laatste rijk"
+              },
+              {
+                "id": 31333409,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226714,
+                  "url": "https://assets.hardcover.app/external_data/60564165/1c0abb3e375fdba7fbce19aef1da48ee7b3cc678.jpeg",
+                  "color": "#899a6a",
+                  "width": 98,
+                  "height": 144,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "Bulgarian",
+                  "id": 25
+                },
+                "pages": 656,
+                "title": "Последната империя"
+              },
+              {
+                "id": 30432877,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4297649,
+                  "url": "https://assets.hardcover.app/editions/30432877/6800548512332565.jpg",
+                  "color": "#b41008",
+                  "width": 1466,
+                  "height": 2200,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 558,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30501719,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4156315,
+                  "url": "https://assets.hardcover.app/external_data/61763528/174f0a3f6ff89c188483dd85b0b914b1902bcfb3.jpeg",
+                  "color": "#452710",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 680,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30425202,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4156681,
+                  "url": "https://assets.hardcover.app/edition/30425202/a7223dacd356a7dc3092f191baa88f50959ee5c4.jpeg",
+                  "color": "#fcfdf4",
+                  "width": 347,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "L'ultimo impero"
+              },
+              {
+                "id": 32230916,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5618137,
+                  "url": "https://assets.hardcover.app/edition/32230916/020012e215bd853c86b5be2e24647d35eb866c95.jpeg",
+                  "color": "#674305",
+                  "width": 347,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "Mistborn. L'ultimo impero"
+              },
+              {
+                "id": 31516510,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3565729,
+                  "url": "https://assets.hardcover.app/external_data/61306780/6533454e5984ee746688c247f244287e4ca3d34d.jpeg",
+                  "color": "#73809c",
+                  "width": 98,
+                  "height": 155,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Polish",
+                  "id": 129
+                },
+                "pages": 624,
+                "title": "Z mgły zrodzony"
+              },
+              {
+                "id": 31945593,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4764560,
+                  "url": "https://assets.hardcover.app/books/369692/0bf80c05-d352-473a-893e-8cd3fca13754.jpg",
+                  "color": "#9c1a0e",
+                  "width": 352,
+                  "height": 531,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 544,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31560992,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3794616,
+                  "url": "https://assets.hardcover.app/external_data/61436903/2a515ef7e2c11d6816397540ea87da41c9812f47.jpeg",
+                  "color": "#ced3d3",
+                  "width": 98,
+                  "height": 150,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Finnish",
+                  "id": 46
+                },
+                "pages": 608,
+                "title": "Viimeinen valtakunta"
+              },
+              {
+                "id": 31707097,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4169015,
+                  "url": "https://assets.hardcover.app/external_data/61775977/066324dc5facdd1838e804d8b335f75e6a8b3352.jpeg",
+                  "color": "#393539",
+                  "width": 97,
+                  "height": 160,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Lithuanian",
+                  "id": 98
+                },
+                "pages": 744,
+                "title": "Miglos vaikai. Paskutinė imperija"
+              },
+              {
+                "id": 30478610,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226741,
+                  "url": "https://assets.hardcover.app/edition/30478610/84de2c65fec79b9048990c5ac337b3d86832e04a.jpeg",
+                  "color": "#178d8d",
+                  "width": 250,
+                  "height": 359,
+                  "color_name": "Blue"
+                },
+                "language": {
+                  "language": "Brazilian Portuguese",
+                  "id": 185
+                },
+                "pages": 621,
+                "title": "O Império Final"
+              },
+              {
+                "id": 31729050,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4224646,
+                  "url": "https://assets.hardcover.app/edition/31729050/b8ff4a46569fe9562a4de0eee7f27596a3c8c743.jpeg",
+                  "color": "#e1e6ea",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Swedish",
+                  "id": 154
+                },
+                "pages": 743,
+                "title": "Sista riket"
+              },
+              {
+                "id": 31794359,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4395557,
+                  "url": "https://assets.hardcover.app/edition/31794359/95580a745b68133f7c9270c3a431762120bcec72.jpeg",
+                  "color": "#4b220d",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 663,
+                "title": "El imperio final"
+              },
+              {
+                "id": 31660362,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4051020,
+                  "url": "https://assets.hardcover.app/external_data/61668647/7f258ecaaab4cf1ad55308532142cdb0df2abef9.jpeg",
+                  "color": "#84576e",
+                  "width": 98,
+                  "height": 131,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31675736,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "Turkish",
+                  "id": 168
+                },
+                "pages": 544,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31580280,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3843704,
+                  "url": "https://assets.hardcover.app/external_data/61482812/65ee23a125b5911ff7d7c9c0ca412d96440b6146.jpeg",
+                  "color": "#867a8c",
+                  "width": 98,
+                  "height": 156,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "French",
+                  "id": 47
+                },
+                "pages": 606,
+                "title": "L'Empire ultime"
+              },
+              {
+                "id": 30800010,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1044370,
+                  "url": "https://assets.hardcover.app/external_data/59936129/cc0f00b9333285ce710d9f0aa99e14c5ab595577.jpeg",
+                  "color": "#6b2208",
+                  "width": 128,
+                  "height": 197,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Czech",
+                  "id": 36
+                },
+                "pages": 622,
+                "title": "Mistborn: Finální říše"
+              },
+              {
+                "id": 32137995,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5340587,
+                  "url": "https://assets.hardcover.app/edition/32137995/5fa67c832e42a3d0ee67287928c85e29d8e6e04d.jpeg",
+                  "color": "#20816c",
+                  "width": 324,
+                  "height": 500,
+                  "color_name": "Green"
+                },
+                "language": {
+                  "language": "Dutch; Flemish",
+                  "id": 39
+                },
+                "pages": 639,
+                "title": "Het Laatste Rijk"
+              },
+              {
+                "id": 30598862,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844217,
+                  "url": "https://assets.hardcover.app/external_data/59668292/1c945407e45d21c2ecfd13b4a55fcbac0cc4a99f.jpeg",
+                  "color": "#dce1e5",
+                  "width": 128,
+                  "height": 196,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "Swedish",
+                  "id": 154
+                },
+                "pages": 578,
+                "title": "Sista riket"
+              },
+              {
+                "id": 31802980,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4428695,
+                  "url": "https://assets.hardcover.app/editions/31802980/8985921707208175.jpg",
+                  "color": "#a57d89",
+                  "width": 1120,
+                  "height": 1120,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30661331,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226795,
+                  "url": "https://assets.hardcover.app/edition/30661331/26b9937f98d3884c53af4b685504e9577bca036e.jpeg",
+                  "color": "#9d1a0e",
+                  "width": 332,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 534,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31897364,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4650973,
+                  "url": "https://assets.hardcover.app/external_data/61589267/3933f0538d90b9b7ce3aba64e6322f64e6bca071.jpeg",
+                  "color": "#e4e8ea",
+                  "width": 98,
+                  "height": 146,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Arabic",
+                  "id": 8
+                },
+                "pages": 1004,
+                "title": "ملحمة وليدو الضباب: الإمبراطوية النهائية"
+              },
+              {
+                "id": 31959646,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4804612,
+                  "url": "https://assets.hardcover.app/edition/31959646/e241e181b9a9cb5b37307dff2a1de54a78d9f6cc.jpeg",
+                  "color": "#a1160d",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "Nacidos de la bruma"
+              },
+              {
+                "id": 31973247,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4840083,
+                  "url": "https://assets.hardcover.app/external_data/203633/a3c534c6a8da8f172e92f9dd64d0310074e8bd4b.jpeg",
+                  "color": "#153b2f",
+                  "width": 98,
+                  "height": 139,
+                  "color_name": "Green"
+                },
+                "language": {
+                  "language": "Ukrainian",
+                  "id": 171
+                },
+                "pages": 704,
+                "title": "Остання імперія"
+              },
+              {
+                "id": 31478724,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 31965395,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4814618,
+                  "url": "https://assets.hardcover.app/editions/31965395/2aac7737-0e7f-4f98-8bc1-c39871029538.jpg",
+                  "color": "#a57e89",
+                  "width": 2400,
+                  "height": 2400,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30420807,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226720,
+                  "url": "https://assets.hardcover.app/external_data/60564171/e63ae7813de99ed0c18c89daf7fe0667dd1b2bd0.jpeg",
+                  "color": "#614e27",
+                  "width": 327,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 670,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30500350,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226745,
+                  "url": "https://assets.hardcover.app/external_data/38309294/87179ea24f567ad6833c4c2e23c09bdd8ab14735.jpeg",
+                  "color": "#d8e8f0",
+                  "width": 325,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 169,
+                "title": "Mistborn: Secret History"
+              },
+              {
+                "id": 30432878,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226728,
+                  "url": "https://assets.hardcover.app/edition/30432878/44ed46eaa882c3845b4cd58dd2db97dc9c32040d.jpeg",
+                  "color": "#4f4c4c",
+                  "width": 333,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30432884,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226734,
+                  "url": "https://assets.hardcover.app/external_data/49456151/243712cb9da52eb40bc27b638a87e44e1a2ee0cc.jpeg",
+                  "color": "#eae9e8",
+                  "width": 500,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 696,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30501711,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226750,
+                  "url": "https://assets.hardcover.app/external_data/60564214/093bb410908818d9f9e5e88a62c6a338b91dd996.jpeg",
+                  "color": "#4c230d",
+                  "width": 329,
+                  "height": 499,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30500337,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844138,
+                  "url": "https://assets.hardcover.app/external_data/59570680/778fe583015efc0c6588986a2ed0fe2556ce21b8.jpeg",
+                  "color": "#25425c",
+                  "width": 128,
+                  "height": 197,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Romanian; Moldavian; Moldovan",
+                  "id": 134
+                },
+                "pages": null,
+                "title": "Ultimul imperiu"
+              },
+              {
+                "id": 30500344,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1977387,
+                  "url": "https://assets.hardcover.app/external_data/59570690/8cf929a207bd26c589601417f6e7b0786ca399af.jpeg",
+                  "color": "#e1eaed",
+                  "width": 128,
+                  "height": 195,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30616735,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226774,
+                  "url": "https://assets.hardcover.app/external_data/49147403/4848ac16ce64d4bbc3b4a6890d0000d260ea0352.jpeg",
+                  "color": "#cbbbc3",
+                  "width": 305,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30652515,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226782,
+                  "url": "https://assets.hardcover.app/edition/30652515/b00d234f982c2b65e691a5148abe337ec6102b7c.jpeg",
+                  "color": "#5f757c",
+                  "width": 331,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 688,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30668434,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226801,
+                  "url": "https://assets.hardcover.app/external_data/60564292/b53c8aa6b6de0998829bd16c5bec7dc720076cb1.jpeg",
+                  "color": "#9f7e83",
+                  "width": 309,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "French",
+                  "id": 47
+                },
+                "pages": 913,
+                "title": "L'Empire ultime"
+              },
+              {
+                "id": 30780165,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226806,
+                  "url": "https://assets.hardcover.app/edition/30780165/e1cabf9a0ae77ed1424fe568b0d7fcf387dc2b08.jpeg",
+                  "color": "#c0781d",
+                  "width": 327,
+                  "height": 500,
+                  "color_name": "Orange"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 608,
+                "title": "L'ultimo impero"
+              },
+              {
+                "id": 30870871,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226815,
+                  "url": "https://assets.hardcover.app/external_data/60564310/98fac1afb94d01d822bbcce545d30d1d8eea3653.jpeg",
+                  "color": "#48260e",
+                  "width": 369,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 663,
+                "title": "El Imperio Final"
+              },
+              {
+                "id": 30953266,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1325716,
+                  "url": "https://assets.hardcover.app/external_data/60081309/7f805d06e275b2e88f094d7c5264caf785b54ba8.jpeg",
+                  "color": "#522301",
+                  "width": 128,
+                  "height": 184,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 774,
+                "title": "Mistborn #1. L'ultimo impero - The Final Empire"
+              },
+              {
+                "id": 31058951,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1534300,
+                  "url": "https://assets.hardcover.app/external_data/60202643/760bac35bca6384e27bfa32776be6757181675e4.jpeg",
+                  "color": "#0b567d",
+                  "width": 128,
+                  "height": 186,
+                  "color_name": "Blue"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 822,
+                "title": "O Império Final"
+              },
+              {
+                "id": 31083171,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226823,
+                  "url": "https://assets.hardcover.app/edition/31083171/b3849fb461b0a1c030acd2e3c9c3e7916a3acc7d.jpeg",
+                  "color": "#ceca98",
+                  "width": 323,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "Mistborn. L'ultimo impero"
+              },
+              {
+                "id": 31335589,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1824853,
+                  "url": "https://assets.hardcover.app/editions/31335589/362821797398814.jpg",
+                  "color": "#bec5d1",
+                  "width": 988,
+                  "height": 1500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": 894,
+                "title": "Kinder des Nebels "
+              },
+              {
+                "id": 31342063,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226828,
+                  "url": "https://assets.hardcover.app/edition/31342063/72539182be337136d0c25c56e34c968d5daea1b1.jpeg",
+                  "color": "#601c11",
+                  "width": 345,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Russian",
+                  "id": 136
+                },
+                "pages": 640,
+                "title": "Пепел и сталь"
+              },
+              {
+                "id": 31264161,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226852,
+                  "url": "https://assets.hardcover.app/external_data/60564355/a7e7ed814e9ab68084d19529317ab5ba74269250.jpeg",
+                  "color": "#6b7694",
+                  "width": 314,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Polish",
+                  "id": 129
+                },
+                "pages": 672,
+                "title": "Z mgły zrodzony"
+              },
+              {
+                "id": 31440008,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2758212,
+                  "url": "https://assets.hardcover.app/editions/31440008/3821389423458097.jpg",
+                  "color": "#9d1a0e",
+                  "width": 1698,
+                  "height": 2560,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 558,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30616149,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226711,
+                  "url": "https://assets.hardcover.app/external_data/60564161/0f17005f643258da853c86a4b77e90adb168636c.jpeg",
+                  "color": "#a41907",
+                  "width": 98,
+                  "height": 98,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30654942,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226784,
+                  "url": "https://assets.hardcover.app/external_data/60564271/26258f225caee8b4abe5ad6d10529f1b9dd6f3da.jpeg",
+                  "color": "#824e88",
+                  "width": 98,
+                  "height": 131,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30602509,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2084548,
+                  "url": "https://assets.hardcover.app/external_data/59672191/d6b51d53782de2cb74f68e9c6a721c14b2ef3070.jpeg",
+                  "color": "#5a4821",
+                  "width": 128,
+                  "height": 195,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 32106670,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5258017,
+                  "url": "https://assets.hardcover.app/external_data/709336/b1f397d6a25126c8229d507f321e316bc2aa7329.jpeg",
+                  "color": "#545a5b",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Persian",
+                  "id": 127
+                },
+                "pages": 728,
+                "title": "امپراتوری نهایی"
+              },
+              {
+                "id": 5195452,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1733515,
+                  "url": "https://assets.hardcover.app/external_data/31614753/800579f7d675e7d2cd01043ddc57eb6ff724a6a5.jpeg",
+                  "color": "#a6747c",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 541,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30391598,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226718,
+                  "url": "https://assets.hardcover.app/edition/30391598/df043e9ffcf05edce0c1025eed218028372e084c.jpeg",
+                  "color": "#dde1e5",
+                  "width": 486,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 32057873,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5102787,
+                  "url": "https://assets.hardcover.app/external_data/524682/ebc19357c33ee4ee5cd907fd3305a27d511834c0.jpeg",
+                  "color": "#cac3c3",
+                  "width": 500,
+                  "height": 387,
+                  "color_name": "Silver"
+                },
+                "language": null,
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31482157,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3251231,
+                  "url": "https://assets.hardcover.app/edition/31482157/9503991630d606d2207acd897c7dae03ff33ccee.jpeg",
+                  "color": "#bbb68e",
+                  "width": 160,
+                  "height": 235,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Greek, Modern (1453-)",
+                  "id": 56
+                },
+                "pages": 424,
+                "title": "Η ύστατη αυτοκρατορία, Τόμος Α'"
+              },
+              {
+                "id": 11581193,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1903149,
+                  "url": "https://assets.hardcover.app/book_mappings/7332293/b3bbeca1bb35566579b72de5d5588c3afff0acda.jpeg",
+                  "color": "#8e5463",
+                  "width": 310,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "Mistborn"
+              },
+              {
+                "id": 31273669,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226810,
+                  "url": "https://assets.hardcover.app/external_data/35201536/4a79f4a297ec8debd649b71ae747a7f4d2b0a9b8.jpeg",
+                  "color": "#91825d",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": null,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 30795878,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226810,
+                  "url": "https://assets.hardcover.app/external_data/35201536/4a79f4a297ec8debd649b71ae747a7f4d2b0a9b8.jpeg",
+                  "color": "#91825d",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": 894,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 31505140,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": null,
+                "pages": null,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31256917,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5107067,
+                  "url": "https://assets.hardcover.app/external_data/529549/dea76b442dd067c63487469650fbccad6c4cdc4c.jpeg",
+                  "color": "#ea2505",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Red"
+                },
+                "language": null,
+                "pages": 614,
+                "title": "Konačno carstvo"
+              },
+              {
+                "id": 30904054,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4084700,
+                  "url": "https://assets.hardcover.app/external_data/61700315/d6c495b26d64ef260bca4eebce06b20d2f3bed99.jpeg",
+                  "color": "#b3a29f",
+                  "width": 341,
+                  "height": 500,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Turkish",
+                  "id": 168
+                },
+                "pages": 544,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31934161,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4735422,
+                  "url": "https://assets.hardcover.app/books/369692/517623169642258.jpeg",
+                  "color": "#a39772",
+                  "width": 300,
+                  "height": 300,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": null,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 31597332,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3887387,
+                  "url": "https://assets.hardcover.app/edition/31597332/a446f7a027cc05c1d878915a154bf182f9660576.jpeg",
+                  "color": "#4b230d",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "Nacidos de la Bruma: El Imperio Final"
+              },
+              {
+                "id": 31104010,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3473224,
+                  "url": "https://assets.hardcover.app/editions/31104010/6282677130727592.jpeg",
+                  "color": "#f2d1bf",
+                  "width": 636,
+                  "height": 944,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Hungarian",
+                  "id": 66
+                },
+                "pages": 381,
+                "title": "Ködszerzet: A Végső Birodalom 1."
+              },
+              {
+                "id": 32113613,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5271687,
+                  "url": "https://assets.hardcover.app/edition/32113613/2971cf492110cc9d981935135e3bd2eb5772c037.jpeg",
+                  "color": "#2b4f69",
+                  "width": 317,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": null,
+                "pages": null,
+                "title": "Рожденный туманом. Книга 1. Пепел и сталь"
+              },
+              {
+                "id": 30405361,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 843507,
+                  "url": "https://assets.hardcover.app/external_data/59360039/e2c6ba1f606033b4e202fccc5931d651feda3d4d.jpeg",
+                  "color": "#905465",
+                  "width": 98,
+                  "height": 158,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30431573,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226723,
+                  "url": "https://assets.hardcover.app/external_data/30835425/ab8bbbd23b43e8589bf43149e7f3507985c64888.jpeg",
+                  "color": "#373527",
+                  "width": 325,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 352,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 1257855,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 843516,
+                  "url": "https://assets.hardcover.app/external_data/45920648/e08119147e4c18d194f5e66596174ba90d694569.jpeg",
+                  "color": "#e4eced",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 647,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 32124613,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5303108,
+                  "url": "https://assets.hardcover.app/edition/32124613/0758bf3560deac22a80c622a1655fed0c2d98708.jpeg",
+                  "color": "#4c220c",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30501714,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226756,
+                  "url": "https://assets.hardcover.app/external_data/60564221/d0abc22f0ca032de1ce430aa14a7e22a3c38020d.jpeg",
+                  "color": "#60290f",
+                  "width": 293,
+                  "height": 458,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30512443,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226763,
+                  "url": "https://assets.hardcover.app/edition/30512443/3d62ff05af7bd98ad1520df802b0ae8ff4262cf1.jpeg",
+                  "color": "#452617",
+                  "width": 349,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 608,
+                "title": "Mistborn: O Império Final"
+              },
+              {
+                "id": 30550953,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2026630,
+                  "url": "https://assets.hardcover.app/external_data/59620766/f4829fccbca8860c50a120e12d6792691832bbfd.jpeg",
+                  "color": "#7e4a23",
+                  "width": 128,
+                  "height": 176,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 823,
+                "title": "O herói das eras"
+              },
+              {
+                "id": 30550950,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226765,
+                  "url": "https://assets.hardcover.app/external_data/40336221/957d63b02a81534b5833ba37ca2a455aca3864c4.jpeg",
+                  "color": "#452710",
+                  "width": 350,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30550949,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2026626,
+                  "url": "https://assets.hardcover.app/external_data/59620762/edfc914c8771f7e18b228c006f192535d6578e9d.jpeg",
+                  "color": "#89541f",
+                  "width": 128,
+                  "height": 186,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 766,
+                "title": "Mistborn: primeira era: Nascidos da bruma: O império final"
+              },
+              {
+                "id": 30660652,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226788,
+                  "url": "https://assets.hardcover.app/edition/30660652/acfdcb16b7f9db8321689432b7c21fb664a85a1a.jpeg",
+                  "color": "#aa7d8c",
+                  "width": 310,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30953268,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3209094,
+                  "url": "https://assets.hardcover.app/edition/30953268/565360267d49a194dc4f785b66ce5dcf131bd690.jpeg",
+                  "color": "#514b4b",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "L'ultimo impero. Mistborn"
+              },
+              {
+                "id": 31148372,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1659995,
+                  "url": "https://assets.hardcover.app/external_data/60294340/32b163887d04ec8e20cb6032b58da4921dd89be7.jpeg",
+                  "color": "#482124",
+                  "width": 98,
+                  "height": 150,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Serbian",
+                  "id": 150
+                },
+                "pages": 645,
+                "title": "Poslednje carstvo"
+              },
+              {
+                "id": 31379363,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 608,
+                "title": "Mistborn – Nascidos da Bruma: O Império Final"
+              },
+              {
+                "id": 31950466,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5502493,
+                  "url": "https://assets.hardcover.app/external_data/126171/f538eaf5448d865811df355822d39f70fbe4b378.jpeg",
+                  "color": "#9c1a0e",
+                  "width": 128,
+                  "height": 193,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "Mistborn"
+              },
+              {
+                "id": 31760152,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5502507,
+                  "url": "https://assets.hardcover.app/edition/31760152/1cbc080a-8b0e-4dba-8c4f-7fe4b77742b8.jpeg",
+                  "color": "#b27b8c",
+                  "width": 295,
+                  "height": 475,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 571,
+                "title": "Mistborn"
+              }
+            ]
+          }
+        },
+        {
+          "id": 16593,
+          "series": {
+            "id": 10001,
+            "name": "The Mistborn Saga: The Original Trilogy"
+          },
+          "book": {
+            "release_date": "2006-01-01",
+            "editions": [
+              {
+                "id": 31521152,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3599365,
+                  "url": "https://assets.hardcover.app/external_data/61320197/76410b2082495906df31856d10293b1f09dfaad6.jpeg",
+                  "color": "#264a72",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Russian",
+                  "id": 136
+                },
+                "pages": 736,
+                "title": "Пепел и сталь"
+              },
+              {
+                "id": 30572581,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844191,
+                  "url": "https://assets.hardcover.app/external_data/59640595/a0f72621b6ea916b44b307a1f907f0778d5e74b9.jpeg",
+                  "color": "#303e46",
+                  "width": 128,
+                  "height": 200,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Dutch; Flemish",
+                  "id": 39
+                },
+                "pages": 692,
+                "title": "Het laatste rijk"
+              },
+              {
+                "id": 31333409,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226714,
+                  "url": "https://assets.hardcover.app/external_data/60564165/1c0abb3e375fdba7fbce19aef1da48ee7b3cc678.jpeg",
+                  "color": "#899a6a",
+                  "width": 98,
+                  "height": 144,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "Bulgarian",
+                  "id": 25
+                },
+                "pages": 656,
+                "title": "Последната империя"
+              },
+              {
+                "id": 30432877,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4297649,
+                  "url": "https://assets.hardcover.app/editions/30432877/6800548512332565.jpg",
+                  "color": "#b41008",
+                  "width": 1466,
+                  "height": 2200,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 558,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30501719,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4156315,
+                  "url": "https://assets.hardcover.app/external_data/61763528/174f0a3f6ff89c188483dd85b0b914b1902bcfb3.jpeg",
+                  "color": "#452710",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 680,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30425202,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4156681,
+                  "url": "https://assets.hardcover.app/edition/30425202/a7223dacd356a7dc3092f191baa88f50959ee5c4.jpeg",
+                  "color": "#fcfdf4",
+                  "width": 347,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "L'ultimo impero"
+              },
+              {
+                "id": 32230916,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5618137,
+                  "url": "https://assets.hardcover.app/edition/32230916/020012e215bd853c86b5be2e24647d35eb866c95.jpeg",
+                  "color": "#674305",
+                  "width": 347,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "Mistborn. L'ultimo impero"
+              },
+              {
+                "id": 31516510,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3565729,
+                  "url": "https://assets.hardcover.app/external_data/61306780/6533454e5984ee746688c247f244287e4ca3d34d.jpeg",
+                  "color": "#73809c",
+                  "width": 98,
+                  "height": 155,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Polish",
+                  "id": 129
+                },
+                "pages": 624,
+                "title": "Z mgły zrodzony"
+              },
+              {
+                "id": 31945593,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4764560,
+                  "url": "https://assets.hardcover.app/books/369692/0bf80c05-d352-473a-893e-8cd3fca13754.jpg",
+                  "color": "#9c1a0e",
+                  "width": 352,
+                  "height": 531,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 544,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31560992,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3794616,
+                  "url": "https://assets.hardcover.app/external_data/61436903/2a515ef7e2c11d6816397540ea87da41c9812f47.jpeg",
+                  "color": "#ced3d3",
+                  "width": 98,
+                  "height": 150,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Finnish",
+                  "id": 46
+                },
+                "pages": 608,
+                "title": "Viimeinen valtakunta"
+              },
+              {
+                "id": 31707097,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4169015,
+                  "url": "https://assets.hardcover.app/external_data/61775977/066324dc5facdd1838e804d8b335f75e6a8b3352.jpeg",
+                  "color": "#393539",
+                  "width": 97,
+                  "height": 160,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Lithuanian",
+                  "id": 98
+                },
+                "pages": 744,
+                "title": "Miglos vaikai. Paskutinė imperija"
+              },
+              {
+                "id": 30478610,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226741,
+                  "url": "https://assets.hardcover.app/edition/30478610/84de2c65fec79b9048990c5ac337b3d86832e04a.jpeg",
+                  "color": "#178d8d",
+                  "width": 250,
+                  "height": 359,
+                  "color_name": "Blue"
+                },
+                "language": {
+                  "language": "Brazilian Portuguese",
+                  "id": 185
+                },
+                "pages": 621,
+                "title": "O Império Final"
+              },
+              {
+                "id": 31729050,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4224646,
+                  "url": "https://assets.hardcover.app/edition/31729050/b8ff4a46569fe9562a4de0eee7f27596a3c8c743.jpeg",
+                  "color": "#e1e6ea",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Swedish",
+                  "id": 154
+                },
+                "pages": 743,
+                "title": "Sista riket"
+              },
+              {
+                "id": 31794359,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4395557,
+                  "url": "https://assets.hardcover.app/edition/31794359/95580a745b68133f7c9270c3a431762120bcec72.jpeg",
+                  "color": "#4b220d",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 663,
+                "title": "El imperio final"
+              },
+              {
+                "id": 31660362,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4051020,
+                  "url": "https://assets.hardcover.app/external_data/61668647/7f258ecaaab4cf1ad55308532142cdb0df2abef9.jpeg",
+                  "color": "#84576e",
+                  "width": 98,
+                  "height": 131,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31675736,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "Turkish",
+                  "id": 168
+                },
+                "pages": 544,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31580280,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3843704,
+                  "url": "https://assets.hardcover.app/external_data/61482812/65ee23a125b5911ff7d7c9c0ca412d96440b6146.jpeg",
+                  "color": "#867a8c",
+                  "width": 98,
+                  "height": 156,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "French",
+                  "id": 47
+                },
+                "pages": 606,
+                "title": "L'Empire ultime"
+              },
+              {
+                "id": 30800010,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1044370,
+                  "url": "https://assets.hardcover.app/external_data/59936129/cc0f00b9333285ce710d9f0aa99e14c5ab595577.jpeg",
+                  "color": "#6b2208",
+                  "width": 128,
+                  "height": 197,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Czech",
+                  "id": 36
+                },
+                "pages": 622,
+                "title": "Mistborn: Finální říše"
+              },
+              {
+                "id": 32137995,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5340587,
+                  "url": "https://assets.hardcover.app/edition/32137995/5fa67c832e42a3d0ee67287928c85e29d8e6e04d.jpeg",
+                  "color": "#20816c",
+                  "width": 324,
+                  "height": 500,
+                  "color_name": "Green"
+                },
+                "language": {
+                  "language": "Dutch; Flemish",
+                  "id": 39
+                },
+                "pages": 639,
+                "title": "Het Laatste Rijk"
+              },
+              {
+                "id": 30598862,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844217,
+                  "url": "https://assets.hardcover.app/external_data/59668292/1c945407e45d21c2ecfd13b4a55fcbac0cc4a99f.jpeg",
+                  "color": "#dce1e5",
+                  "width": 128,
+                  "height": 196,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "Swedish",
+                  "id": 154
+                },
+                "pages": 578,
+                "title": "Sista riket"
+              },
+              {
+                "id": 31802980,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4428695,
+                  "url": "https://assets.hardcover.app/editions/31802980/8985921707208175.jpg",
+                  "color": "#a57d89",
+                  "width": 1120,
+                  "height": 1120,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30661331,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226795,
+                  "url": "https://assets.hardcover.app/edition/30661331/26b9937f98d3884c53af4b685504e9577bca036e.jpeg",
+                  "color": "#9d1a0e",
+                  "width": 332,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 534,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31897364,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4650973,
+                  "url": "https://assets.hardcover.app/external_data/61589267/3933f0538d90b9b7ce3aba64e6322f64e6bca071.jpeg",
+                  "color": "#e4e8ea",
+                  "width": 98,
+                  "height": 146,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Arabic",
+                  "id": 8
+                },
+                "pages": 1004,
+                "title": "ملحمة وليدو الضباب: الإمبراطوية النهائية"
+              },
+              {
+                "id": 31959646,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4804612,
+                  "url": "https://assets.hardcover.app/edition/31959646/e241e181b9a9cb5b37307dff2a1de54a78d9f6cc.jpeg",
+                  "color": "#a1160d",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "Nacidos de la bruma"
+              },
+              {
+                "id": 31973247,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4840083,
+                  "url": "https://assets.hardcover.app/external_data/203633/a3c534c6a8da8f172e92f9dd64d0310074e8bd4b.jpeg",
+                  "color": "#153b2f",
+                  "width": 98,
+                  "height": 139,
+                  "color_name": "Green"
+                },
+                "language": {
+                  "language": "Ukrainian",
+                  "id": 171
+                },
+                "pages": 704,
+                "title": "Остання імперія"
+              },
+              {
+                "id": 31478724,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 31965395,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4814618,
+                  "url": "https://assets.hardcover.app/editions/31965395/2aac7737-0e7f-4f98-8bc1-c39871029538.jpg",
+                  "color": "#a57e89",
+                  "width": 2400,
+                  "height": 2400,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30420807,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226720,
+                  "url": "https://assets.hardcover.app/external_data/60564171/e63ae7813de99ed0c18c89daf7fe0667dd1b2bd0.jpeg",
+                  "color": "#614e27",
+                  "width": 327,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 670,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30500350,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226745,
+                  "url": "https://assets.hardcover.app/external_data/38309294/87179ea24f567ad6833c4c2e23c09bdd8ab14735.jpeg",
+                  "color": "#d8e8f0",
+                  "width": 325,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 169,
+                "title": "Mistborn: Secret History"
+              },
+              {
+                "id": 30432878,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226728,
+                  "url": "https://assets.hardcover.app/edition/30432878/44ed46eaa882c3845b4cd58dd2db97dc9c32040d.jpeg",
+                  "color": "#4f4c4c",
+                  "width": 333,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30432884,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226734,
+                  "url": "https://assets.hardcover.app/external_data/49456151/243712cb9da52eb40bc27b638a87e44e1a2ee0cc.jpeg",
+                  "color": "#eae9e8",
+                  "width": 500,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 696,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30501711,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226750,
+                  "url": "https://assets.hardcover.app/external_data/60564214/093bb410908818d9f9e5e88a62c6a338b91dd996.jpeg",
+                  "color": "#4c230d",
+                  "width": 329,
+                  "height": 499,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30500337,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 844138,
+                  "url": "https://assets.hardcover.app/external_data/59570680/778fe583015efc0c6588986a2ed0fe2556ce21b8.jpeg",
+                  "color": "#25425c",
+                  "width": 128,
+                  "height": 197,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Romanian; Moldavian; Moldovan",
+                  "id": 134
+                },
+                "pages": null,
+                "title": "Ultimul imperiu"
+              },
+              {
+                "id": 30500344,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1977387,
+                  "url": "https://assets.hardcover.app/external_data/59570690/8cf929a207bd26c589601417f6e7b0786ca399af.jpeg",
+                  "color": "#e1eaed",
+                  "width": 128,
+                  "height": 195,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30616735,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226774,
+                  "url": "https://assets.hardcover.app/external_data/49147403/4848ac16ce64d4bbc3b4a6890d0000d260ea0352.jpeg",
+                  "color": "#cbbbc3",
+                  "width": 305,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30652515,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226782,
+                  "url": "https://assets.hardcover.app/edition/30652515/b00d234f982c2b65e691a5148abe337ec6102b7c.jpeg",
+                  "color": "#5f757c",
+                  "width": 331,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 688,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30668434,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226801,
+                  "url": "https://assets.hardcover.app/external_data/60564292/b53c8aa6b6de0998829bd16c5bec7dc720076cb1.jpeg",
+                  "color": "#9f7e83",
+                  "width": 309,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "French",
+                  "id": 47
+                },
+                "pages": 913,
+                "title": "L'Empire ultime"
+              },
+              {
+                "id": 30780165,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226806,
+                  "url": "https://assets.hardcover.app/edition/30780165/e1cabf9a0ae77ed1424fe568b0d7fcf387dc2b08.jpeg",
+                  "color": "#c0781d",
+                  "width": 327,
+                  "height": 500,
+                  "color_name": "Orange"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 608,
+                "title": "L'ultimo impero"
+              },
+              {
+                "id": 30870871,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226815,
+                  "url": "https://assets.hardcover.app/external_data/60564310/98fac1afb94d01d822bbcce545d30d1d8eea3653.jpeg",
+                  "color": "#48260e",
+                  "width": 369,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 663,
+                "title": "El Imperio Final"
+              },
+              {
+                "id": 30953266,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1325716,
+                  "url": "https://assets.hardcover.app/external_data/60081309/7f805d06e275b2e88f094d7c5264caf785b54ba8.jpeg",
+                  "color": "#522301",
+                  "width": 128,
+                  "height": 184,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 774,
+                "title": "Mistborn #1. L'ultimo impero - The Final Empire"
+              },
+              {
+                "id": 31058951,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1534300,
+                  "url": "https://assets.hardcover.app/external_data/60202643/760bac35bca6384e27bfa32776be6757181675e4.jpeg",
+                  "color": "#0b567d",
+                  "width": 128,
+                  "height": 186,
+                  "color_name": "Blue"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 822,
+                "title": "O Império Final"
+              },
+              {
+                "id": 31083171,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226823,
+                  "url": "https://assets.hardcover.app/edition/31083171/b3849fb461b0a1c030acd2e3c9c3e7916a3acc7d.jpeg",
+                  "color": "#ceca98",
+                  "width": 323,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "Mistborn. L'ultimo impero"
+              },
+              {
+                "id": 31335589,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1824853,
+                  "url": "https://assets.hardcover.app/editions/31335589/362821797398814.jpg",
+                  "color": "#bec5d1",
+                  "width": 988,
+                  "height": 1500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": 894,
+                "title": "Kinder des Nebels "
+              },
+              {
+                "id": 31342063,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226828,
+                  "url": "https://assets.hardcover.app/edition/31342063/72539182be337136d0c25c56e34c968d5daea1b1.jpeg",
+                  "color": "#601c11",
+                  "width": 345,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Russian",
+                  "id": 136
+                },
+                "pages": 640,
+                "title": "Пепел и сталь"
+              },
+              {
+                "id": 31264161,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226852,
+                  "url": "https://assets.hardcover.app/external_data/60564355/a7e7ed814e9ab68084d19529317ab5ba74269250.jpeg",
+                  "color": "#6b7694",
+                  "width": 314,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Polish",
+                  "id": 129
+                },
+                "pages": 672,
+                "title": "Z mgły zrodzony"
+              },
+              {
+                "id": 31440008,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2758212,
+                  "url": "https://assets.hardcover.app/editions/31440008/3821389423458097.jpg",
+                  "color": "#9d1a0e",
+                  "width": 1698,
+                  "height": 2560,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 558,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30616149,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226711,
+                  "url": "https://assets.hardcover.app/external_data/60564161/0f17005f643258da853c86a4b77e90adb168636c.jpeg",
+                  "color": "#a41907",
+                  "width": 98,
+                  "height": 98,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30654942,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226784,
+                  "url": "https://assets.hardcover.app/external_data/60564271/26258f225caee8b4abe5ad6d10529f1b9dd6f3da.jpeg",
+                  "color": "#824e88",
+                  "width": 98,
+                  "height": 131,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": null,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 30602509,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2084548,
+                  "url": "https://assets.hardcover.app/external_data/59672191/d6b51d53782de2cb74f68e9c6a721c14b2ef3070.jpeg",
+                  "color": "#5a4821",
+                  "width": 128,
+                  "height": 195,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 32106670,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5258017,
+                  "url": "https://assets.hardcover.app/external_data/709336/b1f397d6a25126c8229d507f321e316bc2aa7329.jpeg",
+                  "color": "#545a5b",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Persian",
+                  "id": 127
+                },
+                "pages": 728,
+                "title": "امپراتوری نهایی"
+              },
+              {
+                "id": 5195452,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1733515,
+                  "url": "https://assets.hardcover.app/external_data/31614753/800579f7d675e7d2cd01043ddc57eb6ff724a6a5.jpeg",
+                  "color": "#a6747c",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 541,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30391598,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226718,
+                  "url": "https://assets.hardcover.app/edition/30391598/df043e9ffcf05edce0c1025eed218028372e084c.jpeg",
+                  "color": "#dde1e5",
+                  "width": 486,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 32057873,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5102787,
+                  "url": "https://assets.hardcover.app/external_data/524682/ebc19357c33ee4ee5cd907fd3305a27d511834c0.jpeg",
+                  "color": "#cac3c3",
+                  "width": 500,
+                  "height": 387,
+                  "color_name": "Silver"
+                },
+                "language": null,
+                "pages": null,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 31482157,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3251231,
+                  "url": "https://assets.hardcover.app/edition/31482157/9503991630d606d2207acd897c7dae03ff33ccee.jpeg",
+                  "color": "#bbb68e",
+                  "width": 160,
+                  "height": 235,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Greek, Modern (1453-)",
+                  "id": 56
+                },
+                "pages": 424,
+                "title": "Η ύστατη αυτοκρατορία, Τόμος Α'"
+              },
+              {
+                "id": 11581193,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1903149,
+                  "url": "https://assets.hardcover.app/book_mappings/7332293/b3bbeca1bb35566579b72de5d5588c3afff0acda.jpeg",
+                  "color": "#8e5463",
+                  "width": 310,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "Mistborn"
+              },
+              {
+                "id": 31273669,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226810,
+                  "url": "https://assets.hardcover.app/external_data/35201536/4a79f4a297ec8debd649b71ae747a7f4d2b0a9b8.jpeg",
+                  "color": "#91825d",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": null,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 30795878,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226810,
+                  "url": "https://assets.hardcover.app/external_data/35201536/4a79f4a297ec8debd649b71ae747a7f4d2b0a9b8.jpeg",
+                  "color": "#91825d",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": 894,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 31505140,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": null,
+                "pages": null,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31256917,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5107067,
+                  "url": "https://assets.hardcover.app/external_data/529549/dea76b442dd067c63487469650fbccad6c4cdc4c.jpeg",
+                  "color": "#ea2505",
+                  "width": 98,
+                  "height": 147,
+                  "color_name": "Red"
+                },
+                "language": null,
+                "pages": 614,
+                "title": "Konačno carstvo"
+              },
+              {
+                "id": 30904054,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4084700,
+                  "url": "https://assets.hardcover.app/external_data/61700315/d6c495b26d64ef260bca4eebce06b20d2f3bed99.jpeg",
+                  "color": "#b3a29f",
+                  "width": 341,
+                  "height": 500,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Turkish",
+                  "id": 168
+                },
+                "pages": 544,
+                "title": "Sissoylu: Son İmparatorluk"
+              },
+              {
+                "id": 31934161,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 4735422,
+                  "url": "https://assets.hardcover.app/books/369692/517623169642258.jpeg",
+                  "color": "#a39772",
+                  "width": 300,
+                  "height": 300,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "German",
+                  "id": 51
+                },
+                "pages": null,
+                "title": "Kinder des Nebels"
+              },
+              {
+                "id": 31597332,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3887387,
+                  "url": "https://assets.hardcover.app/edition/31597332/a446f7a027cc05c1d878915a154bf182f9660576.jpeg",
+                  "color": "#4b230d",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "Nacidos de la Bruma: El Imperio Final"
+              },
+              {
+                "id": 31104010,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3473224,
+                  "url": "https://assets.hardcover.app/editions/31104010/6282677130727592.jpeg",
+                  "color": "#f2d1bf",
+                  "width": 636,
+                  "height": 944,
+                  "color_name": "Silver"
+                },
+                "language": {
+                  "language": "Hungarian",
+                  "id": 66
+                },
+                "pages": 381,
+                "title": "Ködszerzet: A Végső Birodalom 1."
+              },
+              {
+                "id": 32113613,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5271687,
+                  "url": "https://assets.hardcover.app/edition/32113613/2971cf492110cc9d981935135e3bd2eb5772c037.jpeg",
+                  "color": "#2b4f69",
+                  "width": 317,
+                  "height": 500,
+                  "color_name": "Purple"
+                },
+                "language": null,
+                "pages": null,
+                "title": "Рожденный туманом. Книга 1. Пепел и сталь"
+              },
+              {
+                "id": 30405361,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 843507,
+                  "url": "https://assets.hardcover.app/external_data/59360039/e2c6ba1f606033b4e202fccc5931d651feda3d4d.jpeg",
+                  "color": "#905465",
+                  "width": 98,
+                  "height": 158,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30431573,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226723,
+                  "url": "https://assets.hardcover.app/external_data/30835425/ab8bbbd23b43e8589bf43149e7f3507985c64888.jpeg",
+                  "color": "#373527",
+                  "width": 325,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 352,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 1257855,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 843516,
+                  "url": "https://assets.hardcover.app/external_data/45920648/e08119147e4c18d194f5e66596174ba90d694569.jpeg",
+                  "color": "#e4eced",
+                  "width": 328,
+                  "height": 500,
+                  "color_name": "Beige"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 647,
+                "title": "The Final Empire"
+              },
+              {
+                "id": 32124613,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5303108,
+                  "url": "https://assets.hardcover.app/edition/32124613/0758bf3560deac22a80c622a1655fed0c2d98708.jpeg",
+                  "color": "#4c220c",
+                  "width": 329,
+                  "height": 500,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": null,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30501714,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226756,
+                  "url": "https://assets.hardcover.app/external_data/60564221/d0abc22f0ca032de1ce430aa14a7e22a3c38020d.jpeg",
+                  "color": "#60290f",
+                  "width": 293,
+                  "height": 458,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Spanish; Castilian",
+                  "id": 148
+                },
+                "pages": 672,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30512443,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226763,
+                  "url": "https://assets.hardcover.app/edition/30512443/3d62ff05af7bd98ad1520df802b0ae8ff4262cf1.jpeg",
+                  "color": "#452617",
+                  "width": 349,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 608,
+                "title": "Mistborn: O Império Final"
+              },
+              {
+                "id": 30550953,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2026630,
+                  "url": "https://assets.hardcover.app/external_data/59620766/f4829fccbca8860c50a120e12d6792691832bbfd.jpeg",
+                  "color": "#7e4a23",
+                  "width": 128,
+                  "height": 176,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 823,
+                "title": "O herói das eras"
+              },
+              {
+                "id": 30550950,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226765,
+                  "url": "https://assets.hardcover.app/external_data/40336221/957d63b02a81534b5833ba37ca2a455aca3864c4.jpeg",
+                  "color": "#452710",
+                  "width": 350,
+                  "height": 500,
+                  "color_name": "Black"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "El imperio final"
+              },
+              {
+                "id": 30550949,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2026626,
+                  "url": "https://assets.hardcover.app/external_data/59620762/edfc914c8771f7e18b228c006f192535d6578e9d.jpeg",
+                  "color": "#89541f",
+                  "width": 128,
+                  "height": 186,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 766,
+                "title": "Mistborn: primeira era: Nascidos da bruma: O império final"
+              },
+              {
+                "id": 30660652,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 2226788,
+                  "url": "https://assets.hardcover.app/edition/30660652/acfdcb16b7f9db8321689432b7c21fb664a85a1a.jpeg",
+                  "color": "#aa7d8c",
+                  "width": 310,
+                  "height": 500,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 676,
+                "title": "Mistborn: The Final Empire"
+              },
+              {
+                "id": 30953268,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 3209094,
+                  "url": "https://assets.hardcover.app/edition/30953268/565360267d49a194dc4f785b66ce5dcf131bd690.jpeg",
+                  "color": "#514b4b",
+                  "width": 326,
+                  "height": 500,
+                  "color_name": "Gray"
+                },
+                "language": {
+                  "language": "Italian",
+                  "id": 76
+                },
+                "pages": 696,
+                "title": "L'ultimo impero. Mistborn"
+              },
+              {
+                "id": 31148372,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 1659995,
+                  "url": "https://assets.hardcover.app/external_data/60294340/32b163887d04ec8e20cb6032b58da4921dd89be7.jpeg",
+                  "color": "#482124",
+                  "width": 98,
+                  "height": 150,
+                  "color_name": "Purple"
+                },
+                "language": {
+                  "language": "Serbian",
+                  "id": 150
+                },
+                "pages": 645,
+                "title": "Poslednje carstvo"
+              },
+              {
+                "id": 31379363,
+                "book_id": 369692,
+                "cached_image": {},
+                "language": {
+                  "language": "Portuguese",
+                  "id": 130
+                },
+                "pages": 608,
+                "title": "Mistborn – Nascidos da Bruma: O Império Final"
+              },
+              {
+                "id": 31950466,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5502493,
+                  "url": "https://assets.hardcover.app/external_data/126171/f538eaf5448d865811df355822d39f70fbe4b378.jpeg",
+                  "color": "#9c1a0e",
+                  "width": 128,
+                  "height": 193,
+                  "color_name": "Brown"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 686,
+                "title": "Mistborn"
+              },
+              {
+                "id": 31760152,
+                "book_id": 369692,
+                "cached_image": {
+                  "id": 5502507,
+                  "url": "https://assets.hardcover.app/edition/31760152/1cbc080a-8b0e-4dba-8c4f-7fe4b77742b8.jpeg",
+                  "color": "#b27b8c",
+                  "width": 295,
+                  "height": 475,
+                  "color_name": "Pink"
+                },
+                "language": {
+                  "language": "English",
+                  "id": 1
+                },
+                "pages": 571,
+                "title": "Mistborn"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
