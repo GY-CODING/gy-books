@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { BookCardCompact, BookCardCompactSkeleton } from './BookCardCompact';
 import Book from '@/domain/book.model';
+import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
 
 // Mock Next.js router
 const mockPush = jest.fn();
@@ -422,7 +423,7 @@ describe('BookCardCompact', () => {
 
       const img = container.querySelector('img');
       expect(img).toBeTruthy();
-      expect(img).toHaveAttribute('src', '/placeholder-book.jpg');
+      expect(img).toHaveAttribute('src', DEFAULT_COVER_IMAGE);
     });
 
     it('renders typography with correct variants', () => {
