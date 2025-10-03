@@ -17,12 +17,14 @@ interface EditionSelectorProps {
   editions: Edition[];
   selectedEdition: Edition | null;
   onEditionChange: (edition: Edition | null) => void;
+  disabled?: boolean;
 }
 
 export const EditionSelector: React.FC<EditionSelectorProps> = ({
   editions,
   selectedEdition,
   onEditionChange,
+  disabled = false,
 }) => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>('all');
 
@@ -71,11 +73,12 @@ export const EditionSelector: React.FC<EditionSelectorProps> = ({
       <Box display="flex" gap={2} alignItems="center" flexDirection="row">
         {/* Edition Selector - FIRST */}
         <Box sx={{ flex: 1, minWidth: '200px' }}>
-          <FormControl fullWidth size="small">
+          <FormControl fullWidth size="small" disabled={disabled}>
             <Select
               value={selectedEdition?.id ?? ''}
               onChange={handleChange}
               displayEmpty
+              disabled={disabled}
               renderValue={(value) => {
                 if (!value) {
                   return (
@@ -258,11 +261,12 @@ export const EditionSelector: React.FC<EditionSelectorProps> = ({
         {/* Language Filter - SECOND */}
         {availableLanguages.length > 1 && (
           <Box sx={{ minWidth: '100px', flexShrink: 0 }}>
-            <FormControl fullWidth size="small">
+            <FormControl fullWidth size="small" disabled={disabled}>
               <Select
                 value={selectedLanguage}
                 onChange={handleLanguageChange}
                 displayEmpty
+                disabled={disabled}
                 sx={{
                   color: '#FFFFFF',
                   fontFamily: lora.style.fontFamily,
@@ -338,6 +342,22 @@ export const EditionSelector: React.FC<EditionSelectorProps> = ({
           </Box>
         )}
       </Box>
+
+      {disabled && (
+        <Typography
+          variant="caption"
+          sx={{
+            color: '#8C54FF',
+            mt: 1,
+            display: 'block',
+            textAlign: 'center',
+            fontFamily: lora.style.fontFamily,
+            fontStyle: 'italic',
+          }}
+        >
+          Saving edition...
+        </Typography>
+      )}
     </Box>
   );
 };

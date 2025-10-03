@@ -89,7 +89,6 @@ async function handler(
         },
       };
 
-      console.log('USER DATA', JSON.stringify(USER_DATA));
       const gyCodingResponse = await fetch(API_URL, {
         headers: HEADERS,
         method: 'PATCH',
@@ -105,23 +104,18 @@ async function handler(
       }
 
       const BOOK_RATING_DATA = await gyCodingResponse.json();
-      console.log(`PATCH RESPONSE ${JSON.stringify(BOOK_RATING_DATA)}`);
       return NextResponse.json({
         bookRatingData: BOOK_RATING_DATA as ApiBook,
       });
     }
 
     if (request.method === 'DELETE') {
-      console.log('API URL', API_URL);
-      console.log('BOOK ID ', ID);
       const gyCodingResponse = await fetch(API_URL, {
         headers: HEADERS,
         method: 'DELETE',
       });
 
       if (!gyCodingResponse.ok) {
-        console.log('DELETE RESPONSE', gyCodingResponse);
-
         await sendLog(ELevel.ERROR, 'BOOK CANNOT BE DELETED');
         return NextResponse.json(
           { error: 'ERROR DELETING BOOK' },

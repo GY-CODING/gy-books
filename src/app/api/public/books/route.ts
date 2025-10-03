@@ -20,11 +20,7 @@ export const GET = async (req: NextRequest) => {
     const page = parseInt(searchParams.get('page') || '0', 10);
     const size = parseInt(searchParams.get('size') || '10', 10);
 
-    console.log(`[API] page: ${page}, size: ${size}`);
-
     const apiUrl = `${process.env.GY_API}/books/${profileId}/list?page=${page}&size=${size}`;
-    console.log('API ROUTE - Fetching books by user:', profileId);
-    console.log('API ROUTE - URL:', apiUrl);
     const headers = {
       'Content-Type': 'application/json',
     };

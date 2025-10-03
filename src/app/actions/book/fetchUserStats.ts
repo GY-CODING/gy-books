@@ -30,7 +30,6 @@ export async function getStats(profileId: UUID): Promise<any> {
     }
 
     const data: Stats = await response.json();
-    console.log('Server Action - Data fetched:', data);
 
     return data;
   } catch (error: any) {

@@ -4,11 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { SEARCH_BOOKS_QUERY } from '@/utils/constants/Query';
 
 export async function GET(req: NextRequest) {
-  console.log('API Route - Request received');
-
   const searchParams = req.nextUrl.searchParams;
   const queryParam = searchParams.get('query');
-  console.log('API Route - Query:', queryParam);
 
   const apiKey = process.env.API_KEY;
   if (!apiKey) {
@@ -22,12 +19,6 @@ export async function GET(req: NextRequest) {
   try {
     const apiUrl = process.env.HARDCOVER_API_URL;
     const apiKey = process.env.HARDCOVER_API_TOKEN;
-
-    console.log('API Route - Environment variables check:');
-    console.log('HARDCOVER_API_URL exists:', !!apiUrl);
-    console.log('HARDCOVER_API_KEY exists:', !!apiKey);
-    console.log('HARDCOVER_API_URL:', apiUrl);
-    console.log('HARDCOVER_API_KEY length:', apiKey?.length);
 
     if (!apiUrl || !apiKey) {
       console.error('API Route - Missing environment variables');
@@ -50,12 +41,6 @@ export async function GET(req: NextRequest) {
         },
       }),
     });
-
-    console.log('API Route - Backend response status:', response.status);
-    console.log(
-      'API Route - Response headers:',
-      Object.fromEntries(response.headers.entries())
-    );
 
     if (!response.ok) {
       const errorText = await response.text();

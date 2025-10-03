@@ -13,8 +13,6 @@ async function handler(request: Request) {
     return NextResponse.json({ error: 'Book ID is required' }, { status: 400 });
   }
 
-  console.log('API Route - Book ID:', id);
-
   try {
     const baseUrl = process.env.GY_API?.replace(/['"]/g, '');
     if (!baseUrl) {
@@ -27,9 +25,6 @@ async function handler(request: Request) {
       const gyCodingResponse = await fetch(apiUrl, {
         method: 'GET',
       });
-
-      console.log('GET Request URL:', apiUrl);
-      console.log(gyCodingResponse.status);
 
       if (!gyCodingResponse.ok) {
         const errorText = await gyCodingResponse.text();
@@ -49,7 +44,6 @@ async function handler(request: Request) {
       await sendLog(ELevel.INFO, ELogs.PROFILE_HAS_BEEN_RECEIVED, {
         bookId: id,
       });
-      console.log(`public book` + apiBook);
       return NextResponse.json(apiBook as ApiBook);
     }
 

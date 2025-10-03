@@ -1,6 +1,7 @@
 import { EStatus } from '@/utils/constants/EStatus';
 import { UserData } from './userData.model';
 import { findEditionById } from '@/utils/bookEditionHelpers';
+import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
 
 export interface Series {
   name: string;
@@ -84,7 +85,11 @@ export class BookHelpers {
    */
   static getDisplayCoverUrl(book: Book): string {
     const selectedEdition = this.getSelectedEdition(book);
-    return selectedEdition?.cached_image?.url || book.cover.url || '';
+    return (
+      selectedEdition?.cached_image?.url ||
+      book.cover.url ||
+      DEFAULT_COVER_IMAGE
+    );
   }
 
   /**

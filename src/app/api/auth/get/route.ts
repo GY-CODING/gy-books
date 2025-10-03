@@ -26,8 +26,6 @@ import { User } from '@/domain/user.model';
  */
 
 export async function GET() {
-  console.log('🔐 Entrando a GET /api/auth/user');
-
   const session = await auth0.getSession();
 
   if (!session) {

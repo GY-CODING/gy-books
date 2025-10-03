@@ -26,7 +26,7 @@ import { User } from '@/domain/user.model';
 import { EStatus } from '@/utils/constants/EStatus';
 import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
 import { getBooksWithPagination } from '../actions/book/fetchApiBook';
-import Book from '@/domain/book.model';
+import Book, { BookHelpers } from '@/domain/book.model';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { lora } from '@/utils/fonts/fonts';
 import { useFriends } from '@/hooks/useFriends';
@@ -381,8 +381,10 @@ function ProfilePageContent() {
         (typeof book.rating === 'number' && book.rating >= ratingFilter);
       const searchOk =
         !search ||
-        (book.title &&
-          book.title.toLowerCase().includes(search.toLowerCase())) ||
+        (BookHelpers.getDisplayTitle(book) &&
+          BookHelpers.getDisplayTitle(book)
+            .toLowerCase()
+            .includes(search.toLowerCase())) ||
         (book.author &&
           book.author.name &&
           book.author.name.toLowerCase().includes(search.toLowerCase())) ||
@@ -411,8 +413,8 @@ function ProfilePageContent() {
           break;
         case 'title':
         default:
-          aValue = a.title || '';
-          bValue = b.title || '';
+          aValue = BookHelpers.getDisplayTitle(a) || '';
+          bValue = BookHelpers.getDisplayTitle(b) || '';
       }
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         if (orderDirection === 'asc') {

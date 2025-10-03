@@ -6,19 +6,11 @@ export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
-  console.log('API Route - Iniciando petición GET');
-
   const params = await context.params;
-  console.log('API Route - Params:', params);
 
   try {
     const apiUrl = process.env.HARDCOVER_API_URL;
     const apiKey = process.env.HARDCOVER_API_TOKEN;
-
-    console.log('API Route - Variables de entorno:', {
-      apiUrl: apiUrl ? 'Definida' : 'No definida',
-      apiKey: apiKey ? 'Definida' : 'No definida',
-    });
 
     if (!apiUrl || !apiKey) {
       console.error('API Route - Faltan variables de entorno');
@@ -29,7 +21,6 @@ export async function GET(
     }
 
     const { id } = params;
-    console.log('API Route - Book ID:', id);
 
     // Validate that id is a valid number
     const bookId = parseInt(id);
@@ -41,19 +32,12 @@ export async function GET(
       );
     }
 
-    console.log('API Route - Parsed book ID:', bookId);
-
     const requestBody = {
       query: GET_BOOK_BY_ID_QUERY,
       variables: {
         id: bookId,
       },
     };
-
-    console.log(
-      'API Route - Request body:',
-      JSON.stringify(requestBody, null, 2)
-    );
 
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -64,8 +48,6 @@ export async function GET(
       body: JSON.stringify(requestBody),
     });
 
-    console.log('API Route - Hardcover API response status:', response.status);
-
     if (!response.ok) {
       const errorText = await response.text();
       console.error('API Route - Error en respuesta:', errorText);
@@ -75,10 +57,6 @@ export async function GET(
     }
 
     const data = await response.json();
-    console.log(
-      'API Route - Hardcover API response data:',
-      JSON.stringify(data, null, 2)
-    );
 
     if (data.errors) {
       console.error('API Route - Errores GraphQL:', data.errors);
