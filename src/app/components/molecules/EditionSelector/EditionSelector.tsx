@@ -119,7 +119,7 @@ export const EditionSelector: React.FC<EditionSelectorProps> = ({
                 overflow: 'hidden',
                 flexShrink: 0,
                 flexWrap: 'nowrap',
-                maxWidth: ['100%', '200px'],
+                maxWidth: '200px',
                 '.MuiOutlinedInput-notchedOutline': {
                   border: 0,
                 },
