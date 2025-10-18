@@ -1,10 +1,10 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useProfilePagination } from '../useProfilePagination';
-import { getBooksWithPagination } from '../../../actions/book/fetchApiBook';
+import { useProfilePagination } from './useProfilePagination';
+import { getBooksWithPagination } from '../../actions/book/fetchApiBook';
 import { UUID } from 'crypto';
 
 // Mock the server action
-jest.mock('../../../actions/book/fetchApiBook', () => ({
+jest.mock('../../actions/book/fetchApiBook', () => ({
   getBooksWithPagination: jest.fn(),
 }));
 

@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useProfileFilters } from '../useProfileFilters';
+import { useProfileFilters } from './useProfileFilters';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { EStatus } from '@/utils/constants/EStatus';
 
