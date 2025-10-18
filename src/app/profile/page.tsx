@@ -2,13 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  Suspense,
-} from 'react';
+import React, { Suspense } from 'react';
 import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
 import { ProfilePageSkeleton } from './components/ProfilePageSkeleton';
 import { BooksFilter } from './components/BooksFilter/BooksFilter';
@@ -25,17 +19,23 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { User } from '@/domain/user.model';
-import { EStatus } from '@/utils/constants/EStatus';
 import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
-import { getBooksWithPagination } from '../actions/book/fetchApiBook';
-import Book, { BookHelpers } from '@/domain/book.model';
-import { useSearchParams, useRouter } from 'next/navigation';
 import { lora } from '@/utils/fonts/fonts';
 import { useFriends } from '@/hooks/useFriends';
-import { useBiography } from '@/hooks/useBiography';
 import AnimatedAlert from '../components/atoms/Alert/Alert';
 import { ESeverity } from '@/utils/constants/ESeverity';
 import { UUID } from 'crypto';
+
+// Hooks del perfil
+import { useProfileFilters } from './hooks/useProfileFilters';
+import { useProfilePagination } from './hooks/useProfilePagination';
+import { useProfileBiography } from './hooks/useProfileBiography';
+import { useInfiniteScroll } from './hooks/useInfiniteScroll';
+
+// Helpers
+import { ProfileBookHelpers } from './utils/profileHelpers';
+
+// Lazy components
 const Stats = React.lazy(() => import('../components/organisms/Stats'));
 const HallOfFame = React.lazy(
   () => import('../components/molecules/HallOfFame')
@@ -52,397 +52,49 @@ function ProfilePageContent() {
   ) as User | null;
   const isLoading = !user;
   const [tab, setTab] = React.useState(0);
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   const { count: friendsCount, isLoading: isLoadingFriends } = useFriends();
-  // Obtener los filtros del URL al cargar la página
-  const urlStatus = searchParams.get('status');
-  const urlAuthor = searchParams.get('author');
-  const urlSeries = searchParams.get('series');
-  const urlRating = searchParams.get('rating');
-  const urlSearch = searchParams.get('search') || '';
 
-  const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
-    urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
-      ? (urlStatus as EStatus)
-      : null
+  // Hooks personalizados para el perfil
+  const filters = useProfileFilters();
+  const { books, hasMore, loading, loadMoreBooks } = useProfilePagination(
+    user?.id as UUID
   );
-  const [authorFilter, setAuthorFilter] = useState(urlAuthor || '');
-  const [seriesFilter, setSeriesFilter] = useState(urlSeries || '');
-  const [ratingFilter, setRatingFilter] = useState(
-    urlRating ? Number(urlRating) : 0
-  );
-  const [search, setSearch] = useState(urlSearch);
-  // Estado para ordenamiento
-  const urlOrderBy = searchParams.get('orderBy') || 'rating';
-  const urlOrderDirection = searchParams.get('orderDirection') || 'desc';
-  const [orderBy, setOrderBy] = useState<string>(urlOrderBy);
-  const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>(
-    urlOrderDirection as 'asc' | 'desc'
-  );
-
   const {
-    handleUpdateBiography,
-    setIsUpdated: setIsUpdatedBiography,
-    isLoading: isLoadingBiography,
-    isUpdated: isUpdatedBiography,
-    isError: isErrorBiography,
-    setIsError: setIsErrorBiography,
-  } = useBiography();
-  const [isEditingBiography, setIsEditingBiography] = useState(false);
-  const [biography, setBiography] = useState(user?.biography);
-  // Estado para paginación automática y filtros
-  const [books, setBooks] = useState<Book[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const pageRef = useRef(0);
-  // Sentinel ref para IntersectionObserver
-  const sentinelRef = useRef<HTMLDivElement | null>(null);
+    biography,
+    isEditingBiography,
+    isLoadingBiography,
+    isUpdatedBiography,
+    isErrorBiography,
+    handleBiographyChange,
+    handleBiographySave,
+    handleEditBiography,
+    handleCancelBiography,
+    setIsUpdatedBiography,
+    setIsErrorBiography,
+  } = useProfileBiography(user);
 
-  const statusOptions = [
-    { label: 'Reading', value: EStatus.READING },
-    { label: 'Read', value: EStatus.READ },
-    { label: 'Want to read', value: EStatus.WANT_TO_READ },
-  ];
+  // Hook para paginación infinita
+  const { sentinelRef } = useInfiniteScroll({
+    hasMore,
+    loading,
+    loadMore: loadMoreBooks,
+  });
 
-  // Actualizar todos los filtros en la URL
-  const updateUrl = useCallback(
-    (filters: {
-      status?: EStatus | null;
-      author?: string;
-      series?: string;
-      rating?: number;
-      search?: string;
-      orderBy?: string;
-      orderDirection?: 'asc' | 'desc';
-    }) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (filters.status) {
-        params.set('status', filters.status);
-      } else {
-        params.delete('status');
-      }
-      if (filters.author) {
-        params.set('author', filters.author);
-      } else {
-        params.delete('author');
-      }
-      if (filters.series) {
-        params.set('series', filters.series);
-      } else {
-        params.delete('series');
-      }
-      if (filters.rating && filters.rating > 0) {
-        params.set('rating', String(filters.rating));
-      } else {
-        params.delete('rating');
-      }
-      if (filters.search) {
-        params.set('search', filters.search);
-      } else {
-        params.delete('search');
-      }
-      if (filters.orderBy) {
-        params.set('orderBy', filters.orderBy);
-      } else {
-        params.delete('orderBy');
-      }
-      if (filters.orderDirection) {
-        params.set('orderDirection', filters.orderDirection);
-      } else {
-        params.delete('orderDirection');
-      }
-      router.replace(`/profile?${params.toString()}`, { scroll: false });
-    },
-    [searchParams, router]
-  );
-  // Handlers para ordenamiento
-  const handleOrderByChange = useCallback(
-    (newOrderBy: string) => {
-      setOrderBy(newOrderBy);
-      updateUrl({
-        status: statusFilter,
-        author: authorFilter,
-        series: seriesFilter,
-        rating: ratingFilter,
-        search,
-        orderBy: newOrderBy,
-        orderDirection,
-      });
-    },
-    [
-      statusFilter,
-      authorFilter,
-      seriesFilter,
-      ratingFilter,
-      search,
-      orderDirection,
-      updateUrl,
-    ]
-  );
-  const handleOrderDirectionChange = useCallback(
-    (newDirection: 'asc' | 'desc') => {
-      setOrderDirection(newDirection);
-      updateUrl({
-        status: statusFilter,
-        author: authorFilter,
-        series: seriesFilter,
-        rating: ratingFilter,
-        search,
-        orderBy,
-        orderDirection: newDirection,
-      });
-    },
-    [
-      statusFilter,
-      authorFilter,
-      seriesFilter,
-      ratingFilter,
-      search,
-      orderBy,
-      updateUrl,
-    ]
-  );
-  // Handler para el buscador
-  const handleSearchChange = useCallback(
-    (newSearch: string) => {
-      setSearch(newSearch);
-      updateUrl({
-        status: statusFilter,
-        author: authorFilter,
-        series: seriesFilter,
-        rating: ratingFilter,
-        search: newSearch,
-      });
-    },
-    [statusFilter, authorFilter, seriesFilter, ratingFilter, updateUrl]
-  );
-
-  // Handlers para cada filtro
-  const handleStatusFilterChange = useCallback(
-    (newStatus: EStatus | null) => {
-      setStatusFilter(newStatus);
-      updateUrl({
-        status: newStatus,
-        author: authorFilter,
-        series: seriesFilter,
-        rating: ratingFilter,
-      });
-    },
-    [authorFilter, seriesFilter, ratingFilter, updateUrl]
-  );
-  const handleAuthorFilterChange = useCallback(
-    (newAuthor: string) => {
-      setAuthorFilter(newAuthor);
-      updateUrl({
-        status: statusFilter,
-        author: newAuthor,
-        series: seriesFilter,
-        rating: ratingFilter,
-      });
-    },
-    [statusFilter, seriesFilter, ratingFilter, updateUrl]
-  );
-  const handleSeriesFilterChange = useCallback(
-    (newSeries: string) => {
-      setSeriesFilter(newSeries);
-      updateUrl({
-        status: statusFilter,
-        author: authorFilter,
-        series: newSeries,
-        rating: ratingFilter,
-      });
-    },
-    [statusFilter, authorFilter, ratingFilter, updateUrl]
-  );
-  const handleRatingFilterChange = useCallback(
-    (newRating: number) => {
-      setRatingFilter(newRating);
-      updateUrl({
-        status: statusFilter,
-        author: authorFilter,
-        series: seriesFilter,
-        rating: newRating,
-      });
-    },
-    [statusFilter, authorFilter, seriesFilter, updateUrl]
-  );
-
-  // Sincronizar el estado con los search params cuando cambien (solo para navegación del navegador)
-  useEffect(() => {
-    const currentUrlStatus = searchParams.get('status');
-    const newStatus =
-      currentUrlStatus &&
-      Object.values(EStatus).includes(currentUrlStatus as EStatus)
-        ? (currentUrlStatus as EStatus)
-        : null;
-
-    // Solo actualizar si es diferente y no es el mismo valor que ya tenemos
-    if (newStatus !== statusFilter) {
-      setStatusFilter(newStatus);
-    }
-  }, [searchParams]); // Removido statusFilter de las dependencias para evitar loops
-
-  // Función para cargar más libros
-  const loadMoreBooks = useCallback(async () => {
-    if (loading || !hasMore || !user?.id) return;
-
-    setLoading(true);
-    const currentPage = pageRef.current;
-    try {
-      const res = await getBooksWithPagination(
-        user?.id as UUID,
-        currentPage,
-        50
-      );
-      if (res && Array.isArray(res.books) && res.books.length > 0) {
-        setBooks((prev) => {
-          // Evitar duplicados por id
-          const allBooks = [...prev, ...res.books];
-          const uniqueBooks = allBooks.filter(
-            (book, idx, arr) => arr.findIndex((b) => b.id === book.id) === idx
-          );
-          return uniqueBooks;
-        });
-        pageRef.current = currentPage + 1;
-        setHasMore(!!res.hasMore);
-      } else {
-        setHasMore(false);
-      }
-    } catch (error) {
-      console.error('Error loading books:', error);
-      setHasMore(false);
-    } finally {
-      setLoading(false);
-    }
-  }, [hasMore, loading, user?.id]);
-
-  // Cargar libros iniciales SOLO cuando user.id cambie
-  useEffect(() => {
-    if (!user?.id) return;
-    pageRef.current = 0;
-    setBooks([]);
-    setHasMore(true);
-    setLoading(false);
-    loadMoreBooks();
-  }, [user?.id]);
-
-  // Paginación automática con IntersectionObserver
-  useEffect(() => {
-    if (!hasMore || loading) return;
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
-
-    const observer = new window.IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loading) {
-          loadMoreBooks();
-        }
-      },
-      { rootMargin: '200px' }
-    );
-
-    observer.observe(sentinel);
-
-    return () => {
-      if (sentinel) observer.unobserve(sentinel);
-    };
-  }, [hasMore, loading, loadMoreBooks, books]);
-
-  // Opciones únicas de autor y saga/serie
-  // Opciones únicas de autor y saga/serie (evitar nulos/vacíos)
-  // Opciones únicas de autor y saga/serie (usando .name)
-  const authorOptions = React.useMemo(() => {
-    const set = new Set<string>();
-    books.forEach((b) => {
-      if (b.author && b.author.name && b.author.name.trim() !== '')
-        set.add(b.author.name);
-    });
-    return Array.from(set).sort();
-  }, [books]);
-  const seriesOptions = React.useMemo(() => {
-    const set = new Set<string>();
-    books.forEach((b) => {
-      if (b.series && b.series.name && b.series.name.trim() !== '')
-        set.add(b.series.name);
-    });
-    return Array.from(set).sort();
+  // Generar opciones de filtros desde los libros
+  const filterOptions = React.useMemo(() => {
+    return ProfileBookHelpers.generateFilterOptions(books);
   }, [books]);
 
   // Filtrar y ordenar libros
   const filteredBooks = React.useMemo(() => {
-    let result = books.filter((book) => {
-      const statusOk = !statusFilter || book.status === statusFilter;
-      const authorOk =
-        !authorFilter || (book.author && book.author.name === authorFilter);
-      const seriesOk =
-        !seriesFilter || (book.series && book.series.name === seriesFilter);
-      const ratingOk =
-        !ratingFilter ||
-        (typeof book.rating === 'number' && book.rating >= ratingFilter);
-      const searchOk =
-        !search ||
-        (BookHelpers.getDisplayTitle(book) &&
-          BookHelpers.getDisplayTitle(book)
-            .toLowerCase()
-            .includes(search.toLowerCase())) ||
-        (book.author &&
-          book.author.name &&
-          book.author.name.toLowerCase().includes(search.toLowerCase())) ||
-        (book.series &&
-          book.series.name &&
-          book.series.name.toLowerCase().includes(search.toLowerCase()));
-      return statusOk && authorOk && seriesOk && ratingOk && searchOk;
-    });
-
-    // Ordenar por orderBy y orderDirection
-    result = result.sort((a, b) => {
-      let aValue: string | number = '';
-      let bValue: string | number = '';
-      switch (orderBy) {
-        case 'author':
-          aValue = a.author?.name || '';
-          bValue = b.author?.name || '';
-          break;
-        case 'series':
-          aValue = a.series?.name || '';
-          bValue = b.series?.name || '';
-          break;
-        case 'rating':
-          aValue = typeof a.rating === 'number' ? a.rating : 0;
-          bValue = typeof b.rating === 'number' ? b.rating : 0;
-          break;
-        case 'title':
-        default:
-          aValue = BookHelpers.getDisplayTitle(a) || '';
-          bValue = BookHelpers.getDisplayTitle(b) || '';
-      }
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        if (orderDirection === 'asc') {
-          return aValue.localeCompare(bValue);
-        } else {
-          return bValue.localeCompare(aValue);
-        }
-      } else {
-        if (orderDirection === 'asc') {
-          return (aValue as number) - (bValue as number);
-        } else {
-          return (bValue as number) - (aValue as number);
-        }
-      }
-    });
-    return result;
-  }, [
-    books,
-    statusFilter,
-    authorFilter,
-    seriesFilter,
-    ratingFilter,
-    search,
-    orderBy,
-    orderDirection,
-  ]);
+    const filtered = ProfileBookHelpers.filterBooks(books, filters);
+    return ProfileBookHelpers.sortBooks(
+      filtered,
+      filters.orderBy,
+      filters.orderDirection
+    );
+  }, [books, filters]);
 
   if (isLoading) {
     return <ProfilePageSkeleton />;
@@ -457,15 +109,6 @@ function ProfilePageContent() {
       </Container>
     );
   }
-
-  const handleBiographyChange = async () => {
-    const formData = new FormData();
-    formData.append('biography', biography || '');
-    const biographyUpdated = await handleUpdateBiography(formData);
-    setBiography(biographyUpdated);
-    setIsEditingBiography(false);
-    setIsUpdatedBiography(true);
-  };
 
   return (
     <Container
@@ -495,13 +138,13 @@ function ProfilePageContent() {
           user={user}
           friendsCount={friendsCount}
           isLoadingFriends={isLoadingFriends}
-          onEditProfile={() => setIsEditingBiography(true)}
+          onEditProfile={handleEditBiography}
           biography={biography || user?.biography || ''}
           isEditingBiography={isEditingBiography}
           isLoadingBiography={isLoadingBiography}
-          onBiographyChange={setBiography}
-          onBiographySave={handleBiographyChange}
-          onBiographyCancel={() => setIsEditingBiography(false)}
+          onBiographyChange={handleBiographyChange}
+          onBiographySave={handleBiographySave}
+          onBiographyCancel={handleCancelBiography}
         />
         <Box sx={{ mt: 0 }}>
           <Tabs
@@ -545,23 +188,23 @@ function ProfilePageContent() {
               }}
             >
               <BooksFilter
-                statusOptions={statusOptions}
-                statusFilter={statusFilter}
-                authorOptions={authorOptions}
-                seriesOptions={seriesOptions}
-                authorFilter={authorFilter}
-                seriesFilter={seriesFilter}
-                ratingFilter={ratingFilter}
-                search={search}
-                onStatusChange={handleStatusFilterChange}
-                onAuthorChange={handleAuthorFilterChange}
-                onSeriesChange={handleSeriesFilterChange}
-                onRatingChange={handleRatingFilterChange}
-                onSearchChange={handleSearchChange}
-                orderBy={orderBy}
-                orderDirection={orderDirection}
-                onOrderByChange={handleOrderByChange}
-                onOrderDirectionChange={handleOrderDirectionChange}
+                statusOptions={filterOptions.statusOptions}
+                statusFilter={filters.status}
+                authorOptions={filterOptions.authorOptions}
+                seriesOptions={filterOptions.seriesOptions}
+                authorFilter={filters.author}
+                seriesFilter={filters.series}
+                ratingFilter={filters.rating}
+                search={filters.search}
+                onStatusChange={filters.handleStatusFilterChange}
+                onAuthorChange={filters.handleAuthorFilterChange}
+                onSeriesChange={filters.handleSeriesFilterChange}
+                onRatingChange={filters.handleRatingFilterChange}
+                onSearchChange={filters.handleSearchChange}
+                orderBy={filters.orderBy}
+                orderDirection={filters.orderDirection}
+                onOrderByChange={filters.handleOrderByChange}
+                onOrderDirectionChange={filters.handleOrderDirectionChange}
               />
 
               {loading ? (
@@ -576,6 +219,24 @@ function ProfilePageContent() {
                   }}
                 >
                   {loading && <BooksListSkeleton />}
+                </Box>
+              ) : books.length === 0 ? (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: 200,
+                    width: '100%',
+                  }}
+                >
+                  <Typography
+                    sx={{ font: lora.style.fontFamily }}
+                    color="white"
+                    variant="h6"
+                  >
+                    You don&apos;t have any books in your library yet
+                  </Typography>
                 </Box>
               ) : (
                 <BooksList books={filteredBooks} hasMore={hasMore} />
