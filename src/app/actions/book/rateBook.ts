@@ -4,16 +4,16 @@
 import { headers } from 'next/headers';
 import { cookies } from 'next/headers';
 import fetchBookById from './fetchBookById';
-import Book from '@/domain/book.model';
 import { setActivity } from './activities/setActivity';
 import { EActivity } from '@/utils/constants/formatActivity';
-import { ApiBook } from '@/domain/apiBook.model';
 import { EStatus } from '@/utils/constants/EStatus';
+import { Book } from '@gycoding/nebula';
+import HardcoverBook from '@/domain/HardcoverBook';
 
 export default async function rateBook(
   formData: FormData,
   username: string,
-  oldUserData?: ApiBook['userData'] // los datos antiguos
+  oldUserData?: Book['userData'] // los datos antiguos
 ) {
   try {
     const bookId = formData.get('bookId') as string;
@@ -77,7 +77,7 @@ export default async function rateBook(
       throw new Error('No ApiBook data received from server');
     }
 
-    const book: Book = await fetchBookById(bookId);
+    const book: HardcoverBook | null = await fetchBookById(bookId);
     const newUserData = data.bookRatingData.userData;
 
     // Detectar cambios y setear actividad adecuada

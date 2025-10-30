@@ -8,11 +8,11 @@ export const GET = async (req: NextRequest) => {
   try {
     const { searchParams } = new URL(req.url);
     const profileId = searchParams.get('profileId');
+    const page = searchParams.get('page') || '0';
+    const size = searchParams.get('size') || '50';
     if (!profileId) {
       return NextResponse.json({ error: 'Missing profileId param' }, { status: 400 });
     }
-    const page = parseInt(searchParams.get('page') || '0', 10);
-    const size = parseInt(searchParams.get('size') || '5', 10);
 
     const apiUrl = `${process.env.GY_API}/books/${profileId}/list?page=${page}&size=${size}`;
     const headers = {

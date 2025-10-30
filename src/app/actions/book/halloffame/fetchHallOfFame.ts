@@ -20,7 +20,7 @@ export default async function fetchHallOfFame(
     }
 
     const response = await fetch(
-      `${protocol}://${host}/api/public/books/halloffame?userId=${userId}`,
+      `${protocol}://${host}/api/public/books/profiles/halloffame?profileId=${userId}`,
       {
         method: 'GET',
         headers: {

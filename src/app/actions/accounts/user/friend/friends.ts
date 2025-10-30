@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { Friend } from '@/domain/friend.model';
+import { Profile } from '@gycoding/nebula';
 import { headers } from 'next/headers';
 import { cookies } from 'next/headers';
 
-export default async function getFriends(): Promise<Friend[]> {
+export default async function getFriends(): Promise<Profile[]> {
   try {
     const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
@@ -13,7 +13,7 @@ export default async function getFriends(): Promise<Friend[]> {
     const cookieStore = await cookies();
     const cookieHeader = cookieStore.toString();
     const response = await fetch(
-      `${protocol}://${host}/api/auth/accounts/friends`,
+      `${protocol}://${host}/api/auth/books/friends`,
       {
         method: 'GET',
         headers: {
@@ -35,7 +35,7 @@ export default async function getFriends(): Promise<Friend[]> {
       throw new Error('No ApiFriendRequest data received from server');
     }
 
-    return data as Friend[];
+    return data as Profile[];
   } catch (error: any) {
     throw new Error(`Failed to add friend: ${error.message}`);
   }

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import useSWR from 'swr';
-import Book from '@/domain/book.model';
 import fetchBookById from '@/app/actions/book/fetchBookById';
+import HardcoverBook from '@/domain/HardcoverBook';
 
 interface useBookProps {
-  data: Book | undefined;
+  data: HardcoverBook;
   isLoading: boolean;
   error: Error | null;
 }
@@ -20,7 +20,7 @@ export function useBook(id: string): useBookProps {
   );
 
   return {
-    data,
+    data: data as HardcoverBook,
     isLoading,
     error,
   };

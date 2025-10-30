@@ -11,7 +11,7 @@ export default async function setHallOfFameBook(formData: FormData) {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/books/halloffame/book`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profile/halloffame/book`;
 
   // --- DEBUG: Log info before private fetch ---
 

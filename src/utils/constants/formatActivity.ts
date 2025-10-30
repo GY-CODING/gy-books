@@ -1,9 +1,9 @@
-import Book from '@/domain/book.model';
+import HardcoverBook from "@/domain/HardcoverBook";
 
 export default function formatActivity(
   activity: EActivity,
   username: string,
-  book: Book,
+  book: HardcoverBook,
   progress?: number,
   rating?: number
 ): string {

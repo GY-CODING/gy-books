@@ -18,8 +18,8 @@ export const ProfileBookHelpers = {
 
     return {
       statusOptions: Array.from(statusSet).map((s) => ({ label: String(s), value: s })),
-      authorOptions: Array.from(authorSet).map((a) => ({ label: a, value: a })),
-      seriesOptions: Array.from(seriesSet).map((s) => ({ label: s, value: s })),
+      authorOptions: Array.from(authorSet),
+      seriesOptions: Array.from(seriesSet),
     };
   },
 

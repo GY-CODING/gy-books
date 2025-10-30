@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
-import { ApiBook } from '@/domain/apiBook.model';
+import { Book, UserData } from '@gycoding/nebula';
 
 async function handler(
   request: NextRequest,
@@ -46,16 +46,6 @@ async function handler(
         method: 'GET',
       });
 
-      if (gyCodingResponse.status === 404) {
-        return NextResponse.json(
-          {
-            id: ID,
-            averageRating: 0,
-            userData: null,
-          },
-          { status: 200 }
-        );
-      }
       if (!gyCodingResponse.ok) {
         const errorText = await gyCodingResponse.text();
         console.error('GET Error Response:', {
@@ -69,8 +59,8 @@ async function handler(
         throw new Error(`GyCoding API Error: ${errorText}`);
       }
 
-      const API_BOOK = await gyCodingResponse.json();
-      return NextResponse.json(API_BOOK as ApiBook);
+      const book = await gyCodingResponse.json();
+      return NextResponse.json(book as Book);
     }
 
     if (request.method === 'PATCH') {
@@ -78,8 +68,7 @@ async function handler(
 
       const progressNumber = parseFloat(BODY.progress as string);
 
-      const USER_DATA = {
-        userData: {
+      const USER_DATA: Partial<UserData> = {
           rating: BODY.rating,
           status: BODY.status,
           startDate: BODY.startDate,
@@ -87,7 +76,6 @@ async function handler(
           progress: progressNumber,
           review: BODY.review,
           editionId: BODY.editionId,
-        },
       };
 
       const gyCodingResponse = await fetch(API_URL, {
@@ -106,7 +94,7 @@ async function handler(
 
       const BOOK_RATING_DATA = await gyCodingResponse.json();
       return NextResponse.json({
-        bookRatingData: BOOK_RATING_DATA as ApiBook,
+        bookRatingData: BOOK_RATING_DATA as Book,
       });
     }
 

@@ -13,7 +13,7 @@ export default async function updateHallOfFame(
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/books/halloffame/quote`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profile/halloffame/quote`;
 
   // --- DEBUG: Log info before private fetch ---
 

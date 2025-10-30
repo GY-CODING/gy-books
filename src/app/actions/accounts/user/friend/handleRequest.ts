@@ -23,7 +23,7 @@ export default async function manageRequest(
     const cookieHeader = cookieStore.toString();
 
     const response = await fetch(
-      `${protocol}://${host}/api/auth/accounts/friends/manage`,
+      `${protocol}://${host}/api/auth/books/friends/manage`,
       {
         method: 'POST',
         headers: {

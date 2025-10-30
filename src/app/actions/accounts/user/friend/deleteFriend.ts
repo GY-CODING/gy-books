@@ -17,7 +17,7 @@ export default async function deleteFriend(userId: string) {
     const cookieHeader = cookieStore.toString();
 
     const response = await fetch(
-      `${protocol}://${host}/api/auth/accounts/friends/${userId}`,
+      `${protocol}://${host}/api/auth/books/friends/${userId}`,
       {
         method: 'DELETE',
         headers: {

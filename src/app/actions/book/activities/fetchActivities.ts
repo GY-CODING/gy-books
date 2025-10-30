@@ -12,7 +12,7 @@ export async function fetchActivities(profileId: UUID): Promise<Activity[]> {
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 
-    const url = `${protocol}://${host}/api/public/books/activities?userId=${profileId}`;
+    const url = `${protocol}://${host}/api/public/books/profiles/${profileId}/activity`;
     const fetchOptions: RequestInit = {
       method: 'GET',
       headers: {

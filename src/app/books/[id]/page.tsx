@@ -3,34 +3,30 @@
 import React from 'react';
 import { Box, Typography, IconButton, Chip, Divider } from '@mui/material';
 import { useParams } from 'next/navigation';
-import { useBook } from '@/hooks/useBook';
 import { lora } from '@/utils/fonts/fonts';
 import { BookRating } from '@/app/components/atoms/BookRating/BookRating';
 import StarIcon from '@mui/icons-material/Star';
-import { useApiBook } from '@/hooks/useApiBook';
 import { useUser } from '@/hooks/useUser';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { useHallOfFame } from '@/hooks/useHallOfFame';
 import AnimatedAlert from '@/app/components/atoms/Alert/Alert';
 import { ESeverity } from '@/utils/constants/ESeverity';
-import { useApiBookPublic } from '@/hooks/useApiBookPublic';
+// replaced individual api hooks by useMergedBook
+import useMergedBook from '@/hooks/books/useMergedBook';
 import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
 import BookDetailsSkeleton from '@/app/components/molecules/BookDetailsSkeleton';
 import { EditionSelector } from '@/app/components/molecules/EditionSelector/EditionSelector';
-import { Edition } from '@/domain/book.model';
 import { useEditionSelection } from '@/hooks/useEditionSelection';
+import { Edition } from '@/domain/HardcoverBook';
 
 export default function BookDetails() {
   const params = useParams();
-  const { data: book, isLoading } = useBook(params.id as string);
   const { data: user } = useUser();
-  const {
-    data: apiBook,
-    isLoading: isApiBookLoading,
-    mutate,
-  } = useApiBook(params.id as string);
-  const { data: apiBookPublic, isLoading: isApiBookLoadingPublic } =
-    useApiBookPublic(params.id as string);
+  const { data: mergedBook, isLoading: isMergedLoading, mutate } =
+    useMergedBook(params.id as string);
+  const book = mergedBook;
+  const Book = mergedBook;
+  const BookPublic = mergedBook;
 
   // Estados para notificaciones de edición
   const [editionNotification, setEditionNotification] = React.useState<{
@@ -52,7 +48,7 @@ export default function BookDetails() {
     isSaving,
   } = useEditionSelection({
     editions: book?.editions || [],
-    apiBook: apiBook || undefined,
+    Book: Book || undefined,
     defaultCoverUrl: book?.cover?.url || DEFAULT_COVER_IMAGE,
     defaultTitle: book?.title || '',
     onEditionSaved: (success, message) => {
@@ -93,7 +89,7 @@ export default function BookDetails() {
     return book.editions;
   }, [book]);
 
-  if (isLoading || isApiBookLoading || isApiBookLoadingPublic) {
+  if (isMergedLoading) {
     return <BookDetailsSkeleton />;
   }
 
@@ -221,7 +217,7 @@ export default function BookDetails() {
               textShadow: '0 0 20px rgba(140, 84, 255, 0.5)',
             }}
           >
-            {apiBookPublic?.averageRating}
+            {BookPublic?.averageRating}
             <StarIcon
               sx={{
                 color: 'primary.main',
@@ -239,7 +235,7 @@ export default function BookDetails() {
             flexDirection={'row'}
           >
             <BookRating
-              apiBook={apiBook}
+              Book={Book}
               bookId={book?.id || ''}
               isRatingLoading={isApiBookLoading}
               mutate={mutate}

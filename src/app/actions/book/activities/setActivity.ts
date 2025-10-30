@@ -2,12 +2,12 @@
 
 import formatActivity, { EActivity } from '@/utils/constants/formatActivity';
 import sendActivity from './sendActivities';
-import Book from '@/domain/book.model';
+import HardcoverBook from '@/domain/HardcoverBook';
 
 export const setActivity = async (
   activity: EActivity,
   username: string,
-  book: Book,
+  book: HardcoverBook,
   progress?: number,
   rating?: number
 ) => {

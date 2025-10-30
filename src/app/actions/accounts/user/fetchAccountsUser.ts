@@ -3,11 +3,11 @@
 
 import { headers, cookies } from 'next/headers';
 import { auth0 } from '@/lib/auth0';
-import { User } from '@/domain/friend.model';
+import { Profile } from '@gycoding/nebula';
 
 export default async function getAccountsUser(
   id: string
-): Promise<User | null> {
+): Promise<Profile | null> {
   if (!id) throw new Error('No username provided in formData');
 
   const session = await auth0.getSession();
@@ -15,8 +15,8 @@ export default async function getAccountsUser(
   const host = headersList.get('host') || 'localhost:3000';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 
-  const urlPrivate = `${protocol}://${host}/api/auth/accounts/${id}`;
-  const urlPublic = `${protocol}://${host}/api/public/accounts/${id}`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profiles/${id}`;
+  const urlPublic = `${protocol}://${host}/api/public/books/profiles/${id}`;
 
   // Si hay sesión, intenta privada primero
   if (session?.user) {
@@ -34,7 +34,7 @@ export default async function getAccountsUser(
       });
       const privateText = await privateRes.clone().text();
       if (privateRes.ok) {
-        return JSON.parse(privateText) as User;
+        return JSON.parse(privateText) as Profile;
       }
       // Si la privada no va, sigue a la pública
     } catch (error) {
@@ -53,7 +53,7 @@ export default async function getAccountsUser(
     });
     const publicText = await publicRes.clone().text();
     if (publicRes.ok) {
-      return JSON.parse(publicText) as User;
+      return JSON.parse(publicText) as Profile;
     }
     console.warn('[DEBUG] Public fetch failed:', publicRes.status, publicText);
     return null;

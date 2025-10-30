@@ -2,9 +2,9 @@
 'use server';
 
 import { headers, cookies } from 'next/headers';
-import { User } from '@/domain/friend.model';
+import { Profile } from '@gycoding/nebula';
 
-export default async function queryUsers(formData: FormData): Promise<User[]> {
+export default async function queryUsers(formData: FormData): Promise<Profile[]> {
   const query = formData.get('username');
   if (!query) throw new Error('No username provided in formData');
 
@@ -14,8 +14,8 @@ export default async function queryUsers(formData: FormData): Promise<User[]> {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/accounts?query=${query}`;
-  const urlPublic = `${protocol}://${host}/api/public/accounts?query=${query}`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profiles?query=${query}`;
+  const urlPublic = `${protocol}://${host}/api/public/books/profiles?query=${query}`;
 
   // --- DEBUG: Log info before private fetch ---
 
@@ -33,7 +33,7 @@ export default async function queryUsers(formData: FormData): Promise<User[]> {
     const privateText = await privateRes.clone().text();
 
     if (privateRes.ok) {
-      return JSON.parse(privateText) as User[];
+      return JSON.parse(privateText) as Profile[];
     }
     if (privateRes.status !== 401) {
       throw new Error(
@@ -57,7 +57,7 @@ export default async function queryUsers(formData: FormData): Promise<User[]> {
   const publicText = await publicRes.clone().text();
 
   if (publicRes.ok) {
-    return JSON.parse(publicText) as User[];
+    return JSON.parse(publicText) as Profile[];
   }
 
   throw new Error(

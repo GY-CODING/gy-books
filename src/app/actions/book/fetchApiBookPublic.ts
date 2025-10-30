@@ -2,11 +2,11 @@
 'use server';
 
 import { headers } from 'next/headers';
-import { ApiBook } from '@/domain/apiBook.model';
+import { Book } from '@gycoding/nebula';
 
 export default async function getApiBookPublic(
   bookId: string
-): Promise<ApiBook | null> {
+): Promise<Book | null> {
   try {
     const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
@@ -27,7 +27,7 @@ export default async function getApiBookPublic(
       return null;
     }
 
-    return data as ApiBook;
+    return data as Book;
   } catch (error: any) {
     console.error('Server Action - Error details:', error);
     throw new Error(`Failed to get book status: ${error.message}`);

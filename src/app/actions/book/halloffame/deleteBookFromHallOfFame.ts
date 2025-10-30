@@ -10,7 +10,7 @@ export default async function deleteBookFromHallOfFame(formData: FormData) {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/books/halloffame/book`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profiles/halloffame/book`;
 
   // --- DEBUG: Log info before private fetch ---
 

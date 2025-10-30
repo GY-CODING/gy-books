@@ -14,7 +14,7 @@ export default async function updateBiography(
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/books/biography`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profile/biography`;
 
   // --- DEBUG: Log info before private fetch ---
 

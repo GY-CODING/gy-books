@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { FriendRequest } from '@/domain/friend.model';
+import { FriendRequest } from '@gycoding/nebula';
 import { UUID } from 'crypto';
 import { headers } from 'next/headers';
 import { cookies } from 'next/headers';
@@ -16,7 +16,7 @@ export default async function getFriendRequests(
     const cookieStore = await cookies();
     const cookieHeader = cookieStore.toString();
     const response = await fetch(
-      `${protocol}://${host}/api/auth/accounts/friends/request?profileId=${profileId}`,
+      `${protocol}://${host}/api/auth/books/friends/requests?profileId=${profileId}`,
       {
         method: 'GET',
         headers: {
@@ -39,6 +39,6 @@ export default async function getFriendRequests(
 
     return data as FriendRequest[];
   } catch (error: any) {
-    throw new Error(`Failed to add friend: ${error.message}`);
+    throw new Error(`Failed to fetch friend requests: ${error.message}`);
   }
 }

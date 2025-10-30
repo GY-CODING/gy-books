@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import useSWR from 'swr';
-import { ApiBook } from '@/domain/apiBook.model';
 import getApiBook from '@/app/actions/book/fetchApiBook';
+import { Book } from '@gycoding/nebula';
 
 interface useApiBookProps {
-  data: ApiBook | null;
+  data: Book | null;
   isLoading: boolean;
   error: Error | null;
   mutate: (
-    data?: ApiBook | null,
+    data?: Book | null,
     options?: { revalidate?: boolean }
-  ) => Promise<ApiBook | null | undefined>;
+  ) => Promise<Book | null | undefined>;
 }
 
 export function useApiBook(id: string): useApiBookProps {

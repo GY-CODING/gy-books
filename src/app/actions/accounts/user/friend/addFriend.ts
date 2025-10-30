@@ -19,7 +19,7 @@ export default async function addFriend(formData: FormData): Promise<boolean> {
     const cookieHeader = cookieStore.toString();
 
     const response = await fetch(
-      `${protocol}://${host}/api/auth/accounts/friends/request`,
+      `${protocol}://${host}/api/auth/books/friends/request`,
       {
         method: 'POST',
         headers: {
