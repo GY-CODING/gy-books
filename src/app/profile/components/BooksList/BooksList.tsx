@@ -1,10 +1,11 @@
+'use client';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { BookCardCompact } from '@/app/components/atoms/BookCardCompact/BookCardCompact';
-import Book from '@/domain/book.model';
+import HardcoverBook from '@/domain/HardcoverBook';
 
 interface BooksListProps {
-  books: Book[];
+  books: HardcoverBook[];
   hasMore: boolean;
 }
 

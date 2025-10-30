@@ -14,15 +14,13 @@ import {
   Button,
 } from '@mui/material';
 import AssistantIcon from '@mui/icons-material/Assistant';
-import Book from '@/domain/book.model';
 import { useRouter } from 'next/navigation';
-import { Library } from '@/domain/library.model';
 import { lora } from '@/utils/fonts/fonts';
 import { useBookDisplay } from '@/hooks/useBookDisplay';
+import HardcoverBook from '@/domain/HardcoverBook';
 
 interface BookCardCompactProps {
-  book: Book;
-  library?: Library;
+  book: HardcoverBook;
   onClick?: () => void;
   small?: boolean;
 }
@@ -249,10 +247,10 @@ export const BookCardCompact = ({
           >
             {book.author.name}
           </Typography>
-          {book.rating !== undefined && (
+          {book.userData?.rating !== undefined && (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Rating
-                value={book.rating}
+                value={book.userData.rating}
                 precision={0.5}
                 readOnly
                 size="small"
@@ -300,7 +298,7 @@ export const BookCardCompact = ({
         {/* Series */}
         {book.series && (
           <Chip
-            label={book.series.name}
+            label={book.series[0]?.name}
             size="small"
             sx={{
               alignSelf: 'flex-start',

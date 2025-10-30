@@ -1,5 +1,5 @@
+import HardcoverBook, { BookHelpers } from '@/domain/HardcoverBook';
 import { useMemo } from 'react';
-import Book, { BookHelpers, Edition } from '@/domain/book.model';
 
 interface BookDisplayData {
   title: string;
@@ -14,7 +14,7 @@ interface BookDisplayData {
  * @param book El libro del que obtener los datos de visualización
  * @returns Objeto con los datos de visualización procesados
  */
-export function useBookDisplay(book: Book): BookDisplayData {
+export function useBookDisplay(book: HardcoverBook): BookDisplayData {
   return useMemo(() => {
     const selectedEdition = BookHelpers.getSelectedEdition(book);
     const title = BookHelpers.getDisplayTitle(book);

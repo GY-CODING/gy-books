@@ -30,6 +30,7 @@ function BooksContent() {
   }, []);
 
   const debouncedTitle = useDebounce(title, 250);
+  console.log(books)
 
   useEffect(() => {
     const fetchBooks = async () => {

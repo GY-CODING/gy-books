@@ -1,11 +1,10 @@
-import { EStatus } from '@/utils/constants/EStatus';
-import { UserData } from './userData.model';
 import { findEditionById } from '@/utils/bookEditionHelpers';
 import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
+import type { EBookStatus, UserData } from '@gycoding/nebula';
 
 export interface Series {
-  name: string;
   id: number;
+  name: string;
 }
 
 export interface Cover {
@@ -42,18 +41,16 @@ export interface Edition {
   } | null;
 }
 
-export default interface Book {
+export default interface HardcoverBook {
   id: string;
   title: string;
-  series: Series | null;
+  series: Series[];
   cover: Cover;
-  releaseDate: string;
   pageCount: number;
   author: Author;
   description: string;
-  rating?: number;
-  review?: string;
-  status?: EStatus;
+  averageRating: number;
+  status?: EBookStatus;
   editions?: Edition[];
   userData?: UserData;
 }
@@ -65,7 +62,7 @@ export class BookHelpers {
   /**
    * Obtiene la edición seleccionada basada en el editionId del userData
    */
-  static getSelectedEdition(book: Book): Edition | null {
+  static getSelectedEdition(book: HardcoverBook): Edition | null {
     if (!book.userData?.editionId || !book.editions) {
       return null;
     }
@@ -76,7 +73,7 @@ export class BookHelpers {
   /**
    * Obtiene el título a mostrar (de la edición seleccionada o del libro)
    */
-  static getDisplayTitle(book: Book): string {
+  static getDisplayTitle(book: HardcoverBook): string {
     const selectedEdition = this.getSelectedEdition(book);
     return selectedEdition?.title || book.title;
   }
@@ -84,7 +81,7 @@ export class BookHelpers {
   /**
    * Obtiene la URL de la imagen a mostrar (de la edición seleccionada o del libro)
    */
-  static getDisplayCoverUrl(book: Book): string {
+  static getDisplayCoverUrl(book: HardcoverBook): string {
     const selectedEdition = this.getSelectedEdition(book);
     return (
       selectedEdition?.cached_image?.url ||
@@ -96,7 +93,7 @@ export class BookHelpers {
   /**
    * Verifica si el libro tiene una edición específica seleccionada
    */
-  static hasSelectedEdition(book: Book): boolean {
+  static hasSelectedEdition(book: HardcoverBook): boolean {
     return this.getSelectedEdition(book) !== null;
   }
 }

@@ -23,7 +23,7 @@ import { useAccountsUser } from '@/hooks/useAccountsUser';
 import ProfileSkeleton from '@/app/components/atoms/ProfileSkeleton/ProfileSkeleton';
 import { ProfileHeaderSkeleton } from '@/app/profile/components/ProfileHeader/ProfileHeaderSkeleton';
 import { BooksListSkeleton } from '@/app/profile/components/BooksList/BooksListSkeleton';
-import { getBooksWithPagination } from '@/app/actions/book/fetchApiBook';
+import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
 import Book from '@/domain/book.model';
 import { EStatus } from '@/utils/constants/EStatus';
 import { useRouter } from 'next/navigation';
@@ -44,10 +44,9 @@ function ProfilePageContent() {
   const [tab, setTab] = React.useState(0);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [books, setBooks] = useState<Book[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const pageRef = useRef(0);
+  const { data: books = [], isLoading: loading, error: booksError, isDone } =
+    useMergedBooksIncremental(params.id as UUID, 50);
+  const hasMore = !isDone;
 
   // Obtener los filtros del URL al cargar la página
   const urlStatus = searchParams.get('status');
@@ -282,63 +281,8 @@ function ProfilePageContent() {
     search,
   ]);
 
-  // Función para cargar más libros
-  const loadMoreBooks = useCallback(async () => {
-    if (loading || !hasMore) return;
-
-    setLoading(true);
-    const currentPage = pageRef.current;
-    try {
-      const res = await getBooksWithPagination(
-        params.id as UUID,
-        currentPage,
-        50
-      );
-      if (res && Array.isArray(res.books) && res.books.length > 0) {
-        setBooks((prev) => {
-          const allBooks = [...prev, ...res.books];
-          const uniqueBooks = allBooks.filter(
-            (book, idx, arr) => arr.findIndex((b) => b.id === book.id) === idx
-          );
-          return uniqueBooks;
-        });
-        pageRef.current = currentPage + 1;
-        setHasMore(!!res.hasMore);
-      } else {
-        setHasMore(false);
-      }
-    } catch (error) {
-      console.error('Error loading books:', error);
-      setHasMore(false);
-    } finally {
-      setLoading(false);
-    }
-  }, [hasMore, loading, params.id]);
-
-  // Cargar libros iniciales cuando cambie el ID del usuario
-  useEffect(() => {
-    pageRef.current = 0;
-    setBooks([]);
-    setHasMore(true);
-  }, [params.id]);
-
-  // Ejecutar la carga inicial solo una vez al montar el componente
-  useEffect(() => {
-    if (pageRef.current === 0 && books.length === 0 && hasMore) {
-      loadMoreBooks();
-    }
-  }, [loadMoreBooks, books.length, hasMore]);
-
-  // Paginación automática cada 3 segundos usando setTimeout encadenado
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (hasMore && !loading) {
-      timeout = setTimeout(() => {
-        loadMoreBooks();
-      }, 3000);
-    }
-    return () => clearTimeout(timeout);
-  }, [books, hasMore, loading, loadMoreBooks]);
+  // The incremental hook handles loading pages and appending them.
+  // booksError is used below if needed.
 
   // Opciones únicas de autor y saga/serie
   const authorOptions = React.useMemo(() => {

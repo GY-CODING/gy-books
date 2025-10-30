@@ -19,18 +19,18 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { lora } from '@/utils/fonts/fonts';
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
 
 interface BooksFilterProps {
-  statusOptions: { label: string; value: EStatus }[];
-  statusFilter: EStatus | null;
+  statusOptions: { label: string; value: EBookStatus }[];
+  statusFilter: EBookStatus | null;
   authorOptions: string[];
   seriesOptions: string[];
   authorFilter: string;
   seriesFilter: string;
   ratingFilter: number;
   search: string;
-  onStatusChange: (status: EStatus | null) => void;
+  onStatusChange: (status: EBookStatus | null) => void;
   onAuthorChange: (author: string) => void;
   onSeriesChange: (series: string) => void;
   onRatingChange: (rating: number) => void;
