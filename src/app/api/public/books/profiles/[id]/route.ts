@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { sendLog } from '@/utils/logs/logHelper';
 import { ELevel } from '@/utils/constants/ELevel';
@@ -11,8 +12,18 @@ export async function GET(
   try {
 
     // In Next.js app routes the second arg can be a thenable; await it before using params
-    const { params } = (await context) as { params: { id: string } };
-    const profileId = params.id;
+    const awaitedContext = (await context) as { params?: { id?: string } };
+    const profileId = awaitedContext?.params?.id;
+
+    if (!profileId) {
+      await sendLog(ELevel.ERROR, ELogs.PROFILE_COULD_NOT_BE_RECEIVED, {
+        error: 'Missing profile id in route params',
+      });
+      return NextResponse.json(
+        { error: 'Missing profile id' },
+        { status: 400 }
+      );
+    }
 
 
     let apiUrl: string | null = null;
@@ -40,12 +51,28 @@ export async function GET(
 
     if (!gyCodingResponse.ok) {
       const errorText = await gyCodingResponse.text();
+      // If the upstream returned 404, forward it to the client instead of throwing a 500
+      if (gyCodingResponse.status === 404) {
+        await sendLog(ELevel.WARN, ELogs.PROFILE_COULD_NOT_BE_RECEIVED, {
+          error: errorText,
+          status: 404,
+        });
+        return NextResponse.json(
+          { error: 'Profile not found' },
+          { status: 404 }
+        );
+      }
+
       await sendLog(ELevel.ERROR, ELogs.PROFILE_COULD_NOT_BE_RECEIVED, {
         error: errorText,
+        status: gyCodingResponse.status,
       });
-      throw new Error(`GyCoding API Error: ${errorText}`);
-      
+      return NextResponse.json(
+        { error: `GyCoding API Error: ${errorText}` },
+        { status: 502 }
+      );
     }
+
     const data = await gyCodingResponse.json();
 
     return NextResponse.json(data as Profile);

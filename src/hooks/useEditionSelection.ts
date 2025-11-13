@@ -5,7 +5,7 @@ import {
 } from '@/utils/bookEditionHelpers';
 import rateBook from '@/app/actions/book/rateBook';
 import { useUser } from '@/hooks/useUser';
-import { Book, EBookStatus } from '@gycoding/nebula';
+import type { Book } from '@gycoding/nebula';
 import { Edition } from '@/domain/HardcoverBook';
 
 interface UseEditionSelectionProps {
@@ -45,8 +45,8 @@ export function useEditionSelection({
   const userEditionId = Book?.userData?.editionId;
   const hasUserSelectedEdition = Boolean(userEditionId);
 
-  // Estados válidos para guardar ediciones
-  const validStatuses = [EBookStatus.WANT_TO_READ, EBookStatus.READING, EBookStatus.READ];
+  // Estados válidos para guardar ediciones (usar strings para evitar require dinámico)
+  const validStatuses = ['WANT_TO_READ', 'READING', 'READ'];
   const hasValidStatus =
     Book?.userData?.status &&
     validStatuses.includes(Book.userData.status);

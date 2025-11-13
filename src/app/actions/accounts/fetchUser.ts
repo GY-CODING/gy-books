@@ -46,3 +46,4 @@ export default async function fetchUser(): Promise<User | null> {
     throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
+

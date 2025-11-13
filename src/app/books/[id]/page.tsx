@@ -158,7 +158,7 @@ export default function BookDetails() {
             fontFamily: lora.style.fontFamily,
           }}
         >
-          {book?.author.name}
+          {book?.author?.name}
         </Typography>
       </Box>
       <Box
@@ -237,7 +237,7 @@ export default function BookDetails() {
             <BookRating
               Book={Book}
               bookId={book?.id || ''}
-              isRatingLoading={isApiBookLoading}
+              isRatingLoading={isMergedLoading}
               mutate={mutate}
               isLoggedIn={isLoggedIn}
               selectedEdition={selectedEdition}

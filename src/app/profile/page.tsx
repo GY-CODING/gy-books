@@ -27,7 +27,6 @@ import { ESeverity } from '@/utils/constants/ESeverity';
 import { UUID } from 'crypto';
 
 // Hooks del perfil
-
 import { useProfileBiography } from './hooks/useProfileBiography';
 import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
 
@@ -45,6 +44,7 @@ const ActivityTab = React.lazy(
 // import StatsSkeleton from '../components/molecules/StatsSkeleton';
 import { HallOfFameSkeleton } from '../components/molecules/HallOfFameSkeleton';
 import useProfileFilters from './hooks/useProfileFilters';
+import { EBookStatus } from '@gycoding/nebula';
 
 function ProfilePageContent() {
   const user = useSelector(
@@ -183,7 +183,7 @@ function ProfilePageContent() {
               }}
             >
               <BooksFilter
-                statusOptions={filterOptions.statusOptions}
+                statusOptions={filterOptions.statusOptions as { label: string; value: EBookStatus }[]}
                 statusFilter={filters.status}
                 authorOptions={filterOptions.authorOptions}
                 seriesOptions={filterOptions.seriesOptions}

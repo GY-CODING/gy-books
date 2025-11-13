@@ -56,11 +56,9 @@ export async function GET() {
     if (!userDoc) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-    const biography = userDoc.books.biography;
 
     return NextResponse.json({
-      ...userDoc.profile,
-      biography,
+      ...userDoc.profile
     } as User);
   } catch (error) {
     return NextResponse.json(

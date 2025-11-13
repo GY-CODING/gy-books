@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BooksFilter } from './BooksFilter';
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
 
 describe('BooksFilter', () => {
   const statusOptions = [
-    { label: 'Reading', value: EStatus.READING },
-    { label: 'Read', value: EStatus.READ },
-    { label: 'Want to read', value: EStatus.WANT_TO_READ },
+    { label: 'Reading', value: EBookStatus.READING },
+    { label: 'Read', value: EBookStatus.READ },
+    { label: 'Want to read', value: EBookStatus.WANT_TO_READ },
   ];
   const authorOptions = ['Author 1', 'Author 2'];
   const seriesOptions = ['Series 1', 'Series 2'];
@@ -79,7 +79,7 @@ describe('BooksFilter', () => {
     render(<BooksFilter {...defaultProps} />);
     fireEvent.mouseDown(screen.getByText('Status'));
     fireEvent.click(screen.getByText('Read'));
-    expect(defaultProps.onStatusChange).toHaveBeenCalledWith(EStatus.READ);
+  expect(defaultProps.onStatusChange).toHaveBeenCalledWith(EBookStatus.READ);
   });
 
   it('calls onAuthorChange when author changes', () => {

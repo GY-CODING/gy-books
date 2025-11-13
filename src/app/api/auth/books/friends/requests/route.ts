@@ -78,7 +78,7 @@ async function handler(req: NextRequest) {
       try {
         await client.connect();
 
-        const db = client.db('GYAccounts');
+        const db = client.db('GYBooks');
         const collection = db.collection('FriendRequest');
         const data = await collection.find({ to: profileId }).toArray();
         await client.close();

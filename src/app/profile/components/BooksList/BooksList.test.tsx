@@ -2,8 +2,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BooksList } from './BooksList';
-import Book from '@/domain/book.model';
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
 
 // Mock Next.js router
 jest.mock('next/navigation', () => ({
@@ -64,7 +63,7 @@ const mockBooks: Book[] = [
     },
     description: 'Description',
     rating: 4.5,
-    status: EStatus.READ,
+  status: EBookStatus.READ,
   } as Book,
   {
     id: '2',
@@ -81,7 +80,7 @@ const mockBooks: Book[] = [
     },
     description: 'Description',
     rating: 3.5,
-    status: EStatus.READING,
+  status: EBookStatus.READING,
   } as Book,
 ];
 

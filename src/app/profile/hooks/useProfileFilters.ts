@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
+
 
 export type ProfileFilters = {
-  status: EStatus | null;
+  status: EBookStatus | null;
   author: string;
   series: string;
   rating: number;
@@ -11,8 +12,9 @@ export type ProfileFilters = {
   orderDirection: 'asc' | 'desc';
 };
 
+
 export type ProfileFiltersActions = {
-  handleStatusFilterChange: (s: EStatus | null) => void;
+  handleStatusFilterChange: (s: EBookStatus | null) => void;
   handleAuthorFilterChange: (a: string) => void;
   handleSeriesFilterChange: (s: string) => void;
   handleRatingFilterChange: (r: number) => void;
@@ -21,8 +23,9 @@ export type ProfileFiltersActions = {
   handleOrderDirectionChange: (d: 'asc' | 'desc') => void;
 };
 
+
 export function useProfileFilters(): ProfileFilters & ProfileFiltersActions {
-  const [status, setStatus] = useState<EStatus | null>(null);
+  const [status, setStatus] = useState<EBookStatus | null>(null);
   const [author, setAuthor] = useState('');
   const [series, setSeries] = useState('');
   const [rating, setRating] = useState(0);
@@ -30,7 +33,7 @@ export function useProfileFilters(): ProfileFilters & ProfileFiltersActions {
   const [orderBy, setOrderBy] = useState('rating');
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
 
-  const handleStatusFilterChange = useCallback((s: EStatus | null) => setStatus(s), []);
+  const handleStatusFilterChange = useCallback((s: EBookStatus | null) => setStatus(s), []);
   const handleAuthorFilterChange = useCallback((a: string) => setAuthor(a), []);
   const handleSeriesFilterChange = useCallback((s: string) => setSeries(s), []);
   const handleRatingFilterChange = useCallback((r: number) => setRating(r), []);
