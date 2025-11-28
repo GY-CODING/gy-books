@@ -43,7 +43,23 @@ export const ProfileBookHelpers = {
       const ratingOk =
         !filters.rating ||
         (typeof bookRating === 'number' && bookRating >= filters.rating);
-      return statusOk && authorOk && seriesOk && ratingOk;
+
+      // Search filter - el título ya viene con la edición correcta desde el mapeo
+      const searchOk =
+        !filters.search ||
+        (book.title &&
+          book.title.toLowerCase().includes(filters.search.toLowerCase())) ||
+        (book.author &&
+          book.author.name &&
+          book.author.name
+            .toLowerCase()
+            .includes(filters.search.toLowerCase())) ||
+        (book.series &&
+          book.series.some((s) =>
+            s.name.toLowerCase().includes(filters.search.toLowerCase())
+          ));
+
+      return statusOk && authorOk && seriesOk && ratingOk && searchOk;
     });
   },
 
