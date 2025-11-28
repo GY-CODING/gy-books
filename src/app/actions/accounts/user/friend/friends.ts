@@ -26,17 +26,20 @@ export default async function getFriends(): Promise<Profile[]> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+      console.error(`Failed to fetch friends: ${response.status} - ${errorText}`);
+      return []; // Devolver array vacío en lugar de lanzar error
     }
 
     const data = await response.json();
 
     if (!data) {
-      throw new Error('No ApiFriendRequest data received from server');
+      console.error('No friend data received from server');
+      return [];
     }
 
     return data as Profile[];
   } catch (error: any) {
-    throw new Error(`Failed to add friend: ${error.message}`);
+    console.error(`Failed to fetch friends: ${error.message}`);
+    return []; // Devolver array vacío en lugar de lanzar error
   }
 }

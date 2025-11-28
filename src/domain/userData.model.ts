@@ -1,8 +1,8 @@
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
 
 export interface UserData {
   userId: string;
-  status: EStatus;
+  status: EBookStatus;
   rating: number;
   startDate: string;
   endDate: string;

@@ -1,8 +1,8 @@
 import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
-import Book from '../domain/book.model';
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
+import type HardcoverBook from '@/domain/HardcoverBook';
 
-interface HardcoverBook {
+interface HardcoverAPIBook {
   id: string;
   title: string;
   featured_series?: {
@@ -32,7 +32,9 @@ interface HardcoverBook {
   rating?: number;
 }
 
-export function mapHardcoverToBook(hardcoverBook: HardcoverBook): Book {
+export function mapHardcoverToBook(
+  hardcoverBook: HardcoverAPIBook
+): HardcoverBook {
   if (!hardcoverBook) {
     throw new Error('Book data is undefined');
   }
@@ -42,15 +44,16 @@ export function mapHardcoverToBook(hardcoverBook: HardcoverBook): Book {
       id: hardcoverBook.id,
       title: hardcoverBook.title,
       series: hardcoverBook.featured_series?.series
-        ? {
-            name: hardcoverBook.featured_series.series.name,
-            id: hardcoverBook.featured_series.series.id,
-          }
-        : null,
+        ? [
+            {
+              name: hardcoverBook.featured_series.series.name,
+              id: hardcoverBook.featured_series.series.id,
+            },
+          ]
+        : [],
       cover: {
         url: hardcoverBook.image?.url || DEFAULT_COVER_IMAGE,
       },
-      releaseDate: hardcoverBook.release_date || '',
       pageCount: hardcoverBook.pages || 0,
       author: {
         id: 0,
@@ -61,8 +64,8 @@ export function mapHardcoverToBook(hardcoverBook: HardcoverBook): Book {
         biography: '',
       },
       description: hardcoverBook.description || '',
-      rating: hardcoverBook.rating || 0,
-      status: EStatus.WANT_TO_READ,
+      averageRating: 0,
+      status: EBookStatus.WANT_TO_READ,
     };
   }
 
@@ -78,15 +81,16 @@ export function mapHardcoverToBook(hardcoverBook: HardcoverBook): Book {
     id: hardcoverBook.id,
     title: hardcoverBook.title,
     series: hardcoverBook.featured_series?.series
-      ? {
-          name: hardcoverBook.featured_series.series.name,
-          id: hardcoverBook.featured_series.series.id,
-        }
-      : null,
+      ? [
+          {
+            name: hardcoverBook.featured_series.series.name,
+            id: hardcoverBook.featured_series.series.id,
+          },
+        ]
+      : [],
     cover: {
       url: imageUrl,
     },
-    releaseDate: hardcoverBook.release_date || '',
     pageCount: hardcoverBook.pages || 0,
     author: {
       id: mainAuthor.id,
@@ -97,7 +101,7 @@ export function mapHardcoverToBook(hardcoverBook: HardcoverBook): Book {
       biography: mainAuthor.biography || '',
     },
     description: hardcoverBook.description || '',
-    rating: hardcoverBook.rating || 0,
-    status: EStatus.WANT_TO_READ,
+    averageRating: 0,
+    status: EBookStatus.WANT_TO_READ,
   };
 }

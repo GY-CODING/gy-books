@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useParams, useSearchParams, useRouter } from 'next/navigation';
-import UserProfilePage from './page';
 import { User } from '@/domain/friend.model';
-import { EStatus } from '@/utils/constants/EStatus';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { UUID } from 'crypto';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import React from 'react';
+import UserProfilePage from './page';
 
 // Mock Next.js navigation
 jest.mock('next/navigation', () => ({
@@ -21,6 +20,7 @@ jest.mock('@/hooks/useAccountsUser');
 jest.mock('../../actions/book/fetchApiBook');
 
 import { useAccountsUser } from '@/hooks/useAccountsUser';
+import { EBookStatus } from '@gycoding/nebula';
 import { getBooksWithPagination } from '../../actions/book/fetchApiBook';
 
 // Mock lazy-loaded components
@@ -103,9 +103,9 @@ jest.mock('@/app/profile/components/BooksFilter/BooksFilter', () => ({
         onChange={(e) => onStatusChange?.(e.target.value || null)}
       >
         <option value="">All</option>
-        <option value={EStatus.READING}>Reading</option>
-        <option value={EStatus.READ}>Read</option>
-        <option value={EStatus.WANT_TO_READ}>Want to Read</option>
+        <option value={EBookStatus.READING}>Reading</option>
+        <option value={EBookStatus.READ}>Read</option>
+        <option value={EBookStatus.WANT_TO_READ}>Want to Read</option>
       </select>
       <input
         data-testid="search-input"
@@ -187,7 +187,7 @@ const mockBooks = [
     title: 'Public Book 1',
     author: { name: 'Author 1' },
     series: { name: 'Series 1' },
-    status: EStatus.READ,
+    status: EBookStatus.READ,
     rating: 5,
   },
   {
@@ -195,7 +195,7 @@ const mockBooks = [
     title: 'Public Book 2',
     author: { name: 'Author 2' },
     series: { name: 'Series 2' },
-    status: EStatus.READING,
+    status: EBookStatus.READING,
     rating: 4,
   },
 ];
@@ -337,7 +337,7 @@ describe('UserProfilePage', () => {
     });
 
     const statusFilter = screen.getByTestId('status-filter');
-    fireEvent.change(statusFilter, { target: { value: EStatus.READ } });
+    fireEvent.change(statusFilter, { target: { value: EBookStatus.READ } });
 
     await waitFor(() => {
       expect(mockRouter.replace).toHaveBeenCalledWith(
@@ -440,7 +440,7 @@ describe('UserProfilePage', () => {
   it('loads initial URL parameters', () => {
     mockSearchParams.get.mockImplementation((key: string) => {
       const params: Record<string, string> = {
-        status: EStatus.READ,
+        status: EBookStatus.READ,
         search: 'test search',
         orderBy: 'author',
         author: 'Stephen King',
@@ -511,7 +511,7 @@ describe('UserProfilePage', () => {
     });
 
     const statusFilter = screen.getByTestId('status-filter');
-    fireEvent.change(statusFilter, { target: { value: EStatus.READ } });
+    fireEvent.change(statusFilter, { target: { value: EBookStatus.READ } });
 
     await waitFor(() => {
       expect(mockRouter.replace).toHaveBeenCalledWith(

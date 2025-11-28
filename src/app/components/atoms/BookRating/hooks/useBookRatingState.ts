@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react';
-import { BookRatingProps } from '../types';
-import { formatPercent, formatProgress } from '@/domain/userData.model';
-import { EStatus } from '@/utils/constants/EStatus';
 import rateBook from '@/app/actions/book/rateBook';
-import { useUser } from '@/hooks/useUser';
+import { formatPercent, formatProgress } from '@/domain/userData.model';
 import { useRemoveBook } from '@/hooks/useRemoveBook';
+import { useUser } from '@/hooks/useUser';
+import { EBookStatus } from '@gycoding/nebula';
+import { useEffect, useState } from 'react';
+import { BookRatingProps } from '../types';
 
 export function useBookRatingState(props: BookRatingProps) {
   const { bookId, apiBook, mutate } = props;
   const { data: user, isLoading: isUserLoading } = useUser();
   const { handleDeleteBook, isLoading: isDeleteLoading } = useRemoveBook();
   const [tempRating, setTempRating] = useState<number>(0);
-  const [tempStatus, setTempStatus] = useState<EStatus>(EStatus.WANT_TO_READ);
+  const [tempStatus, setTempStatus] = useState<EBookStatus>(
+    EBookStatus.WANT_TO_READ
+  );
   const [tempStartDate, setTempStartDate] = useState<string>('');
   const [tempEndDate, setTempEndDate] = useState<string>('');
   const [tempProgress, setTempProgress] = useState<number>(0);
@@ -24,7 +26,7 @@ export function useBookRatingState(props: BookRatingProps) {
   useEffect(() => {
     if (apiBook && apiBook.userData) {
       setTempRating(apiBook.userData.rating || 0);
-      setTempStatus(apiBook.userData.status ?? EStatus.WANT_TO_READ);
+      setTempStatus(apiBook.userData.status ?? EBookStatus.WANT_TO_READ);
       setTempStartDate(apiBook.userData.startDate || '');
       setTempEndDate(apiBook.userData.endDate || '');
       setTempReview(apiBook.userData.review || '');
@@ -37,12 +39,12 @@ export function useBookRatingState(props: BookRatingProps) {
       );
     } else {
       setTempRating(0);
-      setTempStatus(EStatus.RATE);
+      setTempStatus(EBookStatus.RATE);
       setTempStartDate('');
       setTempEndDate('');
       setTempReview('');
     }
-    if (apiBook?.userData?.status === EStatus.READ) {
+    if (apiBook?.userData?.status === EBookStatus.READ) {
       apiBook.userData.progress = 1;
       setIsProgressPercent(true);
     }
@@ -77,7 +79,9 @@ export function useBookRatingState(props: BookRatingProps) {
       );
       if (updatedApiBook && updatedApiBook.userData) {
         setTempRating(updatedApiBook.userData.rating || 0);
-        setTempStatus(updatedApiBook.userData.status ?? EStatus.WANT_TO_READ);
+        setTempStatus(
+          updatedApiBook.userData.status ?? EBookStatus.WANT_TO_READ
+        );
         setTempStartDate(updatedApiBook.userData.startDate || '');
         setTempEndDate(updatedApiBook.userData.endDate || '');
         setTempReview(updatedApiBook.userData.review || '');

@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Book, {
+
+import HardcoverBook, {
   Author,
   AuthorImage,
   Cover,
-  Series,
   Edition,
-} from '@/domain/book.model';
-import { EStatus } from '@/utils/constants/EStatus';
+  Series,
+} from '@/domain/HardcoverBook';
+import { EBookStatus } from '@gycoding/nebula';
 
-export function mapHardcoverToBook(data: any): Book {
+export function mapHardcoverToBook(data: any): HardcoverBook {
   const seriesEntry = data.book_series?.[0]?.series;
 
   const series: Series | null = seriesEntry
@@ -59,7 +60,7 @@ export function mapHardcoverToBook(data: any): Book {
     }));
   }
 
-  const book: Book = {
+  const book: HardcoverBook = {
     id: data.id.toString(),
     title: data.title,
     description: data.description ?? '',
@@ -68,7 +69,7 @@ export function mapHardcoverToBook(data: any): Book {
     cover,
     author,
     series,
-    status: EStatus.WANT_TO_READ,
+    status: EBookStatus.WANT_TO_READ,
     editions,
   };
 

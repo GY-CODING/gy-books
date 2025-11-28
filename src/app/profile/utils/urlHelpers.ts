@@ -1,4 +1,4 @@
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
 import { ProfileFilters } from './profileTypes';
 
 export class ProfileURLHelpers {
@@ -15,8 +15,9 @@ export class ProfileURLHelpers {
 
     return {
       status:
-        urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
-          ? (urlStatus as EStatus)
+        urlStatus &&
+        Object.values(EBookStatus).includes(urlStatus as EBookStatus)
+          ? (urlStatus as EBookStatus)
           : null,
       author: urlAuthor || '',
       series: urlSeries || '',

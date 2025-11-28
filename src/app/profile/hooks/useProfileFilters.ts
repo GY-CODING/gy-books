@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { EStatus } from '@/utils/constants/EStatus';
+import { EBookStatus } from '@gycoding/nebula';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import { ProfileFilters, ProfileFiltersActions } from '../utils/profileTypes';
 import { ProfileURLHelpers } from '../utils/urlHelpers';
 
@@ -11,7 +11,7 @@ export function useProfileFilters(): ProfileFilters & ProfileFiltersActions {
   // Inicializar filtros desde URL
   const initialFilters = ProfileURLHelpers.parseFiltersFromURL(searchParams);
 
-  const [statusFilter, setStatusFilter] = useState<EStatus | null>(
+  const [statusFilter, setStatusFilter] = useState<EBookStatus | null>(
     initialFilters.status || null
   );
   const [authorFilter, setAuthorFilter] = useState(initialFilters.author || '');
@@ -37,7 +37,7 @@ export function useProfileFilters(): ProfileFilters & ProfileFiltersActions {
 
   // Handlers para cada filtro
   const handleStatusFilterChange = useCallback(
-    (newStatus: EStatus | null) => {
+    (newStatus: EBookStatus | null) => {
       setStatusFilter(newStatus);
       updateUrl({
         status: newStatus,
@@ -209,8 +209,8 @@ export function useProfileFilters(): ProfileFilters & ProfileFiltersActions {
     const currentUrlStatus = searchParams.get('status');
     const newStatus =
       currentUrlStatus &&
-      Object.values(EStatus).includes(currentUrlStatus as EStatus)
-        ? (currentUrlStatus as EStatus)
+      Object.values(EBookStatus).includes(currentUrlStatus as EBookStatus)
+        ? (currentUrlStatus as EBookStatus)
         : null;
 
     if (newStatus !== statusFilter) {

@@ -1,6 +1,6 @@
-import { EStatus } from '@/utils/constants/EStatus';
 import { ApiBook } from '@/domain/apiBook.model';
-import { Edition } from '@/domain/book.model';
+import { Edition } from '@/domain/HardcoverBook';
+import { EBookStatus } from '@gycoding/nebula';
 
 export interface BookRatingProps {
   bookId: string;
@@ -16,7 +16,7 @@ export interface BookRatingProps {
 
 export interface BookRatingState {
   tempRating: number;
-  tempStatus: EStatus;
+  tempStatus: EBookStatus;
   tempStartDate: string;
   tempEndDate: string;
   tempProgress: number;
@@ -27,7 +27,7 @@ export interface BookRatingState {
 
 export interface BookRatingHandlers {
   setTempRating: (rating: number) => void;
-  setTempStatus: (status: EStatus) => void;
+  setTempStatus: (status: EBookStatus) => void;
   setTempStartDate: (date: string) => void;
   setTempEndDate: (date: string) => void;
   setTempProgress: (progress: number) => void;

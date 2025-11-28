@@ -101,7 +101,7 @@ export function BookCard({ book }: { book: HardcoverBook }) {
           >
             {title}
           </Typography>
-          {book.series != null && (
+          {book.series && book.series.length > 0 && book.series[0]?.name && (
             <Typography
               sx={{
                 color: '#FFFFFF45',
@@ -115,7 +115,7 @@ export function BookCard({ book }: { book: HardcoverBook }) {
               }}
               variant="h6"
             >
-              ({book.series[0]?.name})
+              ({book.series[0].name})
             </Typography>
           )}
         </Box>

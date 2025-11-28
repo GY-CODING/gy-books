@@ -1,20 +1,19 @@
 'use client';
 
-import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useRemoveBook } from '@/hooks/useRemoveBook';
+import { useUser } from '@/hooks/useUser';
 import { lora } from '@/utils/fonts/fonts';
+import { EBookStatus } from '@gycoding/nebula';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useUser } from '@/hooks/useUser';
-import { useRemoveBook } from '@/hooks/useRemoveBook';
 import BookRatingDrawer from './BookRatingDrawer';
 import BookRatingMenu from './BookRatingMenu';
-import { BookRatingProps } from './types';
-import { useBookRatingState } from './hooks/useBookRatingState';
 import { statusOptions } from './BookRatingOptions';
-import { EStatus } from '@/utils/constants/EStatus';
+import { useBookRatingState } from './hooks/useBookRatingState';
+import { BookRatingProps } from './types';
 export const BookRating = ({
   bookId,
   apiBook,
@@ -53,7 +52,7 @@ export const BookRating = ({
 
   // Local computed values
   const isBookSaved =
-    apiBook && apiBook.userData && apiBook.userData.status !== EStatus.RATE;
+    apiBook && apiBook.userData && apiBook.userData.status !== EBookStatus.RATE;
   const isLoading = isUserLoading || isRatingLoading;
   const isSubmitting = state.isSubmitting;
   const displayStatus = state.tempStatus;

@@ -1,8 +1,8 @@
-import { EStatus } from '@/utils/constants/EStatus';
-import Book from '@/domain/book.model';
+import HardcoverBook from '@/domain/HardcoverBook';
+import { EBookStatus } from '@gycoding/nebula';
 
 export interface ProfileFilters {
-  status: EStatus | null;
+  status: EBookStatus | null;
   author: string;
   series: string;
   rating: number;
@@ -12,7 +12,7 @@ export interface ProfileFilters {
 }
 
 export interface ProfileFilterOptions {
-  statusOptions: Array<{ label: string; value: EStatus }>;
+  statusOptions: Array<{ label: string; value: EBookStatus }>;
   authorOptions: string[];
   seriesOptions: string[];
 }
@@ -21,7 +21,7 @@ export interface ProfileState {
   tab: number;
   isEditingBiography: boolean;
   biography: string;
-  books: Book[];
+  books: HardcoverBook[];
   hasMore: boolean;
   loading: boolean;
 }
@@ -35,7 +35,7 @@ export interface ProfileBiographyState {
 }
 
 export interface ProfilePaginationState {
-  books: Book[];
+  books: HardcoverBook[];
   hasMore: boolean;
   loading: boolean;
   page: number;
@@ -47,7 +47,7 @@ export interface ProfilePaginationActions {
 }
 
 export interface ProfileFiltersActions {
-  handleStatusFilterChange: (status: EStatus | null) => void;
+  handleStatusFilterChange: (status: EBookStatus | null) => void;
   handleAuthorFilterChange: (author: string) => void;
   handleSeriesFilterChange: (series: string) => void;
   handleRatingFilterChange: (rating: number) => void;

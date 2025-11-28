@@ -125,7 +125,7 @@ export const HallOfFameCarousel: React.FC<HallOfFameCarouselProps> = ({
             const isCenter = pos === 'center';
             return (
               <motion.div
-                key={book.id}
+                key={`${book.id}-${i}`}
                 initial={{ opacity: 0, scale: 0.7, x: 0 }}
                 animate={variants[pos]}
                 exit={{ opacity: 0, scale: 0.7 }}

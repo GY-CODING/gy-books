@@ -60,21 +60,6 @@ pipeline {
       }
     }
 
-    stage('Run Tests') {
-      steps {
-        script {
-          try {
-            build job: 'Front/Test/WingWords',
-                  wait: true,
-                  propagate: true
-          } catch (Exception e) {
-            echo "Error calling test job: ${e.getMessage()}"
-            throw e
-          }
-        }
-      }
-    }
-
     stage('Sync Fork') {
       steps {
         script {

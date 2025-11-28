@@ -4,7 +4,7 @@
 
 import { Auth0Provider } from '@auth0/nextjs-auth0';
 import { Provider } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import store from '@/store';
 import {
   GyCodingUserProvider,
@@ -46,10 +46,13 @@ import { UUID } from 'crypto';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import PersonIcon from '@mui/icons-material/Person';
 import { CustomButton } from './components/atoms/CustomButton/customButton';
-import { useStatsPreFetch } from '@/hooks/useStatsPreFetch';
 import { useUser } from '@/hooks/useUser';
 const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
-  // Removed isHydrated state to prevent hydration mismatch
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useUser(); // Fetch and store profile in Redux
   const { user, isLoading } = useGyCodingUser();
@@ -165,7 +168,17 @@ const ClientLayoutContent = ({ children }: { children: React.ReactNode }) => {
             px: 3,
           }}
         >
-          {isMobile ? (
+          {!isHydrated ? (
+            <Box
+              component="img"
+              sx={{
+                width: '48px',
+                height: '48px',
+              }}
+              src="/gy-logo.png"
+              alt="logo"
+            />
+          ) : isMobile ? (
             <Box
               component="img"
               onClick={toggleDrawer}

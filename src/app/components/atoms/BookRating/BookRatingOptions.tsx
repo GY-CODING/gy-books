@@ -1,29 +1,28 @@
-import React from 'react';
+import { EBookStatus } from '@gycoding/nebula';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { EStatus } from '@/utils/constants/EStatus';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export interface StatusOption {
   label: string;
-  value: EStatus;
+  value: EBookStatus;
   icon: JSX.Element;
 }
 
 export const statusOptions: StatusOption[] = [
   {
     label: 'Want to read',
-    value: EStatus.WANT_TO_READ,
+    value: EBookStatus.WANT_TO_READ,
     icon: <BookmarkIcon />,
   },
   {
     label: 'Reading',
-    value: EStatus.READING,
+    value: EBookStatus.READING,
     icon: <RemoveRedEyeIcon />,
   },
   {
     label: 'Read',
-    value: EStatus.READ,
+    value: EBookStatus.READ,
     icon: <CheckCircleIcon />,
   },
 ];

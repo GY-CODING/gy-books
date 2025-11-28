@@ -2,12 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
-import React, { Suspense } from 'react';
-import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
-import { ProfilePageSkeleton } from './components/ProfilePageSkeleton';
-import { BooksFilter } from './components/BooksFilter/BooksFilter';
-import { BooksList } from './components/BooksList/BooksList';
-import { BooksListSkeleton } from './components/BooksList/BooksListSkeleton';
+import { User } from '@/domain/user.model';
+import { useFriends } from '@/hooks/useFriends';
+import { RootState } from '@/store';
+import { ESeverity } from '@/utils/constants/ESeverity';
+import { lora } from '@/utils/fonts/fonts';
 import {
   Box,
   CircularProgress,
@@ -16,25 +15,24 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
-import { UUID } from 'crypto';
 import React, { Suspense } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { User } from '@/domain/user.model';
-import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
-import { lora } from '@/utils/fonts/fonts';
-import { useFriends } from '@/hooks/useFriends';
 import AnimatedAlert from '../components/atoms/Alert/Alert';
-import { ESeverity } from '@/utils/constants/ESeverity';
-import { UUID } from 'crypto';
+import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
+import { BooksFilter } from './components/BooksFilter/BooksFilter';
+import { BooksList } from './components/BooksList/BooksList';
+import { BooksListSkeleton } from './components/BooksList/BooksListSkeleton';
+import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
+import { ProfilePageSkeleton } from './components/ProfilePageSkeleton';
 
 // Hooks del perfil
-import { useProfileFilters } from './hooks/useProfileFilters';
-import { useProfilePagination } from './hooks/useProfilePagination';
 import { useProfileBiography } from './hooks/useProfileBiography';
-import { useInfiniteScroll } from './hooks/useInfiniteScroll';
+import { useProfileFilters } from './hooks/useProfileFilters';
+import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
 
 // Helpers
+import { HallOfFameSkeleton } from '../components/molecules/HallOfFameSkeleton';
+import StatsSkeleton from '../components/molecules/StatsSkeleton';
 import { ProfileBookHelpers } from './utils/profileHelpers';
 
 // Lazy components
@@ -45,10 +43,6 @@ const HallOfFame = React.lazy(
 const ActivityTab = React.lazy(
   () => import('../components/molecules/activityTab')
 );
-import StatsSkeleton from '../components/molecules/StatsSkeleton';
-import { EBookStatus } from '@gycoding/nebula';
-import { HallOfFameSkeleton } from '../components/molecules/HallOfFameSkeleton';
-import useProfileFilters from './hooks/useProfileFilters';
 
 function ProfilePageContent() {
   const user = useSelector(
@@ -61,9 +55,8 @@ function ProfilePageContent() {
 
   // Hooks personalizados para el perfil
   const filters = useProfileFilters();
-  const { books, hasMore, loading, loadMoreBooks } = useProfilePagination(
-    user?.id as UUID
-  );
+  const { data: books, isLoading: loading, isDone } = useMergedBooksIncremental(user?.id as string, 50);
+  const hasMore = !isDone;
   const {
     biography,
     isEditingBiography,
@@ -77,13 +70,6 @@ function ProfilePageContent() {
     setIsUpdatedBiography,
     setIsErrorBiography,
   } = useProfileBiography(user);
-
-  // Hook para paginación infinita
-  const { sentinelRef } = useInfiniteScroll({
-    hasMore,
-    loading,
-    loadMore: loadMoreBooks,
-  });
 
   // Generar opciones de filtros desde los libros
   const filterOptions = React.useMemo(() => {
@@ -261,14 +247,6 @@ function ProfilePageContent() {
                 </Box>
               ) : (
                 <BooksList books={filteredBooks} hasMore={hasMore} />
-              )}
-
-              {booksError && (
-                <Box sx={{ mt: 2 }}>
-                  <Typography color="error">
-                    Error loading books: {booksError.message}
-                  </Typography>
-                </Box>
               )}
             </Box>
           )}

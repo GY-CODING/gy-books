@@ -1,11 +1,11 @@
-import React from 'react';
+import { EBookStatus } from '@gycoding/nebula';
 import { Button, Stack } from '@mui/material';
-import { EStatus } from '@/utils/constants/EStatus';
-import { statusOptions, StatusOption } from './BookRatingOptions';
+import React from 'react';
+import { StatusOption, statusOptions } from './BookRatingOptions';
 
 interface Props {
-  tempStatus: EStatus;
-  setTempStatus: (status: EStatus) => void;
+  tempStatus: EBookStatus;
+  setTempStatus: (status: EBookStatus) => void;
   fontFamily: string;
 }
 

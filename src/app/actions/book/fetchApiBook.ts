@@ -86,7 +86,7 @@ export async function getBooksWithPagination(
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 
-    const url = `${protocol}://${host}/api/public/books/${profileId}/books?page=${page}&size=${size}`;
+    const url = `${protocol}://${host}/api/public/books?profileId=${profileId}&page=${page}&size=${size}`;
     const fetchOptions: RequestInit = {
       method: 'GET',
       headers: {

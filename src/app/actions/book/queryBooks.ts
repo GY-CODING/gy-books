@@ -4,22 +4,19 @@
 import HardcoverBook from '@/domain/HardcoverBook';
 import { Book } from '@gycoding/nebula';
 
-interface ApiResponse {
-  books: HardcoverBook[];
-}
-
 export default async function queryBooks(formData: FormData): Promise<Book[]> {
   const query = formData.get('title');
 
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const url = `${baseUrl}/api/public/hardcover?query=${query}`;
+    const url = `${baseUrl}/api/hardcover`;
 
     const response = await fetch(url, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ query }),
       cache: 'no-store',
     });
 
@@ -29,12 +26,12 @@ export default async function queryBooks(formData: FormData): Promise<Book[]> {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data: ApiResponse = await response.json();
+    const data: HardcoverBook[] = await response.json();
 
     // Filtrar y ordenar libros: primero los que tienen series
-    const sortedBooks = data.books.sort((a, b) => {
-      const aHasSeries = a.series !== null;
-      const bHasSeries = b.series !== null;
+    const sortedBooks = data.sort((a, b) => {
+      const aHasSeries = a.series && a.series.length > 0;
+      const bHasSeries = b.series && b.series.length > 0;
 
       if (aHasSeries && !bHasSeries) return -1; // a va primero
       if (!aHasSeries && bHasSeries) return 1; // b va primero

@@ -39,11 +39,22 @@ export function mapHardcoverBookToBook(
     };
   }
   // 2️⃣ Series
-  const series: Series[] =
-    hardcoverBook.book_series?.map((bs: any) => ({
+  let series: Series[] = [];
+
+  // Intentar book_series primero (queries por ID)
+  if (hardcoverBook.book_series && Array.isArray(hardcoverBook.book_series)) {
+    series = hardcoverBook.book_series.map((bs: any) => ({
       id: bs.series?.id ?? 0,
       name: bs.series?.name ?? '',
-    })) || [];
+    }));
+  }
+  // Si no hay book_series, intentar featured_series (búsquedas)
+  else if (hardcoverBook.featured_series?.series) {
+    series = [{
+      id: hardcoverBook.featured_series.series.id ?? 0,
+      name: hardcoverBook.featured_series.series.name ?? '',
+    }];
+  }
 
   // 3️⃣ Ediciones: todas las de book_series + hardcoverBook.editions
   let allEditions: Edition[] = [];

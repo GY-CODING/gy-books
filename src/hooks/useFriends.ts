@@ -27,7 +27,14 @@ interface useFriendsProps {
 export function useFriends(): useFriendsProps {
   const { data, isLoading, error } = useSWR(
     '/api/auth/users/accounts/friends',
-    getFriends
+    getFriends,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+      onError: (err) => {
+        console.error('Error loading friends:', err);
+      },
+    }
   );
   const { mutate } = useSWRConfig();
 

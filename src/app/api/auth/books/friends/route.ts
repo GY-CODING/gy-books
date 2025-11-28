@@ -42,7 +42,7 @@ export async function GET() {
     }
 
     const gyCodingResponse = await fetch(apiUrl, { headers });
-
+    console.log('GyCoding Response:', gyCodingResponse);
     if (!gyCodingResponse.ok) {
       const errorText = await gyCodingResponse.text();
       await sendLog(ELevel.ERROR, ELogs.PROFILE_COULD_NOT_BE_RECEIVED, {

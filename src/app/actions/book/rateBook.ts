@@ -2,9 +2,8 @@
 'use server';
 
 import HardcoverBook from '@/domain/HardcoverBook';
-import { EStatus } from '@/utils/constants/EStatus';
 import { EActivity } from '@/utils/constants/formatActivity';
-import { Book } from '@gycoding/nebula';
+import { Book, EBookStatus } from '@gycoding/nebula';
 import { cookies, headers } from 'next/headers';
 import { setActivity } from './activities/setActivity';
 import fetchBookById from './fetchBookById';
@@ -73,8 +72,8 @@ export default async function rateBook(
     ) {
       // Si el status es WANT_TO_READ, progress debe ser 0
       if (
-        status === EStatus.WANT_TO_READ ||
-        newUserData.status === EStatus.WANT_TO_READ
+        status === EBookStatus.WANT_TO_READ ||
+        newUserData.status === EBookStatus.WANT_TO_READ
       ) {
         newUserData.progress = 0;
       } else {
@@ -132,11 +131,11 @@ export default async function rateBook(
 
       // Status actualizado
       if (oldStatus !== newStatus) {
-        if (newStatus === EStatus.WANT_TO_READ) {
+        if (newStatus === EBookStatus.WANT_TO_READ) {
           await setActivity(EActivity.BOOK_WANT_TO_READ, username, book);
-        } else if (newStatus === EStatus.READING) {
+        } else if (newStatus === EBookStatus.READING) {
           await setActivity(EActivity.BOOK_STARED_READING, username, book);
-        } else if (newStatus === EStatus.READ) {
+        } else if (newStatus === EBookStatus.READ) {
           await setActivity(EActivity.BOOK_READ, username, book);
         }
       }
@@ -146,7 +145,7 @@ export default async function rateBook(
         typeof newProgress === 'number' &&
         newProgress !== undefined &&
         newProgress !== oldProgress &&
-        newStatus === EStatus.READING;
+        newStatus === EBookStatus.READING;
 
       if (progressChanged) {
         await setActivity(EActivity.BOOK_PROGRESS, username, book, newProgress);

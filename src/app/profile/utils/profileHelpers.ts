@@ -1,13 +1,13 @@
-import Book, { BookHelpers } from '@/domain/book.model';
-import { ProfileFilters, ProfileFilterOptions } from './profileTypes';
-import { EStatus } from '@/utils/constants/EStatus';
+import HardcoverBook, { BookHelpers } from '@/domain/HardcoverBook';
+import { EBookStatus } from '@gycoding/nebula';
+import { ProfileFilterOptions, ProfileFilters } from './profileTypes';
 
 export class ProfileBookHelpers {
-  static generateFilterOptions(books: Book[]): ProfileFilterOptions {
+  static generateFilterOptions(books: HardcoverBook[]): ProfileFilterOptions {
     const statusOptions = [
-      { label: 'Reading', value: EStatus.READING },
-      { label: 'Read', value: EStatus.READ },
-      { label: 'Want to read', value: EStatus.WANT_TO_READ },
+      { label: 'Reading', value: EBookStatus.READING },
+      { label: 'Read', value: EBookStatus.READ },
+      { label: 'Want to read', value: EBookStatus.WANT_TO_READ },
     ];
 
     const authorOptions = Array.from(
@@ -21,7 +21,7 @@ export class ProfileBookHelpers {
     const seriesOptions = Array.from(
       new Set(
         books
-          .map((b) => b.series?.name)
+          .map((b) => b.series?.[0]?.name)
           .filter((name): name is string => name != null && name.trim() !== '')
       )
     ).sort();
@@ -33,16 +33,22 @@ export class ProfileBookHelpers {
     };
   }
 
-  static filterBooks(books: Book[], filters: ProfileFilters): Book[] {
+  static filterBooks(
+    books: HardcoverBook[],
+    filters: ProfileFilters
+  ): HardcoverBook[] {
     return books.filter((book) => {
-      const statusOk = !filters.status || book.status === filters.status;
+      const statusOk =
+        !filters.status || book.userData?.status === filters.status;
       const authorOk =
         !filters.author || (book.author && book.author.name === filters.author);
       const seriesOk =
-        !filters.series || (book.series && book.series.name === filters.series);
+        !filters.series ||
+        (book.series && book.series.length > 0 && book.series[0]?.name === filters.series);
       const ratingOk =
-        !filters.rating ||
-        (typeof book.rating === 'number' && book.rating >= filters.rating);
+        filters.rating === 0 ||
+        (typeof book.userData?.rating === 'number' &&
+          book.userData.rating >= filters.rating);
 
       const searchOk =
         !filters.search ||
@@ -53,17 +59,19 @@ export class ProfileBookHelpers {
         book.author?.name
           ?.toLowerCase()
           .includes(filters.search.toLowerCase()) ||
-        book.series?.name?.toLowerCase().includes(filters.search.toLowerCase());
+        book.series?.[0]?.name
+          ?.toLowerCase()
+          .includes(filters.search.toLowerCase());
 
       return statusOk && authorOk && seriesOk && ratingOk && searchOk;
     });
   }
 
   static sortBooks(
-    books: Book[],
+    books: HardcoverBook[],
     orderBy: string,
     orderDirection: 'asc' | 'desc'
-  ): Book[] {
+  ): HardcoverBook[] {
     return [...books].sort((a, b) => {
       let aValue: string | number = '';
       let bValue: string | number = '';
@@ -74,12 +82,14 @@ export class ProfileBookHelpers {
           bValue = b.author?.name || '';
           break;
         case 'series':
-          aValue = a.series?.name || '';
-          bValue = b.series?.name || '';
+          aValue = a.series?.[0]?.name || '';
+          bValue = b.series?.[0]?.name || '';
           break;
         case 'rating':
-          aValue = typeof a.rating === 'number' ? a.rating : 0;
-          bValue = typeof b.rating === 'number' ? b.rating : 0;
+          aValue =
+            typeof a.userData?.rating === 'number' ? a.userData.rating : 0;
+          bValue =
+            typeof b.userData?.rating === 'number' ? b.userData.rating : 0;
           break;
         case 'title':
         default:
@@ -99,7 +109,7 @@ export class ProfileBookHelpers {
     });
   }
 
-  static removeDuplicateBooks(books: Book[]): Book[] {
+  static removeDuplicateBooks(books: HardcoverBook[]): HardcoverBook[] {
     return books.filter(
       (book, idx, arr) => arr.findIndex((b) => b.id === book.id) === idx
     );
