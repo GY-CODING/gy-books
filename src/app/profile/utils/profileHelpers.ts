@@ -65,8 +65,8 @@ export const ProfileBookHelpers = {
 
   sortBooks(
     books: HardcoverBook[],
-    orderBy: ProfileOrderBy,
-    orderDirection: ProfileOrderDirection
+    orderBy: string,
+    orderDirection: 'asc' | 'desc'
   ): HardcoverBook[] {
     if (!orderBy) return books;
     // Always sort the full array, robustly handling missing values
@@ -84,9 +84,9 @@ export const ProfileBookHelpers = {
           return bRating - aRating;
         }
         case 'author': {
-          // Sort by author name (first author), fallback to empty string
-          const aAuthor = a.authors?.[0]?.name?.toLowerCase() ?? '';
-          const bAuthor = b.authors?.[0]?.name?.toLowerCase() ?? '';
+          // Sort by author name, fallback to empty string
+          const aAuthor = a.author?.name?.toLowerCase() ?? '';
+          const bAuthor = b.author?.name?.toLowerCase() ?? '';
           // Books with no author go to the end
           if (!aAuthor && !bAuthor) return 0;
           if (!aAuthor) return 1;
@@ -105,8 +105,8 @@ export const ProfileBookHelpers = {
         }
         case 'series': {
           // Sort by saga/series name, fallback to empty string
-          const aSaga = a.series?.name?.toLowerCase() ?? '';
-          const bSaga = b.series?.name?.toLowerCase() ?? '';
+          const aSaga = a.series?.[0]?.name?.toLowerCase() ?? '';
+          const bSaga = b.series?.[0]?.name?.toLowerCase() ?? '';
           // Books with no saga go to the end
           if (!aSaga && !bSaga) return 0;
           if (!aSaga) return 1;

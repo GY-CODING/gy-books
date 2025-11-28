@@ -8,9 +8,7 @@ import { auth0 } from '@/lib/auth0';
 
 import { Book } from '@gycoding/nebula';
 
-export default async function getApiBook(
-  bookId: string
-): Promise<Book | null> {
+export default async function getApiBook(bookId: string): Promise<Book | null> {
   try {
     const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
@@ -82,7 +80,7 @@ export async function getBooksWithPagination(
   profileId: string,
   page: number = 0,
   size: number = 50
-): Promise<{ books: Book[]} | null> {
+): Promise<{ books: Book[] } | null> {
   try {
     const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
@@ -107,9 +105,9 @@ export async function getBooksWithPagination(
 
     const data: Book[] = await response.json();
 
-  return {
-    books: data
-  }
+    return {
+      books: data,
+    };
   } catch (error: any) {
     console.error('Server Action - Error details:', error);
     throw new Error(`Failed to get books: ${error.message}`);

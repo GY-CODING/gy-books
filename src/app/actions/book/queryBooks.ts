@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import HardcoverBook from "@/domain/HardcoverBook";
-import { Book } from "@gycoding/nebula";
-
+import HardcoverBook from '@/domain/HardcoverBook';
+import { Book } from '@gycoding/nebula';
 
 interface ApiResponse {
   books: HardcoverBook[];

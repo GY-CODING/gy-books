@@ -46,7 +46,9 @@ export async function POST(req: NextRequest) {
 
       const chunks: number[][] = [];
       for (let i = 0; i < ids.length; i += BATCH_SIZE) {
-        const chunk = ids.slice(i, i + BATCH_SIZE).map((id: any) => parseInt(id, 10));
+        const chunk = ids
+          .slice(i, i + BATCH_SIZE)
+          .map((id: any) => parseInt(id, 10));
         chunks.push(chunk);
       }
 
@@ -58,7 +60,10 @@ export async function POST(req: NextRequest) {
             'Content-Type': 'application/json',
             Authorization: apiKey,
           },
-          body: JSON.stringify({ query: GET_BOOKS_BY_IDS_QUERY, variables: { ids: chunkIds } }),
+          body: JSON.stringify({
+            query: GET_BOOKS_BY_IDS_QUERY,
+            variables: { ids: chunkIds },
+          }),
         });
 
         if (!resp.ok) {
@@ -122,7 +127,9 @@ export async function POST(req: NextRequest) {
         // Algunos endpoints devuelven results como array de hits
         rawBooks = data.data.search.results.map((h: any) => h.document || h);
       } else if (data.data.search.results?.hits) {
-        rawBooks = data.data.search.results.hits.map((h: any) => h.document || h);
+        rawBooks = data.data.search.results.hits.map(
+          (h: any) => h.document || h
+        );
       }
     } else if (data.data?.books_by_pk) {
       rawBooks = [data.data.books_by_pk];

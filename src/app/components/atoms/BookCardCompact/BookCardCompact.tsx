@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+import HardcoverBook from '@/domain/HardcoverBook';
+import { useBookDisplay } from '@/hooks/useBookDisplay';
+import { lora } from '@/utils/fonts/fonts';
+import AssistantIcon from '@mui/icons-material/Assistant';
 import {
   Box,
-  Typography,
+  Button,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
   Rating,
   Skeleton,
-  IconButton,
   Tooltip,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
+  Typography,
 } from '@mui/material';
-import AssistantIcon from '@mui/icons-material/Assistant';
 import { useRouter } from 'next/navigation';
-import { lora } from '@/utils/fonts/fonts';
-import { useBookDisplay } from '@/hooks/useBookDisplay';
-import HardcoverBook from '@/domain/HardcoverBook';
+import { useState } from 'react';
 
 interface BookCardCompactProps {
   book: HardcoverBook;
@@ -137,14 +137,6 @@ export const BookCardCompact = ({
   const router = useRouter();
   const { title, coverUrl } = useBookDisplay(book);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
-
-  // Debug log temporal
-  console.log(
-    'BookCardCompact - book:',
-    book.title,
-    'userData:',
-    book.userData
-  );
 
   const handleClick = () => {
     if (onClick) {

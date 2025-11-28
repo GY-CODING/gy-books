@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
 import type HardcoverBook from '@/domain/HardcoverBook';
 import { Stats } from '@/domain/stats.model';
 import { calculateStats } from '@/utils/stats/calculateStats';
+import { useMemo } from 'react';
 
 interface UseStatsFromBooksResult {
   data: Stats | undefined;
@@ -30,10 +30,6 @@ interface UseStatsFromBooksResult {
  * const { data: books, isLoading } = useMergedBooksIncremental(userId);
  * const { data: stats } = useStatsFromBooks(books, isLoading);
  *
- * if (stats) {
- *   console.log(`Total books: ${stats.totalBooks}`);
- *   console.log(`Average rating: ${stats.ratings.averageRating}`);
- * }
  * ```
  */
 export function useStatsFromBooks(

@@ -29,9 +29,6 @@ export default function BookDetails() {
     mutate,
   } = useMergedBook(params.id as string);
 
-  console.log('[BookDetails] mergedBook:', mergedBook);
-  console.log('[BookDetails] isMergedLoading:', isMergedLoading);
-
   const book = mergedBook;
   const Book = mergedBook;
   const BookPublic = mergedBook;
@@ -269,21 +266,7 @@ export default function BookDetails() {
               apiBook={Book as any}
               bookId={book?.id || ''}
               isRatingLoading={isMergedLoading}
-              mutate={(updatedBook) => {
-                console.log('[BookDetails] mutate called with:', updatedBook);
-                // Actualización optimista: mergear con datos anteriores
-                if (updatedBook && mutate && book) {
-                  const mergedBook = {
-                    ...book, // Mantener todos los campos de Hardcover (title, cover, author, etc.)
-                    ...updatedBook, // Sobrescribir con los nuevos datos (userData, averageRating)
-                  };
-                  console.log(
-                    '[BookDetails] calling mutate with merged book:',
-                    mergedBook
-                  );
-                  mutate(mergedBook, { revalidate: false });
-                }
-              }}
+              mutate={mutate as any}
               isLoggedIn={isLoggedIn}
               selectedEdition={selectedEdition}
             />

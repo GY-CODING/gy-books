@@ -3,7 +3,7 @@
 import deleteBookFromHallOfFame from '@/app/actions/book/halloffame/deleteBookFromHallOfFame';
 import fetchHallOfFame from '@/app/actions/book/halloffame/fetchHallOfFame';
 import setHallOfFameBook from '@/app/actions/book/halloffame/setHallOfFameBook';
-import Book from '@/domain/book.model';
+import type HardcoverBook from '@/domain/HardcoverBook';
 import { hallOfFame } from '@/domain/hallOfFame.model';
 import useHardcoverBatch from '@/hooks/books/useHardcoverBatch';
 import { useMemo, useState } from 'react';
@@ -14,7 +14,7 @@ interface useHallOfFameProps {
   isLoading: boolean;
   error: Error | null;
   quote: string;
-  books?: Book[];
+  books?: HardcoverBook[];
   isLoadingAddToHallOfFame: boolean;
   isUpdatedAddToHallOfFame: boolean;
   isErrorAddToHallOfFame: boolean;
@@ -65,7 +65,7 @@ export function useHallOfFame(userId: string): useHallOfFameProps {
   // Si hay hardcoverData úsalo, si no, cae a rawBooks
   const books = (
     hardcoverData && hardcoverData.length > 0 ? hardcoverData : rawBooks
-  ) as Book[];
+  ) as HardcoverBook[];
 
   const handleAddBookToHallOfFame = async (bookId: string): Promise<void> => {
     setIsLoadingToAddHallOfFame(true);

@@ -63,7 +63,7 @@ const mockBooks: Book[] = [
     },
     description: 'Description',
     rating: 4.5,
-  status: EBookStatus.READ,
+    status: EBookStatus.READ,
   } as Book,
   {
     id: '2',
@@ -80,7 +80,7 @@ const mockBooks: Book[] = [
     },
     description: 'Description',
     rating: 3.5,
-  status: EBookStatus.READING,
+    status: EBookStatus.READING,
   } as Book,
 ];
 

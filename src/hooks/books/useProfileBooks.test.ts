@@ -14,15 +14,20 @@ describe('useProfileBooks', () => {
       Array.from({ length: 2 }, (_, i) => ({ id: `b${i + 11}` })),
     ];
 
-    const fetchMock = jest.spyOn(global, 'fetch').mockImplementation(
-      (input: string | URL | Request, _init?: RequestInit) => {
-        const url = String(input);
-      const match = url.match(/page=(\d+)/);
-      const pageIndex = match ? Number(match[1]) : 0;
-      const body = pages[pageIndex] ?? [];
-      return Promise.resolve({ ok: true, json: async () => body } as unknown as Response);
-      }
-    );
+    const fetchMock = jest
+      .spyOn(global, 'fetch')
+      .mockImplementation(
+        (input: string | URL | Request, _init?: RequestInit) => {
+          const url = String(input);
+          const match = url.match(/page=(\d+)/);
+          const pageIndex = match ? Number(match[1]) : 0;
+          const body = pages[pageIndex] ?? [];
+          return Promise.resolve({
+            ok: true,
+            json: async () => body,
+          } as unknown as Response);
+        }
+      );
 
     const { result } = renderHook(() => useProfileBooks('user-1', 5));
 

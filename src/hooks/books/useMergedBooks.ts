@@ -15,24 +15,35 @@ type Result = {
  *   y mezcla userData en los HardcoverBook resultantes.
  */
 export default function useMergedBooks(profileId?: string): Result {
-  const { data: summaries, isLoading: loadingSummaries, error: errSummaries } = useProfileBooks(profileId);
+  const {
+    data: summaries,
+    isLoading: loadingSummaries,
+    error: errSummaries,
+  } = useProfileBooks(profileId);
 
   const ids = useMemo(() => {
     if (!summaries) return [] as string[];
     return summaries.map((s) => s.id);
   }, [summaries]);
 
-  const { data: hardcoverData, isLoading: loadingHardcover, error: errHardcover } = useHardcoverBatch(ids);
+  const {
+    data: hardcoverData,
+    isLoading: loadingHardcover,
+    error: errHardcover,
+  } = useHardcoverBatch(ids);
 
   const error = (errSummaries || errHardcover) ?? null;
   const isLoading = loadingSummaries || loadingHardcover;
 
   const data: HardcoverBook[] = useMemo(() => {
     if (!hardcoverData || hardcoverData.length === 0) return [];
-  const summaryById = new Map<string, ProfileUserData | undefined>();
-  (summaries || []).forEach((s) => summaryById.set(s.id, s.userData));
+    const summaryById = new Map<string, ProfileUserData | undefined>();
+    (summaries || []).forEach((s) => summaryById.set(s.id, s.userData));
 
-  return (hardcoverData.map((hb) => ({ ...hb, userData: summaryById.get(hb.id) || hb.userData })) as unknown) as HardcoverBook[];
+    return hardcoverData.map((hb) => ({
+      ...hb,
+      userData: summaryById.get(hb.id) || hb.userData,
+    })) as unknown as HardcoverBook[];
   }, [hardcoverData, summaries]);
 
   return { data, isLoading, error };

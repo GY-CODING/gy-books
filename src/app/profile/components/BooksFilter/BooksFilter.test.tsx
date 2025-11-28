@@ -79,7 +79,7 @@ describe('BooksFilter', () => {
     render(<BooksFilter {...defaultProps} />);
     fireEvent.mouseDown(screen.getByText('Status'));
     fireEvent.click(screen.getByText('Read'));
-  expect(defaultProps.onStatusChange).toHaveBeenCalledWith(EBookStatus.READ);
+    expect(defaultProps.onStatusChange).toHaveBeenCalledWith(EBookStatus.READ);
   });
 
   it('calls onAuthorChange when author changes', () => {

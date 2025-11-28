@@ -5,12 +5,8 @@ import { ELevel } from '@/utils/constants/ELevel';
 import { ELogs } from '@/utils/constants/ELogs';
 import { Profile } from '@gycoding/nebula';
 
-export async function GET(
-  req: NextRequest,
-  context: any
-) {
+export async function GET(req: NextRequest, context: any) {
   try {
-
     // In Next.js app routes the second arg can be a thenable; await it before using params
     const awaitedContext = (await context) as { params?: { id?: string } };
     const profileId = awaitedContext?.params?.id;
@@ -24,7 +20,6 @@ export async function GET(
         { status: 400 }
       );
     }
-
 
     let apiUrl: string | null = null;
     let headers: Record<string, string> = {

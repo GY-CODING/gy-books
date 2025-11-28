@@ -1,15 +1,10 @@
-import Book from '@/domain/book.model';
-import { Box, Typography } from '@mui/material';
-import React from 'react';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { lora } from '@/utils/fonts/fonts';
+import type HardcoverBook from '@/domain/HardcoverBook';
 import { useBookDisplay } from '@/hooks/useBookDisplay';
+import { lora } from '@/utils/fonts/fonts';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Typography } from '@mui/material';
 
-export function BookCard({ book }: { book: Book }) {
-  if (book.id === '103241') {
-    console.log(book);
-  }
-
+export function BookCard({ book }: { book: HardcoverBook }) {
   const { title, coverUrl } = useBookDisplay(book);
   return (
     <Box
@@ -120,7 +115,7 @@ export function BookCard({ book }: { book: Book }) {
               }}
               variant="h6"
             >
-              ({book.series.name})
+              ({book.series[0]?.name})
             </Typography>
           )}
         </Box>

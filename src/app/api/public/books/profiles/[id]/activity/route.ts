@@ -6,7 +6,6 @@ import { Activity } from '@/domain/activity.model';
 
 export const GET = async (req: NextRequest) => {
   try {
-
     const profileId = req.nextUrl.pathname.split('/')[5];
 
     let apiUrl: string | null = null;

@@ -16,8 +16,6 @@ import { Stats } from '@/domain/stats.model';
  * @example
  * ```typescript
  * const stats = calculateStats(userBooks);
- * console.log(stats.totalBooks); // 42
- * console.log(stats.averageRating); // 4.2
  * ```
  */
 export function calculateStats(books: HardcoverBook[]): Stats {
@@ -63,7 +61,7 @@ export function calculateStats(books: HardcoverBook[]): Stats {
     }
 
     // Distribución de autores
-    const authorName = book.author?.name || book.authors?.[0]?.name;
+    const authorName = book.author?.name;
     if (authorName) {
       stats.authors[authorName] = (stats.authors[authorName] || 0) + 1;
     }

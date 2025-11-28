@@ -8,7 +8,10 @@ type Result = {
   data: HardcoverBook | null;
   isLoading: boolean;
   error: Error | null;
-  mutate: (data?: HardcoverBook | null, options?: { revalidate?: boolean }) => Promise<HardcoverBook | null | undefined>;
+  mutate: (
+    data?: HardcoverBook | null,
+    options?: { revalidate?: boolean }
+  ) => Promise<HardcoverBook | null | undefined>;
 };
 
 export function useMergedBook(id?: string): Result {
@@ -26,8 +29,10 @@ export function useMergedBook(id?: string): Result {
       const merged: any = { ...(hardcoverResult as any) };
       if (apiResult) {
         // apiResult may provide averageRating and userData
-        if ((apiResult as any).averageRating !== undefined) merged.averageRating = (apiResult as any).averageRating;
-        if ((apiResult as any).userData !== undefined) merged.userData = (apiResult as any).userData;
+        if ((apiResult as any).averageRating !== undefined)
+          merged.averageRating = (apiResult as any).averageRating;
+        if ((apiResult as any).userData !== undefined)
+          merged.userData = (apiResult as any).userData;
       }
       return merged as HardcoverBook;
     }

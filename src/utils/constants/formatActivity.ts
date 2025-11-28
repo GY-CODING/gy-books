@@ -1,4 +1,4 @@
-import HardcoverBook from "@/domain/HardcoverBook";
+import HardcoverBook from '@/domain/HardcoverBook';
 
 export default function formatActivity(
   activity: EActivity,

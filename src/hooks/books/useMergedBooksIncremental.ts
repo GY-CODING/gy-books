@@ -92,7 +92,10 @@ export default function useMergedBooksIncremental(
           const summaryById = new Map<string, ProfileUserData | undefined>();
           pageData.forEach((s) => summaryById.set(s.id, s.userData));
 
-          const merged = hardcoverArr.map((hb) => ({ ...hb, userData: summaryById.get(hb.id) || hb.userData }));
+          const merged = hardcoverArr.map((hb) => ({
+            ...hb,
+            userData: summaryById.get(hb.id) || hb.userData,
+          }));
 
           // append to state
           if (!cancelled && mountedRef.current) {

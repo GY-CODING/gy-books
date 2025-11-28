@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
 import { Activity } from '@/domain/activity.model';
-import { useActivities } from '@/hooks/useActivities';
+import type HardcoverBook from '@/domain/HardcoverBook';
 import { useHardcoverBatch } from '@/hooks/books/useHardcoverBatch';
+import { useActivities } from '@/hooks/useActivities';
 import { lora } from '@/utils/fonts/fonts';
 import { Box, Skeleton, Typography } from '@mui/material';
 import { UUID } from 'crypto';
-import React, { useMemo } from 'react';
 import Image from 'next/image';
-import type HardcoverBook from '@/domain/HardcoverBook';
+import React, { useMemo } from 'react';
 
 interface ActivityTabProps {
   id: UUID;
@@ -23,8 +23,7 @@ const ActivityTab: React.FC<ActivityTabProps> = ({ id }) => {
     if (!books) return new Map<string, string>();
     return new Map(
       books.map((book: HardcoverBook) => {
-        const imageUrl =
-          book.cover?.url || book.image || '/placeholder-book.png';
+        const imageUrl = book.cover?.url || '/placeholder-book.png';
         return [String(book.id), imageUrl];
       })
     );

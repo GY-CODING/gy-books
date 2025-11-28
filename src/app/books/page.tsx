@@ -2,24 +2,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import React, { useEffect, useState, Suspense } from 'react';
 import queryBooks from '@/app/actions/book/queryBooks';
-import { Box, InputAdornment, TextField } from '@mui/material';
-import Book from '@/domain/book.model';
-import SearchIcon from '@mui/icons-material/Search';
-import Head from 'next/head';
+import HardcoverBook from '@/domain/HardcoverBook';
 import { useDebounce } from '@/hooks/useDebounce';
-import { BookCard } from '../components/atoms/BookCard/BookCard';
-import { useSearchParams, useRouter } from 'next/navigation';
 import { birthStone, lora } from '@/utils/fonts/fonts';
-import LottieAnimation from '../components/atoms/LottieAnimation/LottieAnimation';
+import SearchIcon from '@mui/icons-material/Search';
+import { Box, InputAdornment, TextField } from '@mui/material';
+import Head from 'next/head';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { BookCard } from '../components/atoms/BookCard/BookCard';
 import CustomTitle from '../components/atoms/BookTitle/CustomTitle';
+import LottieAnimation from '../components/atoms/LottieAnimation/LottieAnimation';
 
 function BooksContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [title, setTitle] = useState(searchParams.get('q') || '');
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<HardcoverBook[]>([]);
 
   const [animationData, setAnimationData] = useState<object | null>(null);
 
@@ -30,7 +30,6 @@ function BooksContent() {
   }, []);
 
   const debouncedTitle = useDebounce(title, 250);
-  console.log(books)
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -38,7 +37,7 @@ function BooksContent() {
         const formData = new FormData();
         formData.append('title', debouncedTitle);
         const result = await queryBooks(formData);
-        setBooks(result);
+        setBooks(result as HardcoverBook[]);
       } else {
         setBooks([]);
       }

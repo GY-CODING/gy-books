@@ -4,7 +4,9 @@
 import { headers, cookies } from 'next/headers';
 import { Profile } from '@gycoding/nebula';
 
-export default async function queryUsers(formData: FormData): Promise<Profile[]> {
+export default async function queryUsers(
+  formData: FormData
+): Promise<Profile[]> {
   const query = formData.get('username');
   if (!query) throw new Error('No username provided in formData');
 

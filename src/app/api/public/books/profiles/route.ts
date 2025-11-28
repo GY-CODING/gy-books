@@ -6,7 +6,6 @@ import { User } from '@/domain/friend.model';
 
 export async function GET(req: NextRequest) {
   try {
-
     const searchParams = req.nextUrl.searchParams;
     const queryParam = searchParams.get('query');
 

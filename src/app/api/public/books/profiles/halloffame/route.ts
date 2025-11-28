@@ -35,7 +35,7 @@ export const GET = async (req: NextRequest) => {
         error: errorText,
       });
       throw new Error(`GyCoding API Error: ${errorText}`);
-    }    
+    }
     const hallOfFame = await gyCodingResponse.json();
     return NextResponse.json(hallOfFame as HallOfFame);
   } catch (error) {

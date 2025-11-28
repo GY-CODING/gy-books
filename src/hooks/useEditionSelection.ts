@@ -84,13 +84,6 @@ export function useEditionSelection({
     // Solo llegar aquí si el libro está guardado Y en estado válido
     setIsSaving(true);
 
-    console.log('[DEBUG] handleEditionChange', {
-      newEdition,
-      hasValidStatus,
-      userData: Book?.userData,
-      status: Book?.userData?.status,
-    });
-
     try {
       if (Book?.userData && newEdition && hasValidStatus) {
         // Actualizar la edición en la base de datos

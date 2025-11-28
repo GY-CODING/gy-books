@@ -1,27 +1,26 @@
 'use client';
 
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
-import {
-  Box,
-  Container,
-  Typography,
-  Tab,
-  Tabs,
-  CircularProgress,
-} from '@mui/material';
+import ProfileSkeleton from '@/app/components/atoms/ProfileSkeleton/ProfileSkeleton';
 import { BooksFilter } from '@/app/profile/components/BooksFilter/BooksFilter';
 import { BooksList } from '@/app/profile/components/BooksList/BooksList';
-import { useParams, useSearchParams } from 'next/navigation';
-import { lora } from '@/utils/fonts/fonts';
-import { useAccountsUser } from '@/hooks/useAccountsUser';
-import ProfileSkeleton from '@/app/components/atoms/ProfileSkeleton/ProfileSkeleton';
-import { ProfileHeaderSkeleton } from '@/app/profile/components/ProfileHeader/ProfileHeaderSkeleton';
 import { BooksListSkeleton } from '@/app/profile/components/BooksList/BooksListSkeleton';
-import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
-import { EStatus } from '@/utils/constants/EStatus';
-import { useRouter } from 'next/navigation';
-import { UUID } from 'crypto';
 import { ProfileHeader } from '@/app/profile/components/ProfileHeader/ProfileHeader';
+import { ProfileHeaderSkeleton } from '@/app/profile/components/ProfileHeader/ProfileHeaderSkeleton';
+import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
+import { useAccountsUser } from '@/hooks/useAccountsUser';
+import { lora } from '@/utils/fonts/fonts';
+import { EBookStatus } from '@gycoding/nebula';
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
+import { UUID } from 'crypto';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 const ActivityTab = React.lazy(
   () => import('@/app/components/molecules/activityTab')
 );
@@ -53,9 +52,9 @@ function ProfilePageContent() {
   const urlOrderBy = searchParams.get('orderBy') || 'rating';
   const urlOrderDirection = searchParams.get('orderDirection') || 'desc';
 
-  const [statusFilter, setStatusFilter] = React.useState<EStatus | null>(
-    urlStatus && Object.values(EStatus).includes(urlStatus as EStatus)
-      ? (urlStatus as EStatus)
+  const [statusFilter, setStatusFilter] = React.useState<EBookStatus | null>(
+    urlStatus && Object.values(EBookStatus).includes(urlStatus as EBookStatus)
+      ? (urlStatus as EBookStatus)
       : null
   );
   const [authorFilter, setAuthorFilter] = useState(urlAuthor || '');
@@ -70,15 +69,15 @@ function ProfilePageContent() {
   );
 
   const statusOptions = [
-    { label: 'Reading', value: EStatus.READING },
-    { label: 'Read', value: EStatus.READ },
-    { label: 'Want to read', value: EStatus.WANT_TO_READ },
+    { label: 'Reading', value: EBookStatus.READING },
+    { label: 'Read', value: EBookStatus.READ },
+    { label: 'Want to read', value: EBookStatus.WANT_TO_READ },
   ];
 
   // Actualizar todos los filtros en la URL
   const updateUrl = useCallback(
     (filters: {
-      status?: EStatus | null;
+      status?: EBookStatus | null;
       author?: string;
       series?: string;
       rating?: number;
@@ -192,7 +191,7 @@ function ProfilePageContent() {
 
   // Handlers para cada filtro
   const handleStatusFilterChange = useCallback(
-    (newStatus: EStatus | null) => {
+    (newStatus: EBookStatus | null) => {
       setStatusFilter(newStatus);
       updateUrl({
         status: newStatus,
@@ -245,8 +244,8 @@ function ProfilePageContent() {
     const currentUrlStatus = searchParams.get('status');
     const newStatus =
       currentUrlStatus &&
-      Object.values(EStatus).includes(currentUrlStatus as EStatus)
-        ? (currentUrlStatus as EStatus)
+      Object.values(EBookStatus).includes(currentUrlStatus as EBookStatus)
+        ? (currentUrlStatus as EBookStatus)
         : null;
     if (newStatus !== statusFilter) {
       setStatusFilter(newStatus);
@@ -292,8 +291,13 @@ function ProfilePageContent() {
   const seriesOptions = React.useMemo(() => {
     const set = new Set<string>();
     books.forEach((b) => {
-      if (b.series && b.series.name && b.series.name.trim() !== '')
-        set.add(b.series.name);
+      if (
+        b.series &&
+        b.series.length > 0 &&
+        b.series[0]?.name &&
+        b.series[0].name.trim() !== ''
+      )
+        set.add(b.series[0].name);
     });
     return Array.from(set).sort();
   }, [books]);
@@ -305,10 +309,14 @@ function ProfilePageContent() {
       const authorOk =
         !authorFilter || (book.author && book.author.name === authorFilter);
       const seriesOk =
-        !seriesFilter || (book.series && book.series.name === seriesFilter);
+        !seriesFilter ||
+        (book.series &&
+          book.series.length > 0 &&
+          book.series[0]?.name === seriesFilter);
       const ratingOk =
         !ratingFilter ||
-        (typeof book.rating === 'number' && book.rating >= ratingFilter);
+        (typeof book.userData?.rating === 'number' &&
+          book.userData.rating >= ratingFilter);
       const searchOk =
         !search ||
         (book.title &&
@@ -317,8 +325,8 @@ function ProfilePageContent() {
           book.author.name &&
           book.author.name.toLowerCase().includes(search.toLowerCase())) ||
         (book.series &&
-          book.series.name &&
-          book.series.name.toLowerCase().includes(search.toLowerCase()));
+          book.series.length > 0 &&
+          book.series[0]?.name?.toLowerCase().includes(search.toLowerCase()));
       return statusOk && authorOk && seriesOk && ratingOk && searchOk;
     });
 
@@ -333,12 +341,14 @@ function ProfilePageContent() {
             bValue = b.author?.name || '';
             break;
           case 'series':
-            aValue = a.series?.name || '';
-            bValue = b.series?.name || '';
+            aValue = a.series?.[0]?.name || '';
+            bValue = b.series?.[0]?.name || '';
             break;
           case 'rating':
-            aValue = typeof a.rating === 'number' ? a.rating : 0;
-            bValue = typeof b.rating === 'number' ? b.rating : 0;
+            aValue =
+              typeof a.userData?.rating === 'number' ? a.userData.rating : 0;
+            bValue =
+              typeof b.userData?.rating === 'number' ? b.userData.rating : 0;
             break;
           case 'title':
             aValue = a.title || '';

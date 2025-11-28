@@ -11,7 +11,10 @@ export const GET = async (req: NextRequest) => {
     const page = searchParams.get('page') || '0';
     const size = searchParams.get('size') || '50';
     if (!profileId) {
-      return NextResponse.json({ error: 'Missing profileId param' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Missing profileId param' },
+        { status: 400 }
+      );
     }
 
     const apiUrl = `${process.env.GY_API}/books/${profileId}/list?page=${page}&size=${size}`;
