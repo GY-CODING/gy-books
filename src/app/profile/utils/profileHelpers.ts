@@ -1,125 +1,107 @@
-import type HardcoverBook from '@/domain/HardcoverBook';
-// Do NOT import EBookStatus directly to avoid dynamic require issues on the client
-import type { ProfileFilters } from '../hooks/useProfileFilters';
+import Book, { BookHelpers } from '@/domain/book.model';
+import { ProfileFilters, ProfileFilterOptions } from './profileTypes';
+import { EStatus } from '@/utils/constants/EStatus';
 
-export const ProfileBookHelpers = {
-  generateFilterOptions(books: HardcoverBook[]) {
-    const authorSet = new Set<string>();
-    const seriesSet = new Set<string>();
-
-    books.forEach((b) => {
-      if (b.author && b.author.name) authorSet.add(b.author.name);
-      if (b.series && Array.isArray(b.series)) {
-        b.series.forEach((s) => s && seriesSet.add(s.name));
-      }
-    });
-
-    // Hardcode the status options to avoid runtime import issues
+export class ProfileBookHelpers {
+  static generateFilterOptions(books: Book[]): ProfileFilterOptions {
     const statusOptions = [
-      { label: 'Reading', value: 'READING' },
-      { label: 'Want to read', value: 'WANT_TO_READ' },
-      { label: 'Read', value: 'READ' },
+      { label: 'Reading', value: EStatus.READING },
+      { label: 'Read', value: EStatus.READ },
+      { label: 'Want to read', value: EStatus.WANT_TO_READ },
     ];
+
+    const authorOptions = Array.from(
+      new Set(
+        books
+          .map((b) => b.author?.name)
+          .filter((name): name is string => name != null && name.trim() !== '')
+      )
+    ).sort();
+
+    const seriesOptions = Array.from(
+      new Set(
+        books
+          .map((b) => b.series?.name)
+          .filter((name): name is string => name != null && name.trim() !== '')
+      )
+    ).sort();
 
     return {
       statusOptions,
-      authorOptions: Array.from(authorSet),
-      seriesOptions: Array.from(seriesSet),
+      authorOptions,
+      seriesOptions,
     };
-  },
+  }
 
-  filterBooks(books: HardcoverBook[], filters: ProfileFilters) {
+  static filterBooks(books: Book[], filters: ProfileFilters): Book[] {
     return books.filter((book) => {
-      // Prefer userData.status if available, else book.status
-      const bookStatus: string | undefined =
-        book.userData?.status ?? book.status;
-      const statusOk = !filters.status || bookStatus === filters.status;
+      const statusOk = !filters.status || book.status === filters.status;
       const authorOk =
         !filters.author || (book.author && book.author.name === filters.author);
       const seriesOk =
-        !filters.series ||
-        (book.series && book.series.some((s) => s.name === filters.series));
-      const bookRating = book.userData?.rating;
+        !filters.series || (book.series && book.series.name === filters.series);
       const ratingOk =
         !filters.rating ||
-        (typeof bookRating === 'number' && bookRating >= filters.rating);
+        (typeof book.rating === 'number' && book.rating >= filters.rating);
 
-      // Search filter - el título ya viene con la edición correcta desde el mapeo
       const searchOk =
         !filters.search ||
-        (book.title &&
-          book.title.toLowerCase().includes(filters.search.toLowerCase())) ||
-        (book.author &&
-          book.author.name &&
-          book.author.name
+        (BookHelpers.getDisplayTitle(book) &&
+          BookHelpers.getDisplayTitle(book)
             .toLowerCase()
             .includes(filters.search.toLowerCase())) ||
-        (book.series &&
-          book.series.some((s) =>
-            s.name.toLowerCase().includes(filters.search.toLowerCase())
-          ));
+        book.author?.name
+          ?.toLowerCase()
+          .includes(filters.search.toLowerCase()) ||
+        book.series?.name?.toLowerCase().includes(filters.search.toLowerCase());
 
       return statusOk && authorOk && seriesOk && ratingOk && searchOk;
     });
-  },
+  }
 
-  sortBooks(
-    books: HardcoverBook[],
+  static sortBooks(
+    books: Book[],
     orderBy: string,
     orderDirection: 'asc' | 'desc'
-  ): HardcoverBook[] {
-    if (!orderBy) return books;
-    // Always sort the full array, robustly handling missing values
-    const sorted = [...books].sort((a, b) => {
+  ): Book[] {
+    return [...books].sort((a, b) => {
+      let aValue: string | number = '';
+      let bValue: string | number = '';
+
       switch (orderBy) {
-        case 'rating': {
-          // Sort by userData.rating (personal rating), fallback to 0 if not present
-          const aRating = a.userData?.rating ?? 0;
-          const bRating = b.userData?.rating ?? 0;
-          // If both ratings are 0, keep original order
-          if (aRating === 0 && bRating === 0) return 0;
-          // Books with rating 0 go to the end
-          if (aRating === 0) return 1;
-          if (bRating === 0) return -1;
-          return bRating - aRating;
-        }
-        case 'author': {
-          // Sort by author name, fallback to empty string
-          const aAuthor = a.author?.name?.toLowerCase() ?? '';
-          const bAuthor = b.author?.name?.toLowerCase() ?? '';
-          // Books with no author go to the end
-          if (!aAuthor && !bAuthor) return 0;
-          if (!aAuthor) return 1;
-          if (!bAuthor) return -1;
-          return aAuthor.localeCompare(bAuthor);
-        }
-        case 'name': {
-          // Sort by book title, fallback to empty string
-          const aTitle = a.title?.toLowerCase() ?? '';
-          const bTitle = b.title?.toLowerCase() ?? '';
-          // Books with no title go to the end
-          if (!aTitle && !bTitle) return 0;
-          if (!aTitle) return 1;
-          if (!bTitle) return -1;
-          return aTitle.localeCompare(bTitle);
-        }
-        case 'series': {
-          // Sort by saga/series name, fallback to empty string
-          const aSaga = a.series?.[0]?.name?.toLowerCase() ?? '';
-          const bSaga = b.series?.[0]?.name?.toLowerCase() ?? '';
-          // Books with no saga go to the end
-          if (!aSaga && !bSaga) return 0;
-          if (!aSaga) return 1;
-          if (!bSaga) return -1;
-          return aSaga.localeCompare(bSaga);
-        }
+        case 'author':
+          aValue = a.author?.name || '';
+          bValue = b.author?.name || '';
+          break;
+        case 'series':
+          aValue = a.series?.name || '';
+          bValue = b.series?.name || '';
+          break;
+        case 'rating':
+          aValue = typeof a.rating === 'number' ? a.rating : 0;
+          bValue = typeof b.rating === 'number' ? b.rating : 0;
+          break;
+        case 'title':
         default:
-          return 0;
+          aValue = BookHelpers.getDisplayTitle(a) || '';
+          bValue = BookHelpers.getDisplayTitle(b) || '';
+      }
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return orderDirection === 'asc'
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      } else {
+        return orderDirection === 'asc'
+          ? (aValue as number) - (bValue as number)
+          : (bValue as number) - (aValue as number);
       }
     });
-    if (orderDirection === 'asc') {
-      return sorted.reverse();
-    }
-    return sorted;
-  },
-};
+  }
+
+  static removeDuplicateBooks(books: Book[]): Book[] {
+    return books.filter(
+      (book, idx, arr) => arr.findIndex((b) => b.id === book.id) === idx
+    );
+  }
+}

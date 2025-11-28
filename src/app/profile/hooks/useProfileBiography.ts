@@ -1,66 +1,57 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import updateBiography from '@/app/actions/book/updateBiography';
-import type { User } from '@/domain/user.model';
-import { useCallback, useState } from 'react';
-import { mutate } from 'swr';
+import { useState } from 'react';
+import { useBiography } from '@/hooks/useBiography';
+import { User } from '@/domain/user.model';
 
-type UseProfileBiographyReturn = {
-  biography: string | null;
+interface UseProfileBiographyReturn {
+  biography: string;
   isEditingBiography: boolean;
   isLoadingBiography: boolean;
   isUpdatedBiography: boolean;
   isErrorBiography: boolean;
-  handleBiographyChange: (v: string) => void;
+  handleBiographyChange: (newBiography: string) => void;
   handleBiographySave: () => Promise<void>;
   handleEditBiography: () => void;
   handleCancelBiography: () => void;
-  setIsUpdatedBiography: (v: boolean) => void;
-  setIsErrorBiography: (v: boolean) => void;
-};
+  setIsUpdatedBiography: (value: boolean) => void;
+  setIsErrorBiography: (value: boolean) => void;
+}
 
 export function useProfileBiography(
   user: User | null
 ): UseProfileBiographyReturn {
-  const [biography, setBiography] = useState<string | null>(
-    user?.biography ?? null
-  );
+  const {
+    handleUpdateBiography,
+    setIsUpdated: setIsUpdatedBiography,
+    isLoading: isLoadingBiography,
+    isUpdated: isUpdatedBiography,
+    isError: isErrorBiography,
+    setIsError: setIsErrorBiography,
+  } = useBiography();
+
   const [isEditingBiography, setIsEditingBiography] = useState(false);
-  const [isLoadingBiography, setIsLoadingBiography] = useState(false);
-  const [isUpdatedBiography, setIsUpdatedBiography] = useState(false);
-  const [isErrorBiography, setIsErrorBiography] = useState(false);
+  const [biography, setBiography] = useState(user?.biography || '');
 
-  const handleBiographyChange = useCallback((v: string) => setBiography(v), []);
+  const handleBiographyChange = (newBiography: string) => {
+    setBiography(newBiography);
+  };
 
-  const handleEditBiography = useCallback(
-    () => setIsEditingBiography(true),
-    []
-  );
-  const handleCancelBiography = useCallback(() => {
+  const handleBiographySave = async () => {
+    const formData = new FormData();
+    formData.append('biography', biography || '');
+    const biographyUpdated = await handleUpdateBiography(formData);
+    setBiography(biographyUpdated);
     setIsEditingBiography(false);
-    setBiography(user?.biography ?? null);
-  }, [user]);
+    setIsUpdatedBiography(true);
+  };
 
-  const handleBiographySave = useCallback(async () => {
-    if (!biography) {
-      setIsErrorBiography(true);
-      return;
-    }
+  const handleEditBiography = () => {
+    setIsEditingBiography(true);
+  };
 
-    setIsLoadingBiography(true);
-    setIsErrorBiography(false);
-    try {
-      await updateBiography(biography);
-      setIsUpdatedBiography(true);
-      setIsEditingBiography(false);
-      // Revalidate user data to get updated biography
-      mutate('/api/auth/get');
-    } catch (e) {
-      console.error('Error saving biography:', e);
-      setIsErrorBiography(true);
-    } finally {
-      setIsLoadingBiography(false);
-    }
-  }, [biography]);
+  const handleCancelBiography = () => {
+    setBiography(user?.biography || '');
+    setIsEditingBiography(false);
+  };
 
   return {
     biography,
@@ -74,7 +65,5 @@ export function useProfileBiography(
     handleCancelBiography,
     setIsUpdatedBiography,
     setIsErrorBiography,
-  } as UseProfileBiographyReturn;
+  };
 }
-
-export default useProfileBiography;

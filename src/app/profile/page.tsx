@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
-import { User } from '@/domain/user.model';
-import { useFriends } from '@/hooks/useFriends';
-import { RootState } from '@/store';
-import { ESeverity } from '@/utils/constants/ESeverity';
-import { lora } from '@/utils/fonts/fonts';
+import React, { Suspense } from 'react';
+import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
+import { ProfilePageSkeleton } from './components/ProfilePageSkeleton';
+import { BooksFilter } from './components/BooksFilter/BooksFilter';
+import { BooksList } from './components/BooksList/BooksList';
+import { BooksListSkeleton } from './components/BooksList/BooksListSkeleton';
 import {
   Box,
   CircularProgress,
@@ -18,17 +19,20 @@ import {
 import { UUID } from 'crypto';
 import React, { Suspense } from 'react';
 import { useSelector } from 'react-redux';
-import AnimatedAlert from '../components/atoms/Alert/Alert';
+import { RootState } from '@/store';
+import { User } from '@/domain/user.model';
 import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
-import { BooksFilter } from './components/BooksFilter/BooksFilter';
-import { BooksList } from './components/BooksList/BooksList';
-import { BooksListSkeleton } from './components/BooksList/BooksListSkeleton';
-import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
-import { ProfilePageSkeleton } from './components/ProfilePageSkeleton';
+import { lora } from '@/utils/fonts/fonts';
+import { useFriends } from '@/hooks/useFriends';
+import AnimatedAlert from '../components/atoms/Alert/Alert';
+import { ESeverity } from '@/utils/constants/ESeverity';
+import { UUID } from 'crypto';
 
 // Hooks del perfil
-import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
+import { useProfileFilters } from './hooks/useProfileFilters';
+import { useProfilePagination } from './hooks/useProfilePagination';
 import { useProfileBiography } from './hooks/useProfileBiography';
+import { useInfiniteScroll } from './hooks/useInfiniteScroll';
 
 // Helpers
 import { ProfileBookHelpers } from './utils/profileHelpers';
@@ -54,14 +58,12 @@ function ProfilePageContent() {
   const [tab, setTab] = React.useState(0);
 
   const { count: friendsCount, isLoading: isLoadingFriends } = useFriends();
+
+  // Hooks personalizados para el perfil
   const filters = useProfileFilters();
-  const {
-    data: books = [],
-    isLoading: loading,
-    error: booksError,
-    isDone,
-  } = useMergedBooksIncremental(user?.id as UUID, 25);
-  const hasMore = !isDone;
+  const { books, hasMore, loading, loadMoreBooks } = useProfilePagination(
+    user?.id as UUID
+  );
   const {
     biography,
     isEditingBiography,
@@ -76,7 +78,12 @@ function ProfilePageContent() {
     setIsErrorBiography,
   } = useProfileBiography(user);
 
-  // incremental hook handles loading; no sentinel required
+  // Hook para paginación infinita
+  const { sentinelRef } = useInfiniteScroll({
+    hasMore,
+    loading,
+    loadMore: loadMoreBooks,
+  });
 
   // Generar opciones de filtros desde los libros
   const filterOptions = React.useMemo(() => {
@@ -185,12 +192,7 @@ function ProfilePageContent() {
               }}
             >
               <BooksFilter
-                statusOptions={
-                  filterOptions.statusOptions as {
-                    label: string;
-                    value: EBookStatus;
-                  }[]
-                }
+                statusOptions={filterOptions.statusOptions}
                 statusFilter={filters.status}
                 authorOptions={filterOptions.authorOptions}
                 seriesOptions={filterOptions.seriesOptions}
@@ -220,6 +222,24 @@ function ProfilePageContent() {
                   }}
                 >
                   <BooksListSkeleton />
+                </Box>
+              ) : books.length === 0 ? (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: 200,
+                    width: '100%',
+                  }}
+                >
+                  <Typography
+                    sx={{ font: lora.style.fontFamily }}
+                    color="white"
+                    variant="h6"
+                  >
+                    You don&apos;t have any books in your library yet
+                  </Typography>
                 </Box>
               ) : books.length === 0 ? (
                 <Box
