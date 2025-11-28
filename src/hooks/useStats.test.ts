@@ -99,6 +99,20 @@ describe('useStats', () => {
     expect(mockUseSWR).toHaveBeenCalledWith(null, expect.any(Function));
   });
 
+  it('should not fetch when userId is null', () => {
+    mockUseSWR.mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      error: null,
+      mutate: jest.fn(),
+      isValidating: false,
+    });
+
+    renderHook(() => useStats(null));
+
+    expect(mockUseSWR).toHaveBeenCalledWith(null, expect.any(Function));
+  });
+
   it('should handle undefined userId', () => {
     mockUseSWR.mockReturnValue({
       data: undefined,

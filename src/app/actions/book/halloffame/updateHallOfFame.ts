@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { headers, cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export default async function updateHallOfFame(
   formData: FormData
@@ -13,16 +13,16 @@ export default async function updateHallOfFame(
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/books/profile/halloffame/quote`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profiles/halloffame/quote`;
 
   // --- DEBUG: Log info before private fetch ---
 
-  const quote = formData.get('quote');
+  const quote = formData.get('quote') as string;
   let privateRes: Response;
   try {
     privateRes = await fetch(urlPrivate, {
       method: 'PATCH',
-      body: JSON.stringify(quote),
+      body: JSON.stringify({ quote }),
       headers: {
         'Content-Type': 'application/json',
         Cookie: cookieHeader,

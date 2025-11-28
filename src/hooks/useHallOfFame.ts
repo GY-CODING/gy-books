@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import deleteBookFromHallOfFame from '@/app/actions/book/halloffame/deleteBookFromHallOfFame';
 import fetchHallOfFame from '@/app/actions/book/halloffame/fetchHallOfFame';
 import setHallOfFameBook from '@/app/actions/book/halloffame/setHallOfFameBook';
 import Book from '@/domain/book.model';
 import { hallOfFame } from '@/domain/hallOfFame.model';
-import { useState } from 'react';
+import useHardcoverBatch from '@/hooks/books/useHardcoverBatch';
+import { useMemo, useState } from 'react';
 import useSWR, { mutate } from 'swr';
 
 interface useHallOfFameProps {
@@ -48,7 +51,21 @@ export function useHallOfFame(userId: string): useHallOfFameProps {
   );
 
   const quote = data?.quote || '';
-  const books = data?.books || [];
+  // Extraer ids de los libros (pueden venir como string o como objeto con id)
+  const rawBooks = data?.books || [];
+  const ids = useMemo(
+    () =>
+      rawBooks
+        .map((b: any) => (typeof b === 'string' ? b : b?.id))
+        .filter(Boolean),
+    [rawBooks]
+  );
+  const { data: hardcoverData, isLoading: isLoadingHardcover } =
+    useHardcoverBatch(ids);
+  // Si hay hardcoverData úsalo, si no, cae a rawBooks
+  const books = (
+    hardcoverData && hardcoverData.length > 0 ? hardcoverData : rawBooks
+  ) as Book[];
 
   const handleAddBookToHallOfFame = async (bookId: string): Promise<void> => {
     setIsLoadingToAddHallOfFame(true);
@@ -97,7 +114,7 @@ export function useHallOfFame(userId: string): useHallOfFameProps {
 
   return {
     data: data || null,
-    isLoading,
+    isLoading: isLoading || isLoadingHardcover,
     error,
     quote,
     books,

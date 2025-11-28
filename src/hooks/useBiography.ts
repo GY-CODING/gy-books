@@ -12,7 +12,7 @@ interface useBiographyProps {
   setIsError: (isError: boolean) => void;
 }
 
-export function useBiography(): useBiographyProps {
+export function useBiography(userId: string): useBiographyProps {
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const [isError, setIsError] = useState(false);

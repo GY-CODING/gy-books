@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { headers, cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export default async function setHallOfFameBook(formData: FormData) {
   if (!formData) throw new Error('No quote provided in formData');
@@ -11,7 +11,7 @@ export default async function setHallOfFameBook(formData: FormData) {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/books/profile/halloffame/book`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profiles/halloffame/book`;
 
   // --- DEBUG: Log info before private fetch ---
 

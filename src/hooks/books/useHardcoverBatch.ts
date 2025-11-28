@@ -23,7 +23,10 @@ export function useHardcoverBatch(ids: string[] | undefined | null): Result {
 
     const fetchBatch = async () => {
       if (!ids || ids.length === 0) {
-        setData([]);
+        // Solo actualizar si data no es ya un array vacío
+        if (data === null || data.length > 0) {
+          setData([]);
+        }
         return;
       }
       setIsLoading(true);
@@ -54,7 +57,8 @@ export function useHardcoverBatch(ids: string[] | undefined | null): Result {
       mounted = false;
       abort.abort();
     };
-  }, [ids]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ids?.join(',')]); // Usar join para comparar el contenido del array
 
   return { data, isLoading, error };
 }

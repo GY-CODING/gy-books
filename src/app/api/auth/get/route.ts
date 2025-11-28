@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { auth0 } from '@/lib/auth0';
-import { NextResponse, NextRequest } from 'next/server';
-import { MongoClient } from 'mongodb';
 import { User } from '@/domain/user.model';
+import { auth0 } from '@/lib/auth0';
+import { MongoClient } from 'mongodb';
+import { NextResponse } from 'next/server';
 /**
  * @swagger
  * /api/auth/get:
@@ -49,16 +49,20 @@ export async function GET() {
     await client.connect();
 
     const db = client.db('GYAccounts');
+    const db_books = client.db('GYBooks');
     const collection = db.collection('Metadata');
-
+    const collection_books = db_books.collection('Metadata');
     const userDoc = await collection.findOne({ userId });
+    const profileId = userDoc!.profile?.id;
+    const userBooksDoc = await collection_books.findOne({ profileId });
 
     if (!userDoc) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     return NextResponse.json({
-      ...userDoc.profile
+      ...userDoc.profile,
+      biography: userBooksDoc?.biography || '',
     } as User);
   } catch (error) {
     return NextResponse.json(

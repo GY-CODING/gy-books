@@ -3,6 +3,7 @@
 import { fetchActivities } from '@/app/actions/book/activities/fetchActivities';
 import { Activity } from '@/domain/activity.model';
 import { UUID } from 'crypto';
+import { useMemo } from 'react';
 import useSWR from 'swr';
 
 interface useActivitiesProps {
@@ -10,6 +11,7 @@ interface useActivitiesProps {
   isLoading: boolean;
   error: Error | null;
   formattedActivities?: Activity[];
+  uniqueBookIds: string[];
 }
 
 export function useActivities(id?: UUID): useActivitiesProps {
@@ -38,9 +40,19 @@ export function useActivities(id?: UUID): useActivitiesProps {
         }),
       })) || undefined;
 
+  // Extraer IDs únicos de libros para usar con useHardcoverBatch
+  const uniqueBookIds = useMemo(() => {
+    if (!formattedActivities) return [];
+    const ids = formattedActivities
+      .map((activity) => activity.bookId)
+      .filter((id): id is string => Boolean(id));
+    return Array.from(new Set(ids));
+  }, [formattedActivities]);
+
   return {
     data: formattedActivities,
     isLoading,
     error,
+    uniqueBookIds,
   };
 }

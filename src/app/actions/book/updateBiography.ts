@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { headers, cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export default async function updateBiography(
   biography: string
@@ -14,7 +14,7 @@ export default async function updateBiography(
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const urlPrivate = `${protocol}://${host}/api/auth/books/profile/biography`;
+  const urlPrivate = `${protocol}://${host}/api/auth/books/profiles/biography`;
 
   // --- DEBUG: Log info before private fetch ---
 

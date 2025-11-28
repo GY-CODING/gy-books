@@ -4,7 +4,7 @@ import { ELogs } from '@/utils/constants/ELogs';
 import { sendLog } from '@/utils/logs/logHelper';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
   try {
     const SESSION = await auth0.getSession();
 
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const ID_TOKEN = SESSION?.tokenSet?.idToken;
 
     const body = await req.json();
-    const biography = body.biography;
+    const quote = body.quote;
 
     if (SESSION) {
       await sendLog(ELevel.INFO, ELogs.SESSION_RECIVED, { user: USER_ID });
@@ -27,14 +27,14 @@ export async function POST(req: NextRequest) {
       'Content-Type': 'application/json',
     };
 
-    const baseUrl = process.env.GY_API?.replace(/['"]/g, '');
+    const baseUrl = process.env.GY_API?.replace(/['\"]/g, '');
 
     if (!baseUrl) {
       await sendLog(ELevel.ERROR, ELogs.ENVIROMENT_VARIABLE_NOT_DEFINED);
       throw new Error(ELogs.ENVIROMENT_VARIABLE_NOT_DEFINED);
     }
 
-    apiUrl = `${baseUrl}/books/profiles/biography`;
+    apiUrl = `${baseUrl}/books/profiles/halloffame/quote`;
     console.log(apiUrl);
     headers = {
       ...headers,
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     const gyCodingResponse = await fetch(apiUrl, {
       headers,
       method: 'PATCH',
-      body: JSON.stringify({ biography: biography }),
+      body: JSON.stringify({ quote: quote }),
     });
 
     if (!gyCodingResponse.ok) {
@@ -58,9 +58,9 @@ export async function POST(req: NextRequest) {
       throw new Error(`GyCoding API Error: ${errorText}`);
     }
 
-    return NextResponse.json(204);
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
-    console.error('Error in /api/auth/books/biography:', error);
+    console.error('Error in /api/auth/books/profiles/halloffame/quote:', error);
     await sendLog(ELevel.ERROR, ELogs.PROFILE_COULD_NOT_BE_RECEIVED, {
       error: error,
     });

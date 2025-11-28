@@ -1,9 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { GET_BOOK_BY_ID_QUERY } from '@/utils/constants/Query';
 import { mapHardcoverBookToBook } from '@/mapper/mapHardcoverToBookToBook';
+import { GET_BOOK_BY_ID_QUERY } from '@/utils/constants/Query';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
   try {
+    const params = await props.params;
     const apiUrl = process.env.HARDCOVER_API_URL;
     const apiKey = process.env.HARDCOVER_API_TOKEN;
     const { id } = params;
@@ -15,10 +19,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       );
     }
     if (!id) {
-      return NextResponse.json(
-        { error: 'Missing book id' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Missing book id' }, { status: 400 });
     }
 
     const variables = { id: parseInt(id, 10) };

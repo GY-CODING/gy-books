@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { headers } from 'next/headers';
-import { cookies } from 'next/headers';
-import fetchBookById from './fetchBookById';
-import { setActivity } from './activities/setActivity';
-import { EActivity } from '@/utils/constants/formatActivity';
-import { EStatus } from '@/utils/constants/EStatus';
-import { Book } from '@gycoding/nebula';
 import HardcoverBook from '@/domain/HardcoverBook';
+import { EStatus } from '@/utils/constants/EStatus';
+import { EActivity } from '@/utils/constants/formatActivity';
+import { Book } from '@gycoding/nebula';
+import { cookies, headers } from 'next/headers';
+import { setActivity } from './activities/setActivity';
+import fetchBookById from './fetchBookById';
 
 export default async function rateBook(
   formData: FormData,
@@ -35,11 +34,59 @@ export default async function rateBook(
     }
 
     // Validar que solo se envíe editionId si el libro está en un estado válido
-    const validStatuses = [EStatus.WANT_TO_READ, EStatus.READING, EStatus.READ];
-    const finalEditionId = validStatuses.includes(status as EStatus)
-      ? editionId
-      : null;
+    // RELAJADO: Confiamos en que el frontend o el backend manejen la lógica de negocio.
+    // Si llega un editionId, lo enviamos.
 
+    // Construir solo los campos que han cambiado
+    const newUserData: Record<string, any> = {};
+
+    // Solo agregar campos que realmente tienen valor o han cambiado
+    if (status && status !== oldUserData?.status) {
+      newUserData.status = status;
+    }
+
+    if (ratingNumber !== undefined && ratingNumber !== oldUserData?.rating) {
+      newUserData.rating = ratingNumber;
+    }
+
+    if (startDate && startDate !== oldUserData?.startDate) {
+      newUserData.startDate = startDate;
+    }
+
+    if (endDate && endDate !== oldUserData?.endDate) {
+      newUserData.endDate = endDate;
+    }
+
+    if (review && review !== oldUserData?.review) {
+      newUserData.review = review;
+    }
+
+    if (editionId && editionId !== oldUserData?.editionId) {
+      newUserData.editionId = editionId;
+    }
+
+    // Progress: solo enviar si cambió y tiene sentido según el status
+    const progressNumber = progress ? parseFloat(progress) : undefined;
+    if (
+      progressNumber !== undefined &&
+      progressNumber !== oldUserData?.progress
+    ) {
+      // Si el status es WANT_TO_READ, progress debe ser 0
+      if (
+        status === EStatus.WANT_TO_READ ||
+        newUserData.status === EStatus.WANT_TO_READ
+      ) {
+        newUserData.progress = 0;
+      } else {
+        newUserData.progress = progressNumber;
+      }
+    }
+
+    if (Object.keys(newUserData).length === 0) {
+      throw new Error('No changes to update');
+    }
+
+    // Definir protocol, host y cookieHeader si no existen
     const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
@@ -54,15 +101,7 @@ export default async function rateBook(
           'Content-Type': 'application/json',
           Cookie: cookieHeader,
         },
-        body: JSON.stringify({
-          rating: ratingNumber,
-          startDate: startDate || '',
-          endDate: endDate || '',
-          status: status,
-          progress: progress,
-          review: review || '',
-          editionId: finalEditionId || undefined,
-        }),
+        body: JSON.stringify({ userData: newUserData }),
         credentials: 'include',
       }
     );
@@ -78,18 +117,18 @@ export default async function rateBook(
     }
 
     const book: HardcoverBook | null = await fetchBookById(bookId);
-    const newUserData = data.bookRatingData.userData;
+    const updatedUserData = data.bookRatingData.userData;
 
     // Detectar cambios y setear actividad adecuada
-    if (book && username && newUserData) {
+    if (book && username && updatedUserData) {
       const oldStatus = oldUserData?.status;
-      const newStatus = newUserData.status;
+      const newStatus = updatedUserData.status;
 
       const oldProgress = oldUserData?.progress;
-      const newProgress = newUserData.progress;
+      const newProgress = updatedUserData.progress;
 
       const oldRating = oldUserData?.rating;
-      const newRating = newUserData.rating;
+      const newRating = updatedUserData.rating;
 
       // Status actualizado
       if (oldStatus !== newStatus) {

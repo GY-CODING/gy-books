@@ -14,7 +14,6 @@ export const ProfileBookHelpers = {
       }
     });
 
-
     // Hardcode the status options to avoid runtime import issues
     const statusOptions = [
       { label: 'Reading', value: 'READING' },
@@ -32,12 +31,18 @@ export const ProfileBookHelpers = {
   filterBooks(books: HardcoverBook[], filters: ProfileFilters) {
     return books.filter((book) => {
       // Prefer userData.status if available, else book.status
-      const bookStatus: string | undefined = book.userData?.status ?? book.status;
+      const bookStatus: string | undefined =
+        book.userData?.status ?? book.status;
       const statusOk = !filters.status || bookStatus === filters.status;
-      const authorOk = !filters.author || (book.author && book.author.name === filters.author);
-      const seriesOk = !filters.series || (book.series && book.series.some((s) => s.name === filters.series));
-      const bookRating = (book as HardcoverBook & { rating?: number }).rating;
-      const ratingOk = !filters.rating || (typeof bookRating === 'number' && bookRating >= filters.rating);
+      const authorOk =
+        !filters.author || (book.author && book.author.name === filters.author);
+      const seriesOk =
+        !filters.series ||
+        (book.series && book.series.some((s) => s.name === filters.series));
+      const bookRating = book.userData?.rating;
+      const ratingOk =
+        !filters.rating ||
+        (typeof bookRating === 'number' && bookRating >= filters.rating);
       return statusOk && authorOk && seriesOk && ratingOk;
     });
   },
@@ -101,4 +106,4 @@ export const ProfileBookHelpers = {
     }
     return sorted;
   },
-}
+};

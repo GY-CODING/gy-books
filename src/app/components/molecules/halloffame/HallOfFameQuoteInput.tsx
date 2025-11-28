@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, TextField, IconButton } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
 import { lora } from '@/utils/fonts/fonts';
+import CheckIcon from '@mui/icons-material/Check';
+import { Box, IconButton, TextField } from '@mui/material';
+import React from 'react';
 
 interface HallOfFameQuoteInputProps {
   quote?: string; // Optional since we're using controlled component
@@ -49,7 +49,13 @@ export const HallOfFameQuoteInput: React.FC<HallOfFameQuoteInputProps> = ({
       }}
       InputProps={{
         endAdornment: isEditing ? (
-          <IconButton onClick={onSave} aria-label="Save quote">
+          <IconButton
+            onMouseDown={(e) => {
+              e.preventDefault(); // Prevent blur from firing
+              onSave();
+            }}
+            aria-label="Save quote"
+          >
             <CheckIcon sx={{ fontSize: '20px', color: 'white' }} />
           </IconButton>
         ) : null,

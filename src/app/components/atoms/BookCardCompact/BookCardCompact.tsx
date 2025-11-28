@@ -296,9 +296,9 @@ export const BookCardCompact = ({
         {/* Autor */}
 
         {/* Series */}
-        {book.series && (
+        {book.series && book.series.length > 0 && book.series[0]?.name && (
           <Chip
-            label={book.series[0]?.name}
+            label={book.series[0].name}
             size="small"
             sx={{
               alignSelf: 'flex-start',

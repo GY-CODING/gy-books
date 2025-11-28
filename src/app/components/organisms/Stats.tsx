@@ -1,6 +1,7 @@
 import React from 'react';
 import { UUID } from 'crypto';
 import { useStats } from '@/hooks/useStats';
+import { useStatsFromBooks } from '@/hooks/useStatsFromBooks';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import AuthorsBarChart from '../molecules/AuthorsBarChart';
@@ -10,26 +11,62 @@ import PageCountKPI from '../molecules/PageCountKPI';
 import RatingStats from '../molecules/RatingStats';
 import { lora } from '@/utils/fonts/fonts';
 import StatsSkeleton from '../molecules/StatsSkeleton';
+import type HardcoverBook from '@/domain/HardcoverBook';
 
-export default function StatsComponent({ id }: { id: UUID }) {
+interface StatsComponentProps {
+  id: UUID;
+  books?: HardcoverBook[];
+  booksLoading?: boolean;
+}
+
+/**
+ * Componente de estadísticas optimizado.
+ *
+ * Calcula stats de dos formas (en orden de prioridad):
+ * 1. Si recibe `books` como prop, calcula stats en memoria (rápido)
+ * 2. Si no, usa el hook `useStats` tradicional (fetch al backend)
+ *
+ * También integra Redux para cachear stats del usuario actual.
+ */
+export default function StatsComponent({
+  id,
+  books,
+  booksLoading = false,
+}: StatsComponentProps) {
   const storedStats = useSelector((state: RootState) => state.stats);
   const isCurrentUser = storedStats.userId === id.toString();
-  // Always call useStats, but prefer Redux data if available
-  const {
-    data: hookData,
-    isLoading: hookLoading,
-    error: hookError,
-  } = useStats(id);
 
-  const data = isCurrentUser && storedStats.data ? storedStats.data : hookData;
+  // Hook de stats desde libros (si están disponibles)
+  const statsFromBooks = useStatsFromBooks(books, booksLoading);
+
+  // Hook de stats desde API (fallback) - SOLO si no hay books
+  // Pasamos null para que SWR no ejecute el fetch
+  const shouldFetchFromAPI = !books || books.length === 0;
+  const statsFromAPI = useStats(shouldFetchFromAPI ? id : null);
+
+  // Decidir qué fuente usar (prioridad: Redux > books > API)
+  const data =
+    isCurrentUser && storedStats.data
+      ? storedStats.data
+      : books && books.length > 0
+        ? statsFromBooks.data
+        : statsFromAPI.data;
+
   const isLoading =
-    isCurrentUser && storedStats.data ? storedStats.isLoading : hookLoading;
+    isCurrentUser && storedStats.data
+      ? storedStats.isLoading
+      : books && books.length > 0
+        ? statsFromBooks.isLoading
+        : statsFromAPI.isLoading;
+
   const error =
     isCurrentUser && storedStats.data
       ? storedStats.error
         ? new Error(storedStats.error)
         : null
-      : hookError;
+      : books && books.length > 0
+        ? statsFromBooks.error
+        : statsFromAPI.error;
   if (isLoading) return <StatsSkeleton />;
 
   if (error) return <div>Error: {error.message}</div>;

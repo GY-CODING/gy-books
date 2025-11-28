@@ -1,12 +1,12 @@
-import { useState, useEffect, useMemo } from 'react';
+import rateBook from '@/app/actions/book/rateBook';
+import { Edition } from '@/domain/HardcoverBook';
+import { useUser } from '@/hooks/useUser';
 import {
   findEditionById,
   getDisplayDataFromEdition,
 } from '@/utils/bookEditionHelpers';
-import rateBook from '@/app/actions/book/rateBook';
-import { useUser } from '@/hooks/useUser';
 import type { Book } from '@gycoding/nebula';
-import { Edition } from '@/domain/HardcoverBook';
+import { useEffect, useMemo, useState } from 'react';
 
 interface UseEditionSelectionProps {
   editions: Edition[];
@@ -45,24 +45,31 @@ export function useEditionSelection({
   const userEditionId = Book?.userData?.editionId;
   const hasUserSelectedEdition = Boolean(userEditionId);
 
-  // Estados válidos para guardar ediciones (usar strings para evitar require dinámico)
+  // Estados válidos para guardar ediciones
   const validStatuses = ['WANT_TO_READ', 'READING', 'READ'];
   const hasValidStatus =
     Book?.userData?.status &&
-    validStatuses.includes(Book.userData.status);
+    validStatuses.includes(Book.userData.status.toUpperCase());
 
   // Efecto para inicializar la edición seleccionada basándose en userData
   useEffect(() => {
     if (!userEditionId || !editions.length) {
-      setSelectedEdition(null);
+      // Solo setear null si actualmente no es null (evitar re-renders innecesarios)
+      if (selectedEdition !== null) {
+        setSelectedEdition(null);
+      }
       return;
     }
 
     const userEdition = findEditionById(editions, userEditionId);
     if (userEdition) {
-      setSelectedEdition(userEdition);
+      // Solo actualizar si cambió
+      if (selectedEdition?.id !== userEdition.id) {
+        setSelectedEdition(userEdition);
+      }
     }
-  }, [userEditionId, editions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userEditionId, editions.length]); // Usar editions.length en lugar de editions completo
 
   // Función para manejar el cambio de edición sin auto-guardado
   const handleEditionChange = async (newEdition: Edition | null) => {
@@ -77,6 +84,13 @@ export function useEditionSelection({
     // Solo llegar aquí si el libro está guardado Y en estado válido
     setIsSaving(true);
 
+    console.log('[DEBUG] handleEditionChange', {
+      newEdition,
+      hasValidStatus,
+      userData: Book?.userData,
+      status: Book?.userData?.status,
+    });
+
     try {
       if (Book?.userData && newEdition && hasValidStatus) {
         // Actualizar la edición en la base de datos
@@ -86,10 +100,7 @@ export function useEditionSelection({
         formData.append('status', Book.userData.status);
         formData.append('startDate', Book.userData.startDate || '');
         formData.append('endDate', Book.userData.endDate || '');
-        formData.append(
-          'progress',
-          (Book.userData.progress || 0).toString()
-        );
+        formData.append('progress', (Book.userData.progress || 0).toString());
         formData.append('editionId', newEdition.id.toString());
 
         await rateBook(formData, user.username, Book.userData);

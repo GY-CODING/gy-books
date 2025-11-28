@@ -2,49 +2,49 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
+import { User } from '@/domain/user.model';
+import { useFriends } from '@/hooks/useFriends';
+import { RootState } from '@/store';
+import { ESeverity } from '@/utils/constants/ESeverity';
+import { lora } from '@/utils/fonts/fonts';
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
+import { UUID } from 'crypto';
 import React, { Suspense } from 'react';
-import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
-import { ProfilePageSkeleton } from './components/ProfilePageSkeleton';
+import { useSelector } from 'react-redux';
+import AnimatedAlert from '../components/atoms/Alert/Alert';
+import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
 import { BooksFilter } from './components/BooksFilter/BooksFilter';
 import { BooksList } from './components/BooksList/BooksList';
 import { BooksListSkeleton } from './components/BooksList/BooksListSkeleton';
-import {
-  Box,
-  Container,
-  Typography,
-  Tab,
-  Tabs,
-  CircularProgress,
-} from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { User } from '@/domain/user.model';
-import ProfileSkeleton from '../components/atoms/ProfileSkeleton/ProfileSkeleton';
-import { lora } from '@/utils/fonts/fonts';
-import { useFriends } from '@/hooks/useFriends';
-import AnimatedAlert from '../components/atoms/Alert/Alert';
-import { ESeverity } from '@/utils/constants/ESeverity';
-import { UUID } from 'crypto';
+import { ProfileHeader } from './components/ProfileHeader/ProfileHeader';
+import { ProfilePageSkeleton } from './components/ProfilePageSkeleton';
 
 // Hooks del perfil
-import { useProfileBiography } from './hooks/useProfileBiography';
 import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
+import { useProfileBiography } from './hooks/useProfileBiography';
 
 // Helpers
 import { ProfileBookHelpers } from './utils/profileHelpers';
 
 // Lazy components
-// const Stats = React.lazy(() => import('../components/organisms/Stats'));
+const Stats = React.lazy(() => import('../components/organisms/Stats'));
 const HallOfFame = React.lazy(
   () => import('../components/molecules/HallOfFame')
 );
 const ActivityTab = React.lazy(
   () => import('../components/molecules/activityTab')
 );
-// import StatsSkeleton from '../components/molecules/StatsSkeleton';
+import StatsSkeleton from '../components/molecules/StatsSkeleton';
+import { EBookStatus } from '@gycoding/nebula';
 import { HallOfFameSkeleton } from '../components/molecules/HallOfFameSkeleton';
 import useProfileFilters from './hooks/useProfileFilters';
-import { EBookStatus } from '@gycoding/nebula';
 
 function ProfilePageContent() {
   const user = useSelector(
@@ -54,11 +54,13 @@ function ProfilePageContent() {
   const [tab, setTab] = React.useState(0);
 
   const { count: friendsCount, isLoading: isLoadingFriends } = useFriends();
-
-  // Hooks personalizados para el perfil
   const filters = useProfileFilters();
-  const { data: books = [], isLoading: loading, error: booksError, isDone } =
-    useMergedBooksIncremental(user?.id as UUID, 25);
+  const {
+    data: books = [],
+    isLoading: loading,
+    error: booksError,
+    isDone,
+  } = useMergedBooksIncremental(user?.id as UUID, 25);
   const hasMore = !isDone;
   const {
     biography,
@@ -183,7 +185,12 @@ function ProfilePageContent() {
               }}
             >
               <BooksFilter
-                statusOptions={filterOptions.statusOptions as { label: string; value: EBookStatus }[]}
+                statusOptions={
+                  filterOptions.statusOptions as {
+                    label: string;
+                    value: EBookStatus;
+                  }[]
+                }
                 statusFilter={filters.status}
                 authorOptions={filterOptions.authorOptions}
                 seriesOptions={filterOptions.seriesOptions}
@@ -238,7 +245,9 @@ function ProfilePageContent() {
 
               {booksError && (
                 <Box sx={{ mt: 2 }}>
-                  <Typography color="error">Error loading books: {booksError.message}</Typography>
+                  <Typography color="error">
+                    Error loading books: {booksError.message}
+                  </Typography>
                 </Box>
               )}
             </Box>
@@ -266,9 +275,11 @@ function ProfilePageContent() {
                 textAlign: 'center',
               }}
             >
-              {/* <Suspense fallback={<StatsSkeleton />}>
-                {user && <Stats id={user.id} />}
-              </Suspense> */}
+              <Suspense fallback={<StatsSkeleton />}>
+                {user && (
+                  <Stats id={user.id} books={books} booksLoading={loading} />
+                )}
+              </Suspense>
             </Box>
           )}
           {tab === 3 && (

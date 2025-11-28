@@ -1,32 +1,58 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import React from 'react';
-import { Box, Typography, IconButton, Chip, Divider } from '@mui/material';
-import { useParams } from 'next/navigation';
-import { lora } from '@/utils/fonts/fonts';
-import { BookRating } from '@/app/components/atoms/BookRating/BookRating';
-import StarIcon from '@mui/icons-material/Star';
-import { useUser } from '@/hooks/useUser';
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import { useHallOfFame } from '@/hooks/useHallOfFame';
 import AnimatedAlert from '@/app/components/atoms/Alert/Alert';
+import { BookRating } from '@/app/components/atoms/BookRating/BookRating';
+import { useHallOfFame } from '@/hooks/useHallOfFame';
+import { useUser } from '@/hooks/useUser';
 import { ESeverity } from '@/utils/constants/ESeverity';
+import { lora } from '@/utils/fonts/fonts';
+import StarIcon from '@mui/icons-material/Star';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import { Box, Chip, Divider, IconButton, Typography } from '@mui/material';
+import { useParams } from 'next/navigation';
+import React from 'react';
 // replaced individual api hooks by useMergedBook
-import useMergedBook from '@/hooks/books/useMergedBook';
-import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
 import BookDetailsSkeleton from '@/app/components/molecules/BookDetailsSkeleton';
 import { EditionSelector } from '@/app/components/molecules/EditionSelector/EditionSelector';
-import { useEditionSelection } from '@/hooks/useEditionSelection';
 import { Edition } from '@/domain/HardcoverBook';
+import useMergedBook from '@/hooks/books/useMergedBook';
+import { useEditionSelection } from '@/hooks/useEditionSelection';
+import { DEFAULT_COVER_IMAGE } from '@/utils/constants/constants';
 
 export default function BookDetails() {
   const params = useParams();
   const { data: user } = useUser();
-  const { data: mergedBook, isLoading: isMergedLoading, mutate } =
-    useMergedBook(params.id as string);
+  const {
+    data: mergedBook,
+    isLoading: isMergedLoading,
+    mutate,
+  } = useMergedBook(params.id as string);
+
+  console.log('[BookDetails] mergedBook:', mergedBook);
+  console.log('[BookDetails] isMergedLoading:', isMergedLoading);
+
   const book = mergedBook;
   const Book = mergedBook;
   const BookPublic = mergedBook;
+
+  // Normalizar datos para manejar tanto estructura HardcoverBook como ApiBook
+  const authorName = React.useMemo(() => {
+    if (!book) return '';
+    // Si es string (ApiBook)
+    if (typeof book.author === 'string') return book.author;
+    // Si es objeto (HardcoverBook)
+    return book.author?.name || '';
+  }, [book]);
+
+  const coverUrl = React.useMemo(() => {
+    if (!book) return DEFAULT_COVER_IMAGE;
+    // HardcoverBook usa cover.url
+    if (book.cover?.url) return book.cover.url;
+    // ApiBook usa image
+    if ((book as any).image) return (book as any).image;
+    return DEFAULT_COVER_IMAGE;
+  }, [book]);
 
   // Estados para notificaciones de edición
   const [editionNotification, setEditionNotification] = React.useState<{
@@ -49,7 +75,7 @@ export default function BookDetails() {
   } = useEditionSelection({
     editions: book?.editions || [],
     Book: Book || undefined,
-    defaultCoverUrl: book?.cover?.url || DEFAULT_COVER_IMAGE,
+    defaultCoverUrl: coverUrl,
     defaultTitle: book?.title || '',
     onEditionSaved: (success, message) => {
       setEditionNotification({
@@ -80,7 +106,10 @@ export default function BookDetails() {
     isUpdatedDeleteToHallOfFame,
     isErrorDeleteToHallOfFame,
   } = useHallOfFame(user?.id || '');
-  const isOnHallOfFame = hallOfFame?.books.some((b) => b.id === book?.id);
+  const isOnHallOfFame = hallOfFame?.books.some((b) => {
+    const id = typeof b === 'string' ? b : b.id;
+    return id === book?.id;
+  });
   const isLoggedIn = !!user;
 
   // Extraer todas las ediciones disponibles
@@ -158,7 +187,7 @@ export default function BookDetails() {
             fontFamily: lora.style.fontFamily,
           }}
         >
-          {book?.author?.name}
+          {authorName}
         </Typography>
       </Box>
       <Box
@@ -186,7 +215,7 @@ export default function BookDetails() {
           sx={{ display: ['flex', 'flex', 'none'], marginTop: '1rem' }}
           textAlign="left"
         >
-          {book?.series && (
+          {book?.series && book.series.length > 0 && (
             <Chip
               sx={{
                 backgroundColor: '#8C54FF20',
@@ -198,7 +227,7 @@ export default function BookDetails() {
                 height: '32px',
                 fontSize: '16px',
               }}
-              label={book.series.name}
+              label={book.series[0]?.name}
             />
           )}
         </Divider>
@@ -217,7 +246,9 @@ export default function BookDetails() {
               textShadow: '0 0 20px rgba(140, 84, 255, 0.5)',
             }}
           >
-            {BookPublic?.averageRating}
+            {BookPublic?.averageRating
+              ? BookPublic.averageRating.toFixed(1)
+              : '0.0'}
             <StarIcon
               sx={{
                 color: 'primary.main',
@@ -235,10 +266,24 @@ export default function BookDetails() {
             flexDirection={'row'}
           >
             <BookRating
-              Book={Book}
+              apiBook={Book as any}
               bookId={book?.id || ''}
               isRatingLoading={isMergedLoading}
-              mutate={mutate}
+              mutate={(updatedBook) => {
+                console.log('[BookDetails] mutate called with:', updatedBook);
+                // Actualización optimista: mergear con datos anteriores
+                if (updatedBook && mutate && book) {
+                  const mergedBook = {
+                    ...book, // Mantener todos los campos de Hardcover (title, cover, author, etc.)
+                    ...updatedBook, // Sobrescribir con los nuevos datos (userData, averageRating)
+                  };
+                  console.log(
+                    '[BookDetails] calling mutate with merged book:',
+                    mergedBook
+                  );
+                  mutate(mergedBook, { revalidate: false });
+                }
+              }}
               isLoggedIn={isLoggedIn}
               selectedEdition={selectedEdition}
             />
@@ -327,7 +372,7 @@ export default function BookDetails() {
             fontFamily: lora.style.fontFamily,
           }}
         >
-          {book?.author.name}
+          {authorName}
         </Typography>
         <Box
           sx={{
@@ -346,7 +391,7 @@ export default function BookDetails() {
           }}
           textAlign="center"
         >
-          {book?.series && (
+          {book?.series && book.series.length > 0 && (
             <Chip
               sx={{
                 backgroundColor: '#8C54FF20',
@@ -358,7 +403,7 @@ export default function BookDetails() {
                 height: '32px',
                 fontSize: '16px',
               }}
-              label={book.series.name}
+              label={book.series[0]?.name}
             />
           )}
         </Divider>

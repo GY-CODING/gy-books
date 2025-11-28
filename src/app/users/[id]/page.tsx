@@ -1,12 +1,6 @@
 'use client';
 
-import React, {
-  Suspense,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -24,7 +18,6 @@ import ProfileSkeleton from '@/app/components/atoms/ProfileSkeleton/ProfileSkele
 import { ProfileHeaderSkeleton } from '@/app/profile/components/ProfileHeader/ProfileHeaderSkeleton';
 import { BooksListSkeleton } from '@/app/profile/components/BooksList/BooksListSkeleton';
 import useMergedBooksIncremental from '@/hooks/books/useMergedBooksIncremental';
-import Book from '@/domain/book.model';
 import { EStatus } from '@/utils/constants/EStatus';
 import { useRouter } from 'next/navigation';
 import { UUID } from 'crypto';
@@ -44,8 +37,11 @@ function ProfilePageContent() {
   const [tab, setTab] = React.useState(0);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { data: books = [], isLoading: loading, error: booksError, isDone } =
-    useMergedBooksIncremental(params.id as UUID, 50);
+  const {
+    data: books = [],
+    isLoading: loading,
+    isDone,
+  } = useMergedBooksIncremental(params.id as UUID, 50);
   const hasMore = !isDone;
 
   // Obtener los filtros del URL al cargar la página
@@ -579,7 +575,11 @@ function ProfilePageContent() {
             >
               <Suspense fallback={<CircularProgress />}>
                 {' '}
-                <Stats id={user?.id as UUID} />
+                <Stats
+                  id={user?.id as UUID}
+                  books={books}
+                  booksLoading={loading}
+                />
               </Suspense>
             </Box>
           )}

@@ -1,67 +1,113 @@
 /* eslint-disable react/display-name */
-import React from 'react';
-import { Box, Typography, Skeleton } from '@mui/material';
-import { lora } from '@/utils/fonts/fonts';
 import { Activity } from '@/domain/activity.model';
-import { BookImage } from '../atoms/BookCover/BookImage';
-import { UUID } from 'crypto';
 import { useActivities } from '@/hooks/useActivities';
+import { useHardcoverBatch } from '@/hooks/books/useHardcoverBatch';
+import { lora } from '@/utils/fonts/fonts';
+import { Box, Skeleton, Typography } from '@mui/material';
+import { UUID } from 'crypto';
+import React, { useMemo } from 'react';
+import Image from 'next/image';
+import type HardcoverBook from '@/domain/HardcoverBook';
 
 interface ActivityTabProps {
   id: UUID;
 }
 
 const ActivityTab: React.FC<ActivityTabProps> = ({ id }) => {
-  const { data: activities, isLoading } = useActivities(id);
+  const { data: activities, isLoading, uniqueBookIds } = useActivities(id);
+  const { data: books, isLoading: booksLoading } =
+    useHardcoverBatch(uniqueBookIds);
 
-  const ActivityItem = React.memo(({ activity }: { activity: Activity }) => (
-    <Box
-      component="a"
-      href={`/books/${activity.bookId}`}
-      key={activity.bookId}
-      role="link"
-      aria-label={`Go to book ${activity.bookId}`}
-      sx={{
-        p: 2,
-        mb: 2,
-        height: '100px',
-        background: 'rgba(35, 35, 35, 0.85)',
-        borderRadius: '12px',
-        border: '1px solid #FFFFFF30',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 2,
-        textDecoration: 'none',
-        transition: 'background 0.2s',
-        '&:hover': { background: 'rgba(60, 60, 60, 0.95)' },
-      }}
-      tabIndex={0}
-    >
-      <BookImage bookId={activity.bookId as string} />
-      <Typography
-        variant="body1"
+  // Crear un mapa de bookId -> imagen para acceso rápido
+  const booksMap = useMemo(() => {
+    if (!books) return new Map<string, string>();
+    return new Map(
+      books.map((book: HardcoverBook) => {
+        const imageUrl =
+          book.cover?.url || book.image || '/placeholder-book.png';
+        return [String(book.id), imageUrl];
+      })
+    );
+  }, [books]);
+
+  const ActivityItem = React.memo(({ activity }: { activity: Activity }) => {
+    const bookImage = activity.bookId ? booksMap.get(activity.bookId) : null;
+
+    return (
+      <Box
+        component="a"
+        href={`/books/${activity.bookId}`}
+        key={activity.bookId}
+        role="link"
+        aria-label={`Go to book ${activity.bookId}`}
         sx={{
-          color: '#fff',
-          fontFamily: lora.style.fontFamily,
-          fontSize: ['12px', '14px'],
+          p: 2,
+          mb: 2,
+          height: '100px',
+          background: 'rgba(35, 35, 35, 0.85)',
+          borderRadius: '12px',
+          border: '1px solid #FFFFFF30',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          textDecoration: 'none',
+          transition: 'background 0.2s',
+          '&:hover': { background: 'rgba(60, 60, 60, 0.95)' },
         }}
+        tabIndex={0}
       >
-        {activity.message}
-      </Typography>
-      {activity.formattedDate && (
+        {booksLoading || !bookImage ? (
+          <Skeleton
+            variant="rectangular"
+            width={60}
+            height={80}
+            sx={{ borderRadius: 1, flexShrink: 0 }}
+          />
+        ) : (
+          <Box
+            sx={{
+              position: 'relative',
+              width: 60,
+              height: 80,
+              flexShrink: 0,
+              borderRadius: 1,
+              overflow: 'hidden',
+            }}
+          >
+            <Image
+              src={bookImage}
+              alt="Book cover"
+              fill
+              sizes="60px"
+              style={{ objectFit: 'cover' }}
+            />
+          </Box>
+        )}
         <Typography
-          variant="body2"
+          variant="body1"
           sx={{
-            color: '#AAAAAA',
+            color: '#fff',
             fontFamily: lora.style.fontFamily,
-            marginLeft: 'auto',
+            fontSize: ['12px', '14px'],
           }}
         >
-          {activity.formattedDate}
+          {activity.message}
         </Typography>
-      )}
-    </Box>
-  ));
+        {activity.formattedDate && (
+          <Typography
+            variant="body2"
+            sx={{
+              color: '#AAAAAA',
+              fontFamily: lora.style.fontFamily,
+              marginLeft: 'auto',
+            }}
+          >
+            {activity.formattedDate}
+          </Typography>
+        )}
+      </Box>
+    );
+  });
 
   const SkeletonActivityItem = React.memo(() => (
     <Box

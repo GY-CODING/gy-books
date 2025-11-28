@@ -9,10 +9,10 @@ interface UseStatsResult<T> {
   error?: Error;
 }
 
-export function useStats(id: UUID): UseStatsResult<any> {
+export function useStats(id: UUID | null): UseStatsResult<any> {
   const { data, error, isLoading } = useSWR(
     id ? `/api/public/accounts/${id}/books/stats` : null,
-    () => getStats(id)
+    () => (id ? getStats(id) : Promise.resolve(undefined))
   );
 
   return { data, isLoading, error };

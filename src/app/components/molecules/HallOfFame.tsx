@@ -1,20 +1,20 @@
 /* eslint-disable no-constant-binary-expression */
 'use client';
 
-import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { useGyCodingUser } from '@/contexts/GyCodingUserContext';
 import { useHallOfFame } from '@/hooks/useHallOfFame';
 import { useUpdateHallOfFame } from '@/hooks/useUpdateHallOfFame';
-import { useGyCodingUser } from '@/contexts/GyCodingUserContext';
+import { Box, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import { HallOfFameSkeleton } from './HallOfFameSkeleton';
-import { HallOfFameQuoteInput } from './halloffame/HallOfFameQuoteInput';
 import { HallOfFameCarousel } from './halloffame/HallOfFameCarousel';
 import { HallOfFameEmpty } from './halloffame/HallOfFameEmpty';
+import { HallOfFameQuoteInput } from './halloffame/HallOfFameQuoteInput';
 
 export default function HallOfFame({ userId }: { userId: string }) {
   const { user } = useGyCodingUser();
   const { isLoading, error, quote, books } = useHallOfFame(userId);
-  const { handleUpdateHallOfFame } = useUpdateHallOfFame();
+  const { handleUpdateHallOfFame } = useUpdateHallOfFame(userId);
 
   const [editedQuote, setEditedQuote] = useState(quote);
   const [isEditing, setIsEditing] = useState(false);
@@ -37,10 +37,16 @@ export default function HallOfFame({ userId }: { userId: string }) {
     );
   }
 
-  const handleUpdate = () => {
-    const formData = new FormData();
-    formData.append('quote', editedQuote);
-    handleUpdateHallOfFame(formData);
+  const handleUpdate = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('quote', editedQuote);
+      await handleUpdateHallOfFame(formData);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Failed to update quote:', error);
+      // The error state is already set in the hook
+    }
   };
 
   // Si books es undefined o array vacío
