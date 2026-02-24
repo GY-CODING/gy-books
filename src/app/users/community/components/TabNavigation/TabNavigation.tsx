@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { lora } from '@/utils/fonts/fonts';
 import { Box, Tab, Tabs, Badge } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import ExploreIcon from '@mui/icons-material/Explore';
+import React, { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface TabNavigationProps {
   tab: number;
@@ -14,6 +17,18 @@ export function TabNavigation({
   friendsCount,
   onTabChange,
 }: TabNavigationProps) {
+  const router = useRouter();
+
+  const prefetch = useCallback(
+    (href: string) => {
+      try {
+        router.prefetch(href);
+      } catch (e) {
+        // ignore
+      }
+    },
+    [router]
+  );
   return (
     <Box
       sx={{
@@ -54,7 +69,14 @@ export function TabNavigation({
           },
         }}
       >
-        <Tab icon={<ExploreIcon />} iconPosition="start" label="Discover" />
+        <Tab
+          icon={<ExploreIcon />}
+          iconPosition="start"
+          label="Discover"
+          onMouseEnter={() => prefetch('/users/community')}
+          onFocus={() => prefetch('/users/community')}
+          onTouchStart={() => prefetch('/users/community')}
+        />
         <Tab
           icon={<PeopleIcon />}
           iconPosition="start"
@@ -81,6 +103,9 @@ export function TabNavigation({
               )}
             </Box>
           }
+          onMouseEnter={() => prefetch('/users/community?tab=1')}
+          onFocus={() => prefetch('/users/community?tab=1')}
+          onTouchStart={() => prefetch('/users/community?tab=1')}
         />
       </Tabs>
     </Box>
