@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/gy-logo.png',
-    apple: '/gy-logo.png',
+    apple: '/wingwords-icon.png',
   },
 };
 
