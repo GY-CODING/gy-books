@@ -38,6 +38,7 @@ export function useActivities(id?: UUID): useActivitiesProps {
           month: '2-digit',
           year: 'numeric',
         }),
+        likes: activity.likes,
       })) || undefined;
 
   // Extraer IDs únicos de libros para usar con useHardcoverBatch

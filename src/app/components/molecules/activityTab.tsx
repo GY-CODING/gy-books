@@ -18,6 +18,7 @@ import BookIcon from '@mui/icons-material/Book';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircleIcon from '@mui/icons-material/Circle';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import StarIcon from '@mui/icons-material/Star';
 import { Box, Skeleton, Typography } from '@mui/material';
 import { UUID } from 'crypto';
@@ -153,7 +154,7 @@ const BookCover: React.FC<{
 
 // Activity Item Component
 const ActivityItem: React.FC<{
-  activity: Activity;
+  activity: Activity & { likes?: string[] };
   index: number;
   bookImage: string | null;
   onImageLoad: () => void;
@@ -164,6 +165,7 @@ const ActivityItem: React.FC<{
   const progress = extractProgress(activity.message);
   const rating = extractRating(activity.message);
   const displayMessage = cleanMessage(activity.message);
+  const likesCount = activity.likes?.length ?? 0;
 
   return (
     <MotionBox
@@ -257,8 +259,38 @@ const ActivityItem: React.FC<{
           {displayMessage}
         </Typography>
 
-        {progress !== null && <ProgressBadge progress={progress} />}
-        {rating !== null && <RatingBadge rating={rating} />}
+        {/* Badges y likes en una fila */}
+        {(progress !== null || rating !== null || likesCount > 0) && (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1.5,
+              mt: 1,
+            }}
+          >
+            {progress !== null && <ProgressBadge progress={progress} />}
+            {rating !== null && <RatingBadge rating={rating} />}
+            {likesCount > 0 && (
+              <Box
+                sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                aria-hidden
+              >
+                <FavoriteRoundedIcon sx={{ fontSize: 16, color: '#e74c6f' }} />
+                <Typography
+                  sx={{
+                    fontSize: 13,
+                    color: '#e74c6f',
+                    fontWeight: 600,
+                    fontFamily: lora.style.fontFamily,
+                  }}
+                >
+                  {likesCount}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        )}
       </Box>
     </MotionBox>
   );
@@ -351,6 +383,7 @@ const EmptyState: React.FC = React.memo(() => (
 // Main Component
 const ActivityTab: React.FC<ActivityTabProps> = ({ id }) => {
   const { data: activities, isLoading } = useActivities(id);
+  console.log(activities?.map((a) => a.likes.length));
   const { data: books } = useHardcoverBatch(
     (activities?.map((a) => a.bookId).filter(Boolean) as string[]) || []
   );
