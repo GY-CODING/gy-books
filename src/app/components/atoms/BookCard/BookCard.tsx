@@ -16,7 +16,7 @@ export function BookCard({ book, compact = false }: BookCardProps) {
       href={`/books/${book.id}`}
       key={book.id}
       sx={{
-        width: '100%',
+        width: '45%',
         textDecoration: 'none',
         display: 'flex',
         flexDirection: 'row',

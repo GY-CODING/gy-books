@@ -18,7 +18,13 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { Box, IconButton, Skeleton, Typography } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 const MotionBox = motion(Box);
 
@@ -93,7 +99,15 @@ const FriendActivityItem = React.memo<{
 
       setIsLiking(false);
     },
-    [currentUserId, activity.activityId, isLiking, isLiked, likes, onLikeToggle]
+    [
+      currentUserId,
+      activity.activityId,
+      activity.profileId,
+      isLiking,
+      likes,
+      isLiked,
+      onLikeToggle,
+    ]
   );
 
   return (
@@ -423,6 +437,9 @@ interface FriendsActivityFeedProps {
   activities: FriendActivity[];
   isLoading: boolean;
   currentUserId?: string;
+  loadMore?: () => void;
+  hasNext?: boolean;
+  isLoadingMore?: boolean;
 }
 
 /**
@@ -430,7 +447,14 @@ interface FriendsActivityFeedProps {
  * Memoizado para evitar re-renders cuando cambian datos no relacionados del dashboard.
  */
 export const FriendsActivityFeed = React.memo<FriendsActivityFeedProps>(
-  ({ activities, isLoading, currentUserId }) => {
+  ({
+    activities,
+    isLoading,
+    currentUserId,
+    loadMore,
+    hasNext,
+    isLoadingMore,
+  }) => {
     const router = useRouter();
     const { toggleLike } = useActivityLike();
 
@@ -452,6 +476,35 @@ export const FriendsActivityFeed = React.memo<FriendsActivityFeedProps>(
       },
       [toggleLike]
     );
+
+    // Infinite scroll sentinel
+    const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+      if (!sentinelRef.current || !loadMore) return;
+
+      const root = sentinelRef.current.parentElement || null;
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && hasNext) {
+              loadMore();
+            }
+          });
+        },
+        {
+          root,
+          rootMargin: '0px',
+          threshold: 0.1,
+        }
+      );
+
+      obs.observe(sentinelRef.current);
+
+      return () => {
+        obs.disconnect();
+      };
+    }, [loadMore, hasNext]);
 
     // Loading state
     if (isLoading) {
@@ -484,6 +537,15 @@ export const FriendsActivityFeed = React.memo<FriendsActivityFeedProps>(
             />
           ))}
         </AnimatePresence>
+        {/* Sentinel for infinite scroll */}
+        <div ref={sentinelRef} />
+        {isLoadingMore && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
+            <Typography sx={{ color: 'rgba(255,255,255,0.6)' }}>
+              Loading more...
+            </Typography>
+          </Box>
+        )}
       </>
     );
   }

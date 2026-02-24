@@ -174,7 +174,13 @@ export default function DashboardPage() {
   );
 
   // 🚀 PETICIÓN 2: Feed de actividades de amigos (optimizado con JOIN)
-  const { activities, isLoading: activitiesLoading } = useFriendsActivityFeed();
+  const {
+    activities,
+    isLoading: activitiesLoading,
+    loadMore: activitiesLoadMore,
+    hasNext: activitiesHasNext,
+    isLoadingMore: activitiesLoadingMore,
+  } = useFriendsActivityFeed();
 
   // 🚀 PETICIÓN 3: Hall of Fame para obtener la quote
   const { quote } = useHallOfFame(user?.id || '');
@@ -249,10 +255,12 @@ export default function DashboardPage() {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        height: '100%',
         backgroundColor: '#0A0A0A',
-        position: 'relative',
+        // position: 'relative',
         overflow: 'hidden',
+        boxSizing: 'border-box',
+        p: 0,
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -268,7 +276,15 @@ export default function DashboardPage() {
     >
       {/* Mobile Dashboard */}
       {isMobile ? (
-        <Box sx={{ position: 'relative', zIndex: 1 }}>
+        <Box
+          sx={{
+            position: 'relative',
+            zIndex: 1,
+            height: '100vh',
+            overflow: 'auto',
+            boxSizing: 'border-box',
+          }}
+        >
           <DashboardMobile
             currentlyReadingBook={currentlyReadingBook}
             booksLoading={booksLoading}
@@ -289,7 +305,8 @@ export default function DashboardPage() {
             maxWidth: '1600px',
             margin: '0 auto',
             padding: { xs: 0, sm: 3, lg: 4 },
-            height: 'calc(100vh - 32px)',
+            height: '100%',
+            boxSizing: 'border-box',
           }}
         >
           {/* 3 Column Layout - Desktop */}
@@ -300,6 +317,7 @@ export default function DashboardPage() {
               gap: 4,
               alignItems: 'start',
               height: '100%',
+              boxSizing: 'border-box',
             }}
           >
             {/* LEFT COLUMN - User Profile & Currently Reading */}
@@ -339,6 +357,7 @@ export default function DashboardPage() {
                 height: '100%',
                 gap: 2,
                 minHeight: 0,
+                boxSizing: 'border-box',
               }}
             >
               {/* Friends Activity - Main content */}
@@ -353,8 +372,11 @@ export default function DashboardPage() {
                   overflow: 'auto',
                   display: 'flex',
                   flexDirection: 'column',
+                  height: '100%',
+                  boxSizing: 'border-box',
                   '&::-webkit-scrollbar': {
                     width: '6px',
+                    display: 'none',
                   },
                   '&::-webkit-scrollbar-track': {
                     backgroundColor: 'rgba(255, 255, 255, 0.02)',
@@ -373,6 +395,9 @@ export default function DashboardPage() {
                   activities={activities}
                   isLoading={activitiesLoading}
                   currentUserId={user?.id}
+                  loadMore={activitiesLoadMore}
+                  hasNext={activitiesHasNext}
+                  isLoadingMore={activitiesLoadingMore}
                 />
               </Paper>
             </MotionBox>

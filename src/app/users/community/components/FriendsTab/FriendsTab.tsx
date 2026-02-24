@@ -115,6 +115,8 @@ export function FriendsTab({
           width: '100%',
           maxWidth: '900px',
           justifyContent: 'center',
+          alignItems: 'center',
+          justifyItems: 'center',
         }}
       >
         {isLoading || !data ? (
@@ -127,6 +129,8 @@ export function FriendsTab({
               gridColumn: '1 / -1',
               display: 'flex',
               justifyContent: 'center',
+              alignItems: 'center',
+              justifyItems: 'center',
             }}
           >
             <Typography

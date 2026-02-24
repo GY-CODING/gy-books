@@ -1,12 +1,12 @@
 'use client';
 
-import React, { Suspense } from 'react';
-import { Box, Container, CircularProgress } from '@mui/material';
-import { Hero } from './components/organisms/Hero';
-import { FeaturesGrid } from './components/organisms/FeaturesGrid';
-import { CTASection } from './components/organisms/CTASection';
-import { Footer } from './components/organisms/Footer';
 import { useGyCodingUser } from '@/contexts/GyCodingUserContext';
+import { Box, CircularProgress, Container } from '@mui/material';
+import { Suspense } from 'react';
+import { CTASection } from './components/organisms/CTASection';
+import { FeaturesGrid } from './components/organisms/FeaturesGrid';
+import { Footer } from './components/organisms/Footer';
+import { Hero } from './components/organisms/Hero';
 import DashboardPage from './dashboard/page';
 
 const LoadingSkeleton = () => (
@@ -85,9 +85,15 @@ export default function Home() {
 
   if (user) {
     return (
-      <Suspense fallback={<LoadingSkeleton />}>
-        <DashboardPage />
-      </Suspense>
+      <Box
+        sx={{
+          height: '90vh',
+        }}
+      >
+        <Suspense fallback={<LoadingSkeleton />}>
+          <DashboardPage />
+        </Suspense>
+      </Box>
     );
   }
 

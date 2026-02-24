@@ -27,7 +27,12 @@ export async function GET(_req: NextRequest) {
       throw new Error(ELogs.ENVIROMENT_VARIABLE_NOT_DEFINED);
     }
 
-    const apiUrl = `${baseUrl}/books/activity?page=0&size=10`;
+    // Extraer page y size de la query
+    const { searchParams } = _req.nextUrl;
+    const page = searchParams.get('page') ?? '0';
+    const size = searchParams.get('size') ?? '50';
+
+    const apiUrl = `${baseUrl}/books/activity?page=${page}&size=${size}`;
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${ID_TOKEN}`,
@@ -44,8 +49,15 @@ export async function GET(_req: NextRequest) {
     }
 
     const activities = await gyCodingResponse.json();
-
-    return NextResponse.json(activities as feedActivity[]);
+    // Leer el header X-Has-Next de la respuesta de la API
+    const hasNext = gyCodingResponse.headers.get('x-has-next');
+    console.log('Has next page:', hasNext);
+    // Crear respuesta y setear el header X-Has-Next
+    const response = NextResponse.json(activities as feedActivity[]);
+    if (hasNext !== null) {
+      response.headers.set('X-Has-Next', hasNext);
+    }
+    return response;
   } catch (error) {
     console.error('Error in /api/auth/books/activity:', error);
     await sendLog(ELevel.ERROR, ELogs.ACTIVITY_FETCH_ERROR, {

@@ -1,7 +1,7 @@
 'use client';
 
-import { FriendActivity } from '@/hooks/activities/useFriendsActivityFeed';
 import { useActivityLike } from '@/hooks/activities/useActivityLike';
+import { FriendActivity } from '@/hooks/activities/useFriendsActivityFeed';
 import { lora } from '@/utils/fonts/fonts';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import { Box, Typography } from '@mui/material';
@@ -117,7 +117,16 @@ export const FriendsActivityMobileFeed =
       }
 
       return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1.5,
+            maxHeight: '500px',
+            height: '45vdh',
+            overflow: 'auto',
+          }}
+        >
           <AnimatePresence>
             {activities.map((activity, index) => (
               <FriendActivityMobileItem

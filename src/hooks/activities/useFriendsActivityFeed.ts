@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Activity, feedActivity } from '@/domain/activity.model';
-import { useMemo } from 'react';
-import useSWR from 'swr';
+import { useCallback, useMemo } from 'react';
+import useSWRInfinite from 'swr/infinite';
+import { useUserProfiles } from './useUserProfiles';
 import {
   cleanActivityMessage,
   extractBookId,
   formatRelativeDate,
   sortActivitiesByDate,
 } from './utils/activityHelpers';
-import { useUserProfiles } from './useUserProfiles';
 
 /**
  * Interface para actividades de amigos con información del usuario
  */
 export interface FriendActivity extends Activity {
-  /** ID único de la actividad (para likes) */
-  activityId: string;
   /** profileId del autor de la actividad */
   profileId: string;
   userId: string;
@@ -33,6 +31,9 @@ export interface UseFriendsActivityFeedResult {
   bookIds: string[];
   isLoading: boolean;
   error: Error | null;
+  loadMore?: () => void;
+  hasNext?: boolean;
+  isLoadingMore?: boolean;
 }
 
 /**
@@ -55,35 +56,76 @@ async function fetchFriendsActivityFeed(): Promise<feedActivity[]> {
   const data = await response.json();
   return data as feedActivity[];
 }
+type PageResult = {
+  activities: feedActivity[];
+  hasNext: boolean;
+};
+
+const PAGE_SIZE = 50;
+
+async function fetchPage(key: string): Promise<PageResult> {
+  // key expected: '/api/auth/books/activity?page=X&size=Y'
+  const query = key.split('?')[1] || '';
+  const params = new URLSearchParams(query);
+  const page = Number(params.get('page') ?? 0);
+  const size = Number(params.get('size') ?? PAGE_SIZE);
+
+  const response = await fetch(
+    `/api/auth/books/activity?page=${page}&size=${size}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      cache: 'no-store',
+    }
+  );
+
+  if (!response.ok) {
+    if (response.status === 401) return { activities: [], hasNext: false };
+    throw new Error(`Failed to fetch friends activity: ${response.status}`);
+  }
+
+  const data = (await response.json()) as feedActivity[];
+  const hasNext = response.headers.get('X-Has-Next') === 'true';
+  return { activities: data, hasNext };
+}
 
 export function useFriendsActivityFeed(): UseFriendsActivityFeedResult {
-  // 1. Obtener actividades
+  // 1. Obtener actividades paginadas (SWR Infinite)
   const {
-    data: activities,
-    isLoading: loadingActivities,
+    data: pages,
     error,
-  } = useSWR('/api/auth/books/activity', fetchFriendsActivityFeed, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    shouldRetryOnError: false,
-    dedupingInterval: 30000,
-    keepPreviousData: true,
-  });
+    size,
+    setSize,
+    isValidating,
+  } = useSWRInfinite<PageResult>(
+    (index) => `/api/auth/books/activity?page=${index}&size=${PAGE_SIZE}`,
+    fetchPage,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      shouldRetryOnError: false,
+      dedupingInterval: 30000,
+      keepPreviousData: true,
+    }
+  );
 
   // 2. Extraer profileIds únicos (usando profileId del modelo FeedActivity)
+  const allActivities = useMemo(
+    () => (pages ? pages.flatMap((p) => p.activities) : []),
+    [pages]
+  );
+
   const uniqueProfileIds = useMemo(() => {
-    if (!activities) {
-      return [];
-    }
+    if (!allActivities || allActivities.length === 0) return [];
     const ids = Array.from(
       new Set(
-        activities
+        allActivities
           .map((activity) => activity.profileId)
           .filter((id): id is string => Boolean(id))
       )
     );
     return ids;
-  }, [activities]);
+  }, [allActivities]);
 
   // 3. Obtener perfiles con hook optimizado (con caché SWR)
   const { profiles, isLoading: loadingProfiles } =
@@ -91,11 +133,9 @@ export function useFriendsActivityFeed(): UseFriendsActivityFeedResult {
 
   // 4. Procesar actividades: agregar username y picture
   const processedActivities: FriendActivity[] = useMemo(() => {
-    if (!activities || activities.length === 0) {
-      return [];
-    }
+    if (!allActivities || allActivities.length === 0) return [];
 
-    const processed = activities
+    const processed = allActivities
       .map((activity) => {
         // Obtener perfil usando profileId (puede estar cargando aún)
         const userProfile = profiles[activity.profileId];
@@ -125,7 +165,7 @@ export function useFriendsActivityFeed(): UseFriendsActivityFeedResult {
       .sort(sortActivitiesByDate);
 
     return processed;
-  }, [activities, profiles]);
+  }, [allActivities, profiles]);
 
   // 5. Extraer bookIds únicos
   const bookIds = useMemo(() => {
@@ -135,10 +175,25 @@ export function useFriendsActivityFeed(): UseFriendsActivityFeedResult {
     return Array.from(new Set(ids));
   }, [processedActivities]);
 
+  const hasNext = useMemo(() => {
+    if (!pages || pages.length === 0) return false;
+    return pages[pages.length - 1].hasNext;
+  }, [pages]);
+
+  const loadMore = useCallback(() => {
+    if (hasNext) setSize((s) => s + 1);
+  }, [hasNext, setSize]);
+
+  const isLoading = Boolean(!pages && !error) || (isValidating && size === 1);
+  const isLoadingMore = isValidating && size > 1;
+
   return {
     activities: processedActivities,
     bookIds,
-    isLoading: loadingActivities,
+    isLoading,
     error: error || null,
+    loadMore,
+    hasNext,
+    isLoadingMore,
   };
 }
